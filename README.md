@@ -3,9 +3,11 @@
 A cipher library and experiment harness for attacking Kryptos K4.
 
 > **There's a paper.** The findings are written up in
-> [paper/k4_underdetermination.pdf](paper/k4_underdetermination.pdf) (source:
-> [paper/k4_underdetermination.tex](paper/k4_underdetermination.tex)). Every numerical
-> claim traces to a logged `Verdict` in
+> **[the K4 paper](https://mattruckman.com/papers/k4/)** (local copy:
+> [PDF](paper/k4_underdetermination.pdf), [source](paper/k4_underdetermination.tex)),
+> with a companion essay,
+> **[The Answer in the Box](https://mattruckman.com/blog/the-answer-in-the-box/)**.
+> Every numerical claim traces to a logged `Verdict` in
 > [experiments/results/FINDINGS.md](experiments/results/FINDINGS.md) (regenerate via
 > `python scripts/report.py`), and the load-bearing structural results are re-derived
 > from scratch by
