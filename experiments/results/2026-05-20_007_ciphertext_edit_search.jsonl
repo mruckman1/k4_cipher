@@ -1,0 +1,8 @@
+{"_header": true, "name": "007_ciphertext_edit_search", "ts": 1779334290.3340318, "argv": ["experiments/007_ciphertext_edit_search.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"win_threshold": 8, "log_threshold": 5, "n_generators": 20524, "n_alphabets": 2}
+{"edit_kind": "insert", "edit_pos": 25, "edit_letter": "M", "alphabet": "standard", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 23, "generator": "lcg:m26_a25_c25_s24"}
+{"edit_kind": "insert", "edit_pos": 26, "edit_letter": "H", "alphabet": "kryptos_keyed", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 25, "generator": "lcg:m26_a11_c2_s21"}
+{"edit_kind": "insert", "edit_pos": 26, "edit_letter": "H", "alphabet": "kryptos_keyed", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 25, "generator": "lcg:m26_a24_c15_s8"}
+{"edit_kind": "insert", "edit_pos": 26, "edit_letter": "H", "alphabet": "kryptos_keyed", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 25, "generator": "lcg:m26_a24_c15_s21"}
+{"edit_kind": "swap", "edit_pos": 22, "edit_letter": "", "alphabet": "kryptos_keyed", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 21, "generator": "lcg:m26_a5_c11_s8"}
+{"summary": true, "n_variants": 2741, "n_scored": 112512568, "n_hits": 0, "n_notables": 5, "elapsed_s": 90.33048195799347}

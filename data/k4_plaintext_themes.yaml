@@ -1,0 +1,217 @@
+# K4 plaintext-content inference (N1): clustered themes from 12 LM
+# subagent runs producing 6 candidate 97-character plaintexts each.
+# Total: 12 subagents x 6 candidates = 72 candidates.
+# All cribs were enforced; 72/72 pass strict crib check.
+
+convergence_statistic:
+  description: |
+    For each theme, the fraction of independent subagents (each
+    with different framing/prompt) producing >=1 candidate
+    containing that theme. High convergence = strong prior.
+
+  navigation:
+    subagents_with_theme: 12
+    subagents_total:      12
+    cross_subagent_freq:  1.000
+  first_person:
+    subagents_with_theme: 12
+    subagents_total:      12
+    cross_subagent_freq:  1.000
+  berlin_wall:
+    subagents_with_theme: 11
+    subagents_total:      12
+    cross_subagent_freq:  0.917
+  k2_k3_echo:
+    subagents_with_theme: 9
+    subagents_total:      12
+    cross_subagent_freq:  0.750
+  egypt:
+    subagents_with_theme: 8
+    subagents_total:      12
+    cross_subagent_freq:  0.667
+  k5_forward:
+    subagents_with_theme: 8
+    subagents_total:      12
+    cross_subagent_freq:  0.667
+
+recurring_keywords:
+  description: For each theme, keywords ranked by candidate-hits.
+
+  berlin_wall:
+    candidate_coverage: 42  # of 72
+    candidate_coverage_pct: 58.3
+    top_keywords:
+      WALL: 14
+      GATE: 11
+      CROWD: 9
+      ALEXANDER: 8
+      PLATZ: 8
+      BORNHOLMER: 5
+      ALEXANDERPLATZ: 5
+      WEST: 5
+      WELTZEITUHR: 4
+      FALL: 4
+
+  egypt:
+    candidate_coverage: 19  # of 72
+    candidate_coverage_pct: 26.4
+    top_keywords:
+      STONE: 7
+      SAND: 4
+      EGYPT: 3
+      DESERT: 3
+      KARNAK: 2
+      CHAMBER: 2
+      CAIRO: 1
+      TOMB: 1
+      PHARAOH: 1
+      TUTENKAMUN: 1
+
+  navigation:
+    candidate_coverage: 72  # of 72
+    candidate_coverage_pct: 100.0
+    top_keywords:
+      NORTH: 72
+      FROM: 17
+      TOWARD: 9
+      DEGREES: 7
+      ACROSS: 6
+      FIFTY: 6
+      FIFTYTWO: 6
+      FACE: 5
+      THIRTEEN: 4
+      FACING: 3
+
+  k2_k3_echo:
+    candidate_coverage: 24  # of 72
+    candidate_coverage_pct: 33.3
+    top_keywords:
+      SEE: 6
+      PLINTH: 4
+      YOU: 4
+      LAYER: 3
+      BURIED: 3
+      CAN: 3
+      LAST: 2
+      MESSAGE: 2
+      BELOW: 2
+      PEERED: 2
+
+  first_person:
+    candidate_coverage: 72  # of 72
+    candidate_coverage_pct: 100.0
+    top_keywords:
+      I: 72
+      WE: 31
+      ME: 29
+      OUR: 12
+      STOOD: 10
+      WENT: 8
+      SAW: 6
+      TURNED: 5
+      ISTOOD: 5
+      LOOKED: 3
+
+  k5_forward:
+    candidate_coverage: 19  # of 72
+    candidate_coverage_pct: 26.4
+    top_keywords:
+      Q: 8
+      MARK: 4
+      LAYER: 3
+      BURIED: 3
+      MORE: 2
+      AWAITS: 2
+      BELOW: 2
+      STILL: 2
+      FINAL: 2
+      NEXT: 2
+
+recurring_substrings_length_5_plus:
+  threshold: 4  # min candidates containing substring
+  XTHEX: 19
+  FROMT: 12
+  OMTHE: 12
+  ROMTH: 12
+  CROSS: 12
+  STOOD: 10
+  CROWD: 9
+  ATTHE: 9
+  THEPL: 9
+  OWARD: 9
+  TOWAR: 9
+  EWALL: 8
+  NIGHT: 8
+  LEXAN: 8
+  ANDER: 8
+  XANDE: 8
+  ALEXA: 8
+  EXAND: 8
+  PLATZ: 8
+  DXTHE: 8
+  TXTHE: 8
+  THEWA: 7
+  HEWAL: 7
+  EXTHE: 7
+  STONE: 7
+  DEGRE: 7
+  GREES: 7
+  EGREE: 7
+  EDTHE: 7
+  THREE: 7
+
+recurring_substrings_length_7_plus:
+  FROMTHE: 12
+  LEXANDE: 8
+  ALEXAND: 8
+  EXANDER: 8
+  THEWALL: 7
+  DEGREES: 7
+  IFTYTWO: 6
+  FIFTYTW: 6
+  ANDERPL: 6
+  NDERPLA: 6
+  XANDERP: 6
+  DERPLAT: 6
+  WARDTHE: 6
+  TOWARDT: 6
+  OWARDTH: 6
+  THEGATE: 5
+  ORNHOLM: 5
+  RNHOLME: 5
+  BORNHOL: 5
+  NHOLMER: 5
+
+summary_for_n2_prior:
+  description: |
+    For each candidate plaintext that ShinkaEvolve produces
+    via decrypt_k4, score a small bonus if it contains tokens
+    from the high-convergence themes below.
+  thematic_keywords_high_prior:
+    # theme: navigation
+    - NORTH
+    - FROM
+    - TOWARD
+    - DEGREES
+    - ACROSS
+    - FIFTY
+    - FIFTYTWO
+    - FACE
+    # theme: first_person
+    - I
+    - WE
+    - ME
+    - OUR
+    - STOOD
+    - WENT
+    - SAW
+    - TURNED
+    # theme: berlin_wall
+    - WALL
+    - GATE
+    - CROWD
+    - ALEXANDER
+    - PLATZ
+    - BORNHOLMER
+    - ALEXANDERPLATZ
+    - WEST

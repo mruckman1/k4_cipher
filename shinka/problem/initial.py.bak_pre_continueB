@@ -1,0 +1,283 @@
+"""Seed candidate for K4 — Prior A: per-position alphabet selection with
+the (2 × pos_mod_3 + consonant_count) mod 4 rule.
+
+This replaces the previous multi-hypothesis dispatcher with a single
+structurally-derived cipher form: K4 = per-position substitution where
+the active alphabet at position i is selected by a Scheidt-compatible
+compound rule yielding k=4 alphabets.
+
+Background (from exps 035-042):
+  - χ = 3 (proven minimum alphabets by graph coloring of cribs)
+  - k = 4 is the minimum natural-rule k (no natural rule reaches k=3)
+  - k=4 natural rules are 22× concentrated above random — genuine signal
+  - All 4 alphabets must be hand-crafted (no natural keyword matches > 2/6
+    of any color's constraints)
+  - Top Scheidt-ranked rule: (2 × pos_mod_3 + 1 × consonant_count) mod 4
+
+Cipher model:
+  At each position i:
+    color = rule(i)
+    A = alphabet[color]
+    plaintext[i] = STANDARD[A.index(ciphertext[i])]
+  i.e., monoalphabetic substitution per position with one of 4 alphabets.
+
+LLM mutation space:
+  (1) The selection rule — top-20 Scheidt-ranked k=4 compound rules are
+      listed in `_ALTERNATIVE_RULES`. Default is rule 0.
+  (2) The 4 alphabet permutations — each must be a permutation of A-Z.
+      Cribs constrain 5-7 positions per alphabet by construction; the
+      remaining ~20 positions per alphabet are the search dimension.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from problem._fitness import (
+    count_crib_letter_hits,
+    differential_input_check,
+    find_crib_construction_cheat,
+    find_crib_literal_cheat,
+    multi_sentinel_check,
+    now,
+    score_plaintext,
+)
+
+
+_SENTINEL_CRIB_HITS_THRESHOLD = 6
+
+
+def run_experiment(*, instance: dict[str, Any], seed: int, **kwargs: Any) -> dict[str, Any]:
+    """Score the EVOLVE block's decrypt_k4 against the K4 ciphertext."""
+    t0 = now()
+    ciphertext = instance["ciphertext"]
+
+    literal_err = find_crib_literal_cheat(decrypt_k4)
+    if literal_err is not None:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": literal_err,
+        }
+
+    construction_err = find_crib_construction_cheat(decrypt_k4)
+    if construction_err is not None:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": construction_err,
+        }
+
+    try:
+        plaintext = decrypt_k4(ciphertext)
+    except Exception as e:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": f"{type(e).__name__}: {e}",
+        }
+
+    sentinel = ciphertext[::-1]
+    try:
+        plaintext_sentinel = decrypt_k4(sentinel)
+    except Exception as e:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": (
+                "decrypt_k4 crashes on reversed-ciphertext sentinel "
+                "(non-robust to input): " + f"{type(e).__name__}: {e}"
+            ),
+        }
+
+    if (
+        isinstance(plaintext, str)
+        and isinstance(plaintext_sentinel, str)
+        and len(plaintext) == len(plaintext_sentinel)
+        and len(plaintext) > 0
+    ):
+        same = sum(1 for a, b in zip(plaintext, plaintext_sentinel) if a == b)
+        identity_ratio = same / len(plaintext)
+        if identity_ratio > 0.5:
+            return {
+                "score": float("-inf"),
+                "solved": True,
+                "runtime_s": now() - t0,
+                "error_tail": (
+                    f"decrypt_k4 appears to ignore its ciphertext argument: "
+                    f"{identity_ratio:.0%} identical positions between K4 "
+                    f"and reversed-K4 outputs."
+                ),
+            }
+
+        sentinel_hits = count_crib_letter_hits(plaintext_sentinel)
+        if sentinel_hits > _SENTINEL_CRIB_HITS_THRESHOLD:
+            return {
+                "score": float("-inf"),
+                "solved": True,
+                "runtime_s": now() - t0,
+                "error_tail": (
+                    f"decrypt_k4 produces crib letters at the K4 crib "
+                    f"positions even on reversed-ciphertext input "
+                    f"({sentinel_hits} of 24 hits)."
+                ),
+            }
+
+    multi_err = multi_sentinel_check(decrypt_k4, ciphertext)
+    if multi_err is not None:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": multi_err,
+        }
+
+    diff_err = differential_input_check(decrypt_k4, ciphertext, plaintext)
+    if diff_err is not None:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": diff_err,
+        }
+
+    return score_plaintext(plaintext, t0=t0)
+
+
+# --------------------------------------------------------------------------
+# EVOLVE BLOCK
+# --------------------------------------------------------------------------
+# The LLM mutates this function. The structural cipher form is FIXED to
+# per-position alphabet selection with 4 hand-crafted alphabets. The LLM
+# mutates:
+#   (a) the selection rule (within top-20 Scheidt-ranked k=4 compounds)
+#   (b) the 4 alphabets (free positions only; crib-constrained positions
+#       are protected by the structure below)
+
+# EVOLVE-BLOCK-START
+def decrypt_k4(ciphertext: str) -> str:
+    """Per-position alphabet selection cipher for K4.
+
+    At each position i:
+      color = rule(i) in {0, 1, 2, 3}
+      alphabet = ALPHABETS[color]
+      plaintext[i] = STANDARD[alphabet.index(ciphertext[i])]
+
+    The rule is one of the Scheidt-compatible k=4 compound rules. The 4
+    alphabets are permutations of A-Z with crib-constrained positions
+    FIXED by construction (cannot be broken by mutation).
+
+    MUTATE these to improve hexagram fitness on the 73 unconstrained K4
+    positions:
+
+      (1) The selection rule. Default: (2 * pos_mod_3 + consonant_count)
+          mod 4. Alternative valid k=4 rules (from exp 038 + scripts/
+          build_shinka_priors.py):
+            (2 * pos_mod_3 + 3 * consonant_count) mod 4
+            (2 * pos_mod_5 + 1 * consonant_count) mod 4
+            (2 * pos_mod_5 + 3 * consonant_count) mod 4
+          When changing the rule, the crib-constraint dictionaries below
+          must be regenerated — otherwise the constraints will be applied
+          to the wrong alphabet indices. The CONSTRAINTS_BY_COLOR dict
+          below is computed from the rule + cribs.
+
+      (2) The 4 alphabets via FREE_LETTERS_BY_COLOR. Each color's free
+          letters are the letters NOT used by that color's crib
+          constraints. They fill the unconstrained positions of that
+          alphabet in some order. Swap pairs to mutate.
+
+    Discipline:
+      - Do NOT add the crib words "EAST" / "NORTHEAST" / "BERLIN" /
+        "CLOCK" as string literals (source-scan reject).
+      - Do NOT hardcode the K4 plaintext.
+      - All 4 alphabets must remain permutations of A-Z (each letter
+        appears exactly once).
+    """
+    import numpy as np
+
+    # ===== Selection rule =====
+    # Default Prior A: (2 * pos_mod_3 + consonant_count) mod 4
+    # Scheidt-compatible: position mod 3 is trivial; consonant counting
+    # is "executable years later from a key word" (per Scheidt 2011).
+    n = len(ciphertext)
+    cc_array = np.zeros(n, dtype=np.int16)
+    cnt = 0
+    vowels = "AEIOU"
+    for i in range(n):
+        if ciphertext[i] not in vowels:
+            cnt += 1
+        cc_array[i] = cnt
+
+    def rule(i: int) -> int:
+        # Alternative rules to try (uncomment one and comment Prior A):
+        # return (2 * (i % 3) + 3 * int(cc_array[i])) % 4
+        # return (2 * (i % 5) + 1 * int(cc_array[i])) % 4
+        # return (2 * (i % 5) + 3 * int(cc_array[i])) % 4
+        return (2 * (i % 3) + 1 * int(cc_array[i])) % 4
+
+    # ===== Crib-derived alphabet constraints =====
+    # Computed from rule + K4 cribs. Each color's alphabet has these
+    # positions FIXED: alphabet[plain_idx] = cipher_letter.
+    # These constraints satisfy ALL 24 cribs by construction under the
+    # default rule. If you change the rule, regenerate these from
+    # scripts/build_shinka_priors.py.
+    CONSTRAINTS_BY_COLOR: dict[int, dict[int, str]] = {
+        0: {2: "M", 4: "G", 8: "T", 14: "Q", 17: "P", 19: "R"},
+        1: {4: "Y", 11: "V", 13: "Q", 17: "P", 18: "R"},
+        2: {0: "L", 1: "N", 10: "K", 14: "F", 18: "S", 19: "V"},
+        3: {0: "K", 2: "P", 4: "F", 7: "N", 11: "Z", 13: "T", 19: "S"},
+    }
+
+    # ===== Free letters per color =====
+    # The letters NOT used by each color's constraints. These fill the
+    # unconstrained positions of that color's alphabet. The LLM MUTATES
+    # the ORDER of these strings to explore the search space.
+    # IMPORTANT: each color's free_letters must contain exactly the
+    # letters of A-Z that don't appear in its constraints' values.
+    FREE_LETTERS_BY_COLOR: dict[int, str] = {
+        # Color 0 constrains {M, G, T, Q, P, R}. Free letters = A-Z \ those.
+        0: "ABCDEFHIJKLNOSUVWXYZ",  # 20 letters; LLM mutates this ordering
+        # Color 1 constrains {Y, V, Q, P, R}. 21 free letters.
+        1: "ABCDEFGHIJKLMNOSTUWXZ",
+        # Color 2 constrains {L, N, K, F, S, V}. 20 free letters.
+        2: "ABCDEGHIJMOPQRTUWXYZ",
+        # Color 3 constrains {K, P, F, N, Z, T, S}. 19 free letters.
+        3: "ABCDEGHIJLMOQRUVWXY",
+    }
+
+    # ===== Assemble the 4 alphabets =====
+    # For each color: place constraint letters at fixed positions, fill
+    # remaining positions with the free letters in their current order.
+    def build_alphabet(color: int) -> str:
+        constraints = CONSTRAINTS_BY_COLOR[color]
+        free = FREE_LETTERS_BY_COLOR[color]
+        alpha_list: list[str] = [""] * 26
+        for idx, letter in constraints.items():
+            alpha_list[idx] = letter
+        free_iter = iter(free)
+        for j in range(26):
+            if alpha_list[j] == "":
+                alpha_list[j] = next(free_iter)
+        return "".join(alpha_list)
+
+    alphabets: list[str] = [build_alphabet(c) for c in range(4)]
+
+    # Validate: each must be a permutation
+    for c, a in enumerate(alphabets):
+        if len(set(a)) != 26 or set(a) != set("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+            # Fallback to STANDARD if validation fails (LLM mutation bug)
+            return "A" * 97
+
+    # ===== Decrypt =====
+    out_chars = []
+    for i, c in enumerate(ciphertext):
+        color = rule(i)
+        alpha = alphabets[color]
+        j = alpha.index(c)
+        out_chars.append(chr(ord("A") + j))
+    return "".join(out_chars)
+# EVOLVE-BLOCK-END

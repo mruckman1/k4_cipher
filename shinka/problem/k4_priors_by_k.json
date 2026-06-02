@@ -1,0 +1,294 @@
+{
+  "by_k": {
+    "3": [],
+    "4": [
+      {
+        "rank": 0,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 1,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 33,
+        "description": "(2*pos_mod_3 + 1*consonant_count) mod 4"
+      },
+      {
+        "rank": 1,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 3,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32,
+        "description": "(2*pos_mod_3 + 3*consonant_count) mod 4"
+      },
+      {
+        "rank": 2,
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 1,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32,
+        "description": "(2*pos_mod_5 + 1*consonant_count) mod 4"
+      },
+      {
+        "rank": 3,
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 3,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 31,
+        "description": "(2*pos_mod_5 + 3*consonant_count) mod 4"
+      }
+    ],
+    "5": [
+      {
+        "rank": 0,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "w_seg_offset",
+        "a": 3,
+        "b": 4,
+        "k": 5,
+        "k_used": 5,
+        "scheidt_score": 29,
+        "description": "(3*pos_mod_3 + 4*w_seg_offset) mod 5"
+      },
+      {
+        "rank": 1,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "w_seg_offset",
+        "a": 4,
+        "b": 2,
+        "k": 5,
+        "k_used": 5,
+        "scheidt_score": 29,
+        "description": "(4*pos_mod_3 + 2*w_seg_offset) mod 5"
+      },
+      {
+        "rank": 2,
+        "kind": "lex_compound",
+        "fa": "pos_mod_3",
+        "fb": "w_seg_offset",
+        "a": null,
+        "b": null,
+        "k": 5,
+        "k_used": 5,
+        "scheidt_score": 25,
+        "description": "(pos_mod_3*22 + w_seg_offset) mod 5"
+      },
+      {
+        "rank": 3,
+        "kind": "lex_compound",
+        "fa": "w_seg_offset",
+        "fb": "pos_mod_3",
+        "a": null,
+        "b": null,
+        "k": 5,
+        "k_used": 5,
+        "scheidt_score": 25,
+        "description": "(w_seg_offset*3 + pos_mod_3) mod 5"
+      }
+    ],
+    "6": [
+      {
+        "rank": 0,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 1,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 31,
+        "description": "(1*pos_mod_3 + 1*consonant_count) mod 6"
+      },
+      {
+        "rank": 1,
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 1,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 30,
+        "description": "(1*pos_mod_5 + 1*consonant_count) mod 6"
+      },
+      {
+        "rank": 2,
+        "kind": "linear_compound",
+        "fa": "position",
+        "fb": "pos_mod_5",
+        "a": 5,
+        "b": 5,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 29,
+        "description": "(5*position + 5*pos_mod_5) mod 6"
+      },
+      {
+        "rank": 3,
+        "kind": "linear_compound",
+        "fa": "position",
+        "fb": "consonant_count",
+        "a": 4,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 29,
+        "description": "(4*position + 1*consonant_count) mod 6"
+      },
+      {
+        "rank": 4,
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "vowel_count",
+        "a": 1,
+        "b": 2,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 29,
+        "description": "(1*consonant_count + 2*vowel_count) mod 6"
+      },
+      {
+        "rank": 5,
+        "kind": "linear_compound",
+        "fa": "position",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 5,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 28,
+        "description": "(2*position + 5*consonant_count) mod 6"
+      },
+      {
+        "rank": 6,
+        "kind": "linear_compound",
+        "fa": "position",
+        "fb": "vowel_count",
+        "a": 5,
+        "b": 5,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 28,
+        "description": "(5*position + 5*vowel_count) mod 6"
+      },
+      {
+        "rank": 7,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 5,
+        "b": 5,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 28,
+        "description": "(5*pos_mod_3 + 5*consonant_count) mod 6"
+      },
+      {
+        "rank": 8,
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "w_dist",
+        "a": 3,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 28,
+        "description": "(3*pos_mod_3 + 1*w_dist) mod 6"
+      },
+      {
+        "rank": 9,
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 5,
+        "b": 5,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 27,
+        "description": "(5*pos_mod_5 + 5*consonant_count) mod 6"
+      },
+      {
+        "rank": 10,
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "signed_w_dist",
+        "a": 2,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 27,
+        "description": "(2*pos_mod_5 + 1*signed_w_dist) mod 6"
+      },
+      {
+        "rank": 11,
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "w_seg_offset",
+        "a": 3,
+        "b": 2,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 27,
+        "description": "(3*consonant_count + 2*w_seg_offset) mod 6"
+      },
+      {
+        "rank": 12,
+        "kind": "linear_compound",
+        "fa": "vowel_count",
+        "fb": "w_seg_offset",
+        "a": 3,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 27,
+        "description": "(3*vowel_count + 1*w_seg_offset) mod 6"
+      },
+      {
+        "rank": 13,
+        "kind": "linear_compound",
+        "fa": "w_seg_idx",
+        "fb": "w_seg_offset",
+        "a": 1,
+        "b": 1,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 27,
+        "description": "(1*w_seg_idx + 1*w_seg_offset) mod 6"
+      },
+      {
+        "rank": 14,
+        "kind": "lex_compound",
+        "fa": "pos_mod_5",
+        "fb": "position",
+        "a": null,
+        "b": null,
+        "k": 6,
+        "k_used": 6,
+        "scheidt_score": 26,
+        "description": "(pos_mod_5*97 + position) mod 6"
+      }
+    ]
+  },
+  "summary": {
+    "k=3 valid count": 0,
+    "k=4 valid count": 4,
+    "k=5 valid count": 4,
+    "k=6 valid count": 46,
+    "k=3_note": "If 0, no natural compound rule achieves k=3 (chromatic floor requires hand-crafted rule). Skip K=3 in Run B."
+  }
+}

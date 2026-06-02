@@ -1,0 +1,4 @@
+{"_header": true, "name": "002_gromark_k4_dyahr_primer", "ts": 1779328398.723569, "argv": ["experiments/002_gromark_k4_dyahr_primer.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"kind": "vimark_DYAHR", "primer": "DYAHR", "alphabet_keyword": "KRYPTOS", "crib_ok": false, "plaintext": "USNGQQEEOORDAWGOVMOGJFWTTUUDEESQALBKGUVELEHJKJSHVUBRKJBRLCXPXNLPKSSWANPKDDBYGDNPXGJEUGWZNSMPWLEQV"}
+{"kind": "summary", "swept": "gromark_kryptos", "tried": 100000, "survivors": 0}
+{"kind": "summary", "swept": "gromark_standard", "tried": 100000, "survivors": 0}

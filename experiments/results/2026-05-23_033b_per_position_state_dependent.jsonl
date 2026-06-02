@@ -1,0 +1,1 @@
+{"summary": true, "n_state_functions": 7, "n_alphabets": 82, "total_solves": 0, "best_partial_coverage": 8, "best_partial_info": {"k": 5, "state_fn": "dist_to_nearest_w_mod_k", "combo_labels": ["KRYPTOS", "VALLEY", "LAYER", "WW", "BREACH"], "n_cribs_satisfied": 8}, "elapsed_s": 214.1}

@@ -1,0 +1,9 @@
+{"mask": "SOS", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 14, "cons_dash": 9}
+{"mask": "LUCIDMEMORY", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 12, "cons_dash": 12}
+{"mask": "TISYOURPOSITION", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 14, "cons_dash": 9}
+{"mask": "SHADOWFORCES", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 15, "cons_dash": 8}
+{"mask": "VIRTUALLYINVISIBLE", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 16, "cons_dash": 8}
+{"mask": "DIGETALINTERPRETATIT", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 14, "cons_dash": 10}
+{"mask": "RQ", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 11, "cons_dash": 13}
+{"mask": "ALL", "selector_2alpha_solvable": false, "A_covers": 0, "B_covers": 0, "cons_dot": 12, "cons_dash": 12}
+{"exp": "050", "title": "morse slabs as binary mask / 2-alphabet selector", "hypothesis": "Scheidt's 'masking' is implemented by the courtyard morse dot/dash pattern", "status": "ruled_out", "best_score": -99.0, "best_partial": "selector hits: []", "search_space": 16, "elapsed_s": 0.0, "solved_params": null, "insights": ["Role A (morse null-mask -> delete -> short-period KPA): best free hexagram -99.00/char.", "Role B (morse dot/dash -> 2 route alphabets): 0 masks admit a covering route-alphabet pair .", "Morse slabs as either a null-mask or a binary 2-alphabet selector do not satisfy the cribs / restore English. The morse content is thematic, not structural."], "next_steps": ["morse not structural; deprioritise. Try morse as a transposition route instead."], "metrics": {"best": null}, "_verdict": true, "ts": 1780017959.7279959}

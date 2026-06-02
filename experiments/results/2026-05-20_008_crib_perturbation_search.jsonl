@@ -1,0 +1,4 @@
+{"_header": true, "name": "008_crib_perturbation_search", "ts": 1779334384.977658, "argv": ["experiments/008_crib_perturbation_search.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"win_threshold": 8, "log_threshold": 5, "n_generators": 20524, "n_alphabets": 2}
+{"perturbation": "NORTHEAST_letter_sub_pos2_R>U", "alphabet": "kryptos_keyed", "window": "EASTNORTHEAST", "run_length": 5, "run_start": 26, "generator": "fib:a16_b21"}
+{"summary": true, "n_perturbations": 1226, "n_scored": 25162424, "n_hits": 0, "n_notables": 1, "elapsed_s": 24.25967154209502}

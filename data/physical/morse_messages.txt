@@ -1,0 +1,17 @@
+# International Morse messages from the granite slabs (sandwiched copper
+# sheets) installed in the Kryptos courtyard at Langley.
+#
+# Each line is one engraved message, as letters. Note the deliberate
+# misspelling of DIGETAL INTERPRETATIT (Sanborn-confirmed).
+#
+# These almost certainly are NOT direct cipher source material -- the letter
+# distribution (e.g. 14 I's vs 4 in K4) doesn't match -- but the messages
+# read as thematic clues to the narrative context.
+
+SOS
+LUCID MEMORY
+T IS YOUR POSITION
+SHADOW FORCES
+VIRTUALLY INVISIBLE
+DIGETAL INTERPRETATIT
+RQ

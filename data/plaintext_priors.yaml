@@ -1,0 +1,276 @@
+# Plaintext-level priors for the K4 max-likelihood candidate search.
+#
+# These supplement the hard positional cribs in data/cribs.yaml. The
+# cribs constrain WHAT is at certain positions; these priors constrain
+# WHAT KIND of text the rest of the 73 unconstrained positions can be.
+#
+# Schema per entry:
+#   id:          short slug, stable across edits
+#   type:        meta | lexical | stylistic | topical | cipher
+#   confidence:  sanborn-stated | scheidt-stated | inferred |
+#                community-consensus | speculative
+#   hardness:    hard (definitely true) | soft (probably true)
+#   constraint:  what this implies about the plaintext, in code-checkable
+#                form where possible
+#   quote:       verbatim source quote (optional)
+#   source:      publication + URL + date
+#   notes:       commentary, scoring implications
+#
+# Use these to weight a candidate-plaintext search beyond pure
+# language-model log-likelihood.
+
+priors:
+
+  # --- META: priors about the cipher's solvability and structure ---
+
+  - id: solvable_5_7_10_years
+    type: meta
+    confidence: scheidt-stated
+    hardness: soft
+    constraint: |
+      The cipher is breakable by a serious cryptanalyst (not by chance
+      or by accidentally finding it in a Sanborn coding chart). The
+      cipher should have a structure a person can re-derive.
+    quote: |
+      "Difficulty rating around nine out of ten" with an intended solve
+      time of "five, seven or maybe ten years."
+    source: |
+      Richard Bean, "Declassified Cold War code-breaking manual has
+      lessons for solving 'impossible' puzzles," The Conversation,
+      30 May 2021. https://theconversation.com/162454
+      Cross-confirmed by Wikipedia, "Kryptos."
+    notes: |
+      Evidence AGAINST a hand-made-permutation cipher with no generative
+      key. A deliberately-unsolvable cipher would not be assigned an
+      intended solve time. Weights against pessimistic permutation-table
+      interpretations of K4.
+
+  - id: scheidt_simple_memorable
+    type: meta
+    confidence: scheidt-stated
+    hardness: soft
+    constraint: |
+      The cipher is "not mathematical," is "simple," "can be remembered,"
+      and can be "executed years later when used with the correct key
+      word/s." This rules out keystreams that require external state
+      (physical clocks, calendar dates, ephemerides) AND rules out
+      compositions too complex for an artist to execute by hand.
+    quote: |
+      "[K4 cryptography] is not mathematical (although this does not
+      preclude it being modeled mathematically), it is simple, can be
+      remembered, and executed years later when used with the correct
+      key word/s."
+    source: |
+      Ed Scheidt at the 2011 Kryptos Dinner, per Ed Hannon's notes,
+      quoted in Bean (HistoCrypt 2021).
+
+  - id: sanborn_modified_scheidt
+    type: meta
+    confidence: sanborn-stated
+    hardness: soft
+    constraint: |
+      K4 is Scheidt's classical scheme PLUS a Sanborn-introduced
+      modification. The base classical cipher should be standard (likely
+      Quagmire III, given K1/K2/K3 precedent); the modification is what
+      makes K4 distinctively harder.
+    quote: |
+      "I was modifying systems and developing my own which would make
+      it virtually impossible for [Scheidt] to decipher all of it."
+    source: |
+      Wired, Kim Zetter, 21 Jan 2005.
+      https://www.wired.com/2005/01/scheidt/
+
+  # --- LEXICAL: priors about the plaintext characters and vocabulary ---
+
+  - id: english_uppercase
+    type: lexical
+    confidence: community-consensus
+    hardness: hard
+    constraint: |
+      Plaintext is uppercase English letters A-Z only, no punctuation,
+      no spaces. X is used as a separator (per K1, K2). Q may terminate
+      (per K3). No code, no foreign language, no abbreviations beyond
+      what K1-K3 use (WW for William Webster in K2).
+    source: |
+      Pattern across all three solved sections.
+
+  - id: theme_1989_berlin_wall
+    type: topical
+    confidence: sanborn-stated
+    hardness: soft
+    constraint: |
+      Plaintext thematically references the fall of the Berlin Wall (1989).
+    quote: |
+      "Two events influenced the K4 plaintext: my second trip to Egypt
+      in late 1986 and the fall of the Berlin Wall."
+    source: |
+      Jim Sanborn, International Spy Museum talk, Washington DC,
+      12 November 2025. Reported by Scientific American.
+    notes: |
+      Candidate vocabulary worth scoring as bonus: WALL, BERLIN, EAST,
+      WEST, GATE, CROSSING, WELTZEITUHR, ALEXANDERPLATZ, BRANDENBURG,
+      GERMANY, REUNIFICATION, LIBERATION, BORNHOLMER, CHECKPOINT, CHARLIE.
+      The cribs EAST + NORTHEAST + BERLINCLOCK directly instantiate this.
+
+  - id: theme_1986_egypt_trip
+    type: topical
+    confidence: sanborn-stated
+    hardness: soft
+    constraint: |
+      Plaintext thematically references Sanborn's late-1986 Egypt trip.
+    quote: |
+      Same as theme_1989_berlin_wall above.
+    source: Same as theme_1989_berlin_wall.
+    notes: |
+      K3 plaintext is Howard Carter's tomb-opening diary; thematic
+      continuity with K4 is likely. Candidate vocabulary: EGYPT, NILE,
+      CAIRO, PYRAMID, TOMB, MUMMY, PHARAOH, LUXOR, KARNAK, TUTANKHAMEN,
+      VALLEY, KINGS, BURIAL, SARCOPHAGUS, CHAMBER. K2 ends with "LAYER TWO"
+      arguably referencing Carter's "second layer" of the tomb.
+
+  - id: coordinates_spelled_out
+    type: lexical
+    confidence: inferred
+    hardness: soft
+    constraint: |
+      If the plaintext contains geographic coordinates, they are spelled
+      out as words ("THIRTYEIGHTDEGREESFIFTYSEVENMINUTES...") rather than
+      written as digits. The Berlin Wall fall location at Bornholmer
+      Strasse is approximately 52 degrees 33 minutes north, 13 degrees
+      24 minutes east; spelled out that's roughly 70+ characters.
+    source: |
+      K2 plaintext contains
+      "THIRTYEIGHTDEGREESFIFTYSEVENMINUTESSIXPOINTFIVESECONDSNORTH
+       SEVENTYSEVENDEGREESEIGHTMINUTESFORTYFOURSECONDSWEST" --- the
+      sculpture's own coordinates spelled out.
+
+  - id: ww_initials_pattern
+    type: lexical
+    confidence: speculative
+    hardness: soft
+    constraint: |
+      K2's "WW" for William Webster (then CIA Director) suggests K4 may
+      contain abbreviated 2-letter initials for specific people relevant
+      to the theme.
+    source: K2 plaintext "ONLY WW THIS WAS HIS LAST MESSAGE."
+    notes: |
+      Candidates if Egypt-themed: HC (Howard Carter), JC (John Carter?),
+      LK (Lord Carnarvon?). If Berlin-themed: HK (Helmut Kohl?), MG
+      (Mikhail Gorbachev). Speculative; do not boost strongly.
+
+  - id: layer_terminology
+    type: lexical
+    confidence: speculative
+    hardness: soft
+    constraint: |
+      K2 ends "LAYERTWO" (post-2006 correction). K3 (Carter's tomb) is
+      arguably "layer two" of the buried-secret narrative; K4 might
+      include "LAYERTHREE" or "LAYER" terminology.
+    source: K2 post-2006 corrected plaintext.
+    notes: |
+      Pure pattern speculation. Cheap to score candidates with LAYER
+      higher; should not be a strong constraint.
+
+  - id: separator_x
+    type: lexical
+    confidence: community-consensus
+    hardness: soft
+    constraint: |
+      X is used as a word/phrase separator in K2 ("HOWSTHATPOSSIBLEX...
+      ...UNDERGRUUNDTOANUNKNOWNLOCATIONXDOESLANGLEYKNOW..."). K4 may
+      use X-separators at phrase boundaries too. The cribs at
+      EASTNORTHEAST and BERLINCLOCK do NOT contain X (no separation
+      mid-crib), but the 73 unconstrained positions may.
+
+  # --- STYLISTIC: priors about register, density, and tone ---
+
+  - id: literary_register
+    type: stylistic
+    confidence: inferred
+    hardness: soft
+    constraint: |
+      Plaintext is descriptive English in a literary register similar to
+      K1-K3. Not telegraphic, not technical jargon, not encoded.
+    source: |
+      Pattern across K1 (poetic abstraction: "between subtle shading and
+      the absence of light"), K2 (historical-technical narrative with
+      conversational asides: "how's that possible?"), K3 (Carter's
+      first-person tomb diary).
+
+  - id: not_stylistically_different
+    type: stylistic
+    confidence: inferred
+    hardness: hard
+    constraint: |
+      K4 is "harder" cryptographically but not stylistically different.
+      Same English, same register, same alphabet, same format as K1-K3.
+    source: |
+      Sanborn has repeatedly emphasised that K4 is harder, never that
+      it is in code, foreign, numeric, or otherwise non-English.
+
+  - id: redundant_information
+    type: stylistic
+    confidence: community-consensus
+    hardness: soft
+    constraint: |
+      K4 plaintext is plausibly less information-dense per character than
+      K1 or K2, implying repeated words, common English filler, or
+      simple sentence structure rather than dense technical phrasing.
+    source: |
+      Community-reported pattern from multiple Sanborn statements at
+      annual Kryptos Dinners (2011-2019). Specific verbatim quote not
+      available to me; flag this as community-consensus rather than
+      sanborn-stated.
+
+  # --- CIPHER: priors about the cipher mechanism (for cross-feedback) ---
+
+  - id: same_alphabet_family_as_k1_k2
+    type: cipher
+    confidence: inferred
+    hardness: soft
+    constraint: |
+      K1 and K2 both use the KRYPTOS-keyed 26-letter alphabet under
+      Quagmire III. K4's cipher likely uses the same or related alphabet
+      (KRYPTOS-keyed 26-letter, or one of the 27-letter sculpture
+      variants such as the doubled-L tableau).
+    source: |
+      Pattern across solved sections plus Sanborn's "modified Scheidt"
+      framing. Already exploited by our existing experiments.
+
+  - id: k4_one_to_one_positional
+    type: cipher
+    confidence: community-consensus
+    hardness: hard
+    constraint: |
+      K4 is a one-to-one positional cipher (cipher_i = f(plain_i, key, i)),
+      NOT a transposition or fractionated cipher. Confirmed by the
+      ability of the cribs to satisfy positional substitution and by
+      Sanborn's confirmation that the two T letters at positions 67 and
+      68 decrypt to L and N respectively ("emphatically").
+    source: |
+      Sanborn, 2013 ACA Convention: "N=B, Y=E, P=R, V=L, T=I, T=N --
+      Emphatically." Cross-confirmed by experiment 011 bigram analysis
+      (K4 is statistically consistent with single-letter polyalphabetic
+      output of English at length 97).
+
+  # --- META: the forward oracle ---
+
+  - id: k5_shares_words_at_same_positions
+    type: meta
+    confidence: sanborn-stated
+    hardness: hard
+    constraint: |
+      K5 (when revealed) is 97 characters and shares words at the same
+      positions as K4. A K4 plaintext hypothesis must be checkable against
+      K5 once K5 is public.
+    quote: |
+      "K5 will appear in a public space after K4 is cracked, will share
+      words at the same positions as K4, and is thematically tied to K2's
+      'its buried out there somewhere.'"
+    source: |
+      Jim Sanborn, International Spy Museum talk, 12 November 2025.
+    notes: |
+      Not yet usable but should be slot-ready in the data model. When K5
+      ciphertext drops, candidate K4 plaintexts gain a powerful forward
+      test: any K4 candidate that ALSO yields plausible English K5
+      plaintext under the same cipher class is much more likely correct.

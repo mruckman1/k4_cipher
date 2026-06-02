@@ -1,0 +1,16 @@
+{"_header": true, "name": "000_reproduce_bean_2021", "ts": 1779327564.5443609, "argv": ["experiments/000_reproduce_bean_2021.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"test": "shift_uniformity", "crib": "EASTNORTHEAST", "n_iters": 50000, "observed": 9.0, "null_mean": 10.39532, "null_std": 1.1865420757815544, "p_upper": 0.9442, "p_lower": 0.21876}
+{"test": "shift_uniformity", "crib": "BERLINCLOCK", "n_iters": 50000, "observed": 10.0, "null_mean": 9.10648, "null_std": 1.0659746758718052, "p_upper": 0.36922, "p_lower": 0.91358}
+{"test": "transposition_consistency", "crib": "EAST", "n_iters": 50000, "observed": 4.0, "null_mean": 0.14558, "null_std": 0.3743614077332224, "p_upper": 0.0}
+{"test": "transposition_consistency", "crib": "NORTHEAST", "n_iters": 50000, "observed": 9.0, "null_mean": 0.4349, "null_std": 0.6404076748447038, "p_upper": 0.0}
+{"test": "transposition_consistency", "crib": "BERLIN", "n_iters": 50000, "observed": 6.0, "null_mean": 0.21744, "null_std": 0.45391612264822667, "p_upper": 0.0}
+{"test": "transposition_consistency", "crib": "CLOCK", "n_iters": 50000, "observed": 5.0, "null_mean": 0.20952, "null_std": 0.4464766170808948, "p_upper": 0.0}
+{"_header": true, "name": "000_reproduce_bean_2021", "ts": 1779329558.105344, "argv": ["experiments/000_reproduce_bean_2021.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"test": "shift_uniformity", "crib": "EASTNORTHEAST", "n_iters": 50000, "observed": 9.0, "null_mean": 10.39532, "null_std": 1.1865420757815544, "p_upper": 0.9442, "p_lower": 0.21876}
+{"test": "shift_uniformity", "crib": "BERLINCLOCK", "n_iters": 50000, "observed": 10.0, "null_mean": 9.10648, "null_std": 1.0659746758718052, "p_upper": 0.36922, "p_lower": 0.91358}
+{"test": "english_at_cribs", "crib": "EASTNORTHEAST", "n_iters": 50000, "observed": -6.7457645306887555, "null_mean": -6.8065059795302325, "null_std": 0.22226191109791243, "p_lower": 0.6323, "p_upper": 0.37034, "p_two_sided": 0.74068}
+{"test": "english_at_cribs", "crib": "BERLINCLOCK", "n_iters": 50000, "observed": -6.794343421721317, "null_mean": -6.806380429394605, "null_std": 0.24344845950772767, "p_lower": 0.56322, "p_upper": 0.44916, "p_two_sided": 0.89832}
+{"test": "english_at_cribs", "crib": "EAST", "n_iters": 50000, "observed": -6.810994475626225, "null_mean": -6.80615510600363, "null_std": 0.4368178801655283, "p_lower": 0.60604, "p_upper": 0.48406, "p_two_sided": 0.96812}
+{"test": "english_at_cribs", "crib": "NORTHEAST", "n_iters": 50000, "observed": -6.655387293173359, "null_mean": -6.8067056766031335, "null_std": 0.27382860747882465, "p_lower": 0.72634, "p_upper": 0.27716, "p_two_sided": 0.55432}
+{"test": "english_at_cribs", "crib": "BERLIN", "n_iters": 50000, "observed": -6.673946141288724, "null_mean": -6.804288985720452, "null_std": 0.34417285357614164, "p_lower": 0.6898, "p_upper": 0.32812, "p_two_sided": 0.65624}
+{"test": "english_at_cribs", "crib": "CLOCK", "n_iters": 50000, "observed": -7.099805800859535, "null_mean": -6.808541647996564, "null_std": 0.3810920429960305, "p_lower": 0.33468, "p_upper": 0.81948, "p_two_sided": 0.66936}

@@ -1,0 +1,34 @@
+# Root Hydra config. Defaults to the openrouter_only variant (Gemini 3.1 Pro).
+# Override with `variant=...` on the command line.
+
+defaults:
+  - variant: openrouter_only
+  - cluster: local
+  - _self_
+
+skip_preflight: false
+
+# Catalog wiring: tells shinka_adapter where to sample the K4 instance from.
+# Without this, the SHINKA_CATALOG env var is unset and shinka falls back to
+# a scalar-objective default ({"id": "default", "family": "scalar"}) which
+# has no `ciphertext` key -- every candidate then crashes with KeyError.
+catalog:
+  sampler: problem.catalog:sample
+
+# AST safety allowlist for candidate files (problem/initial.py + LLM mutations).
+# shinka_adapter's static AST check rejects modules outside this list. The
+# visitor splits on '.' and keeps the root, so listing `kryptos` here also
+# permits `from kryptos.ciphers import ...`, etc. `problem` is the sibling
+# package whose `_fitness.py` holds the frozen scorer the candidate imports.
+# The forbidden_module_attrs set (time, pathlib, os, ...) is hardcoded in
+# shinka_adapter and NOT overridable -- keep those out of initial.py; they
+# live in _fitness.py which is not AST-checked.
+ast_check:
+  allowed_imports:
+    - __future__
+    - numpy
+    - math
+    - typing
+    - collections
+    - kryptos
+    - problem

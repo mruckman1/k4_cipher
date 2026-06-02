@@ -1,0 +1,311 @@
+run_dir: experiments/results/n1_claude_outputs/run_20260523_083115_claude-opus-4-7
+total_candidates: 26265
+
+per_framing:
+  berlin_wall:
+    n_candidates: 962
+    theme_pct:
+      first_person_clean: 58.7%
+      berlin_wall: 57.9%
+      k5_forward: 31.0%
+      navigation_clean: 16.5%
+      sculpture_action: 8.8%
+      egypt: 7.8%
+      espionage: 3.5%
+      k2_k3_echo: 2.3%
+  bornholmer_specific:
+    n_candidates: 912
+    theme_pct:
+      berlin_wall: 83.4%
+      first_person_clean: 51.3%
+      k5_forward: 27.2%
+      navigation_clean: 12.6%
+      egypt: 4.9%
+      espionage: 3.9%
+      sculpture_action: 3.5%
+      k2_k3_echo: 1.0%
+  cairo_museum_artifact:
+    n_candidates: 996
+    theme_pct:
+      k5_forward: 28.8%
+      egypt: 22.7%
+      first_person_clean: 15.3%
+      berlin_wall: 13.7%
+      k2_k3_echo: 13.0%
+      navigation_clean: 10.2%
+      sculpture_action: 6.5%
+      espionage: 0.1%
+  carter_continuation:
+    n_candidates: 1024
+    theme_pct:
+      k2_k3_echo: 35.1%
+      egypt: 19.4%
+      k5_forward: 18.4%
+      first_person_clean: 15.5%
+      berlin_wall: 9.7%
+      navigation_clean: 2.4%
+      sculpture_action: 1.4%
+      espionage: 0.1%
+  dedication_day_1990:
+    n_candidates: 1027
+    theme_pct:
+      first_person_clean: 47.6%
+      berlin_wall: 46.6%
+      k5_forward: 29.0%
+      navigation_clean: 13.5%
+      k2_k3_echo: 7.9%
+      egypt: 7.9%
+      sculpture_action: 7.2%
+      espionage: 1.3%
+  descriptive_no_imperative:
+    n_candidates: 960
+    theme_pct:
+      first_person_clean: 44.6%
+      berlin_wall: 31.8%
+      k5_forward: 26.6%
+      egypt: 21.2%
+      k2_k3_echo: 15.5%
+      sculpture_action: 12.7%
+      navigation_clean: 7.5%
+      espionage: 2.1%
+  egypt_1986_specific:
+    n_candidates: 995
+    theme_pct:
+      first_person_clean: 44.5%
+      egypt: 38.8%
+      k5_forward: 32.0%
+      k2_k3_echo: 25.3%
+      berlin_wall: 24.6%
+      navigation_clean: 12.3%
+      sculpture_action: 6.7%
+      espionage: 0.6%
+  espionage:
+    n_candidates: 933
+    theme_pct:
+      first_person_clean: 47.6%
+      espionage: 39.7%
+      k5_forward: 35.2%
+      berlin_wall: 28.6%
+      sculpture_action: 9.1%
+      navigation_clean: 6.5%
+      k2_k3_echo: 6.5%
+      egypt: 4.1%
+  first_person_witness:
+    n_candidates: 1021
+    theme_pct:
+      first_person_clean: 35.4%
+      k5_forward: 32.1%
+      berlin_wall: 28.8%
+      sculpture_action: 15.7%
+      navigation_clean: 10.2%
+      egypt: 7.9%
+      k2_k3_echo: 3.4%
+      espionage: 3.2%
+  k1_perception_paradox:
+    n_candidates: 997
+    theme_pct:
+      first_person_clean: 41.6%
+      k5_forward: 33.9%
+      berlin_wall: 6.4%
+      sculpture_action: 5.9%
+      k2_k3_echo: 4.0%
+      egypt: 2.8%
+      navigation_clean: 2.5%
+      espionage: 0.3%
+  k1_poetic_echo:
+    n_candidates: 990
+    theme_pct:
+      first_person_clean: 36.9%
+      berlin_wall: 28.2%
+      k5_forward: 26.8%
+      egypt: 18.0%
+      sculpture_action: 10.8%
+      k2_k3_echo: 7.8%
+      navigation_clean: 5.6%
+      espionage: 2.4%
+  k2_coords_explicit:
+    n_candidates: 994
+    theme_pct:
+      navigation_clean: 88.2%
+      first_person_clean: 61.7%
+      berlin_wall: 38.9%
+      k5_forward: 30.3%
+      egypt: 11.0%
+      k2_k3_echo: 5.2%
+      sculpture_action: 4.2%
+      espionage: 1.0%
+  k2_k3_echo:
+    n_candidates: 997
+    theme_pct:
+      k2_k3_echo: 55.5%
+      first_person_clean: 50.6%
+      k5_forward: 45.0%
+      berlin_wall: 32.7%
+      egypt: 12.5%
+      navigation_clean: 9.7%
+      sculpture_action: 7.6%
+      espionage: 1.4%
+  k4_self_referential:
+    n_candidates: 938
+    theme_pct:
+      k5_forward: 33.4%
+      sculpture_action: 27.8%
+      navigation_clean: 23.1%
+      berlin_wall: 15.5%
+      first_person_clean: 15.1%
+      egypt: 8.5%
+      k2_k3_echo: 6.1%
+      espionage: 0.6%
+  k5_forward:
+    n_candidates: 933
+    theme_pct:
+      k5_forward: 49.3%
+      berlin_wall: 28.9%
+      k2_k3_echo: 18.1%
+      first_person_clean: 17.1%
+      sculpture_action: 12.1%
+      navigation_clean: 8.7%
+      egypt: 5.8%
+      espionage: 0.5%
+  karnak_temple_observation:
+    n_candidates: 935
+    theme_pct:
+      egypt: 42.1%
+      first_person_clean: 30.6%
+      k5_forward: 26.2%
+      berlin_wall: 19.9%
+      navigation_clean: 8.7%
+      k2_k3_echo: 7.3%
+      sculpture_action: 4.7%
+      espionage: 0.0%
+  kobek_byrne_archival:
+    n_candidates: 996
+    theme_pct:
+      k5_forward: 35.9%
+      berlin_wall: 20.6%
+      first_person_clean: 18.0%
+      k2_k3_echo: 12.6%
+      egypt: 10.3%
+      navigation_clean: 7.5%
+      sculpture_action: 7.4%
+      espionage: 1.2%
+  layer_three_forward:
+    n_candidates: 962
+    theme_pct:
+      k2_k3_echo: 99.5%
+      first_person_clean: 58.1%
+      k5_forward: 43.0%
+      berlin_wall: 32.8%
+      egypt: 16.6%
+      navigation_clean: 10.6%
+      sculpture_action: 4.9%
+      espionage: 1.9%
+  morse_thematic_echo:
+    n_candidates: 1003
+    theme_pct:
+      first_person_clean: 38.5%
+      k5_forward: 34.9%
+      berlin_wall: 33.3%
+      sculpture_action: 11.8%
+      navigation_clean: 7.2%
+      egypt: 3.8%
+      espionage: 3.3%
+      k2_k3_echo: 2.0%
+  navigation:
+    n_candidates: 997
+    theme_pct:
+      first_person_clean: 56.2%
+      navigation_clean: 53.3%
+      berlin_wall: 42.1%
+      k5_forward: 36.8%
+      egypt: 20.7%
+      sculpture_action: 13.7%
+      k2_k3_echo: 3.0%
+      espionage: 1.9%
+  near_verbatim_quote:
+    n_candidates: 1025
+    theme_pct:
+      first_person_clean: 44.7%
+      berlin_wall: 34.2%
+      k5_forward: 31.2%
+      k2_k3_echo: 22.0%
+      egypt: 15.4%
+      navigation_clean: 10.5%
+      sculpture_action: 6.4%
+      espionage: 2.7%
+  non_english_loanword:
+    n_candidates: 968
+    theme_pct:
+      berlin_wall: 69.5%
+      first_person_clean: 58.4%
+      egypt: 40.3%
+      k5_forward: 14.3%
+      navigation_clean: 5.2%
+      k2_k3_echo: 3.6%
+      sculpture_action: 2.5%
+      espionage: 0.4%
+  schliemann_memoirs:
+    n_candidates: 965
+    theme_pct:
+      k5_forward: 34.0%
+      first_person_clean: 33.9%
+      berlin_wall: 23.4%
+      k2_k3_echo: 20.0%
+      egypt: 7.9%
+      navigation_clean: 7.7%
+      sculpture_action: 2.7%
+      espionage: 1.0%
+  sensory_specific:
+    n_candidates: 961
+    theme_pct:
+      first_person_clean: 36.2%
+      k5_forward: 25.9%
+      berlin_wall: 23.3%
+      egypt: 18.3%
+      k2_k3_echo: 10.2%
+      sculpture_action: 6.2%
+      navigation_clean: 5.2%
+      espionage: 1.9%
+  surveyor:
+    n_candidates: 992
+    theme_pct:
+      k5_forward: 62.8%
+      sculpture_action: 27.8%
+      navigation_clean: 22.9%
+      first_person_clean: 17.6%
+      berlin_wall: 11.3%
+      k2_k3_echo: 5.7%
+      egypt: 5.6%
+      espionage: 0.5%
+  valley_of_kings_tomb:
+    n_candidates: 907
+    theme_pct:
+      k2_k3_echo: 48.7%
+      first_person_clean: 33.5%
+      k5_forward: 30.8%
+      berlin_wall: 15.1%
+      egypt: 12.9%
+      navigation_clean: 6.7%
+      sculpture_action: 2.9%
+      espionage: 0.6%
+  weltzeituhr_visual:
+    n_candidates: 875
+    theme_pct:
+      first_person_clean: 58.5%
+      k5_forward: 36.0%
+      sculpture_action: 33.0%
+      berlin_wall: 27.2%
+      egypt: 8.3%
+      navigation_clean: 4.9%
+      espionage: 1.6%
+      k2_k3_echo: 0.5%
+
+overall_theme_pct:
+  first_person_clean: 39.5%
+  k5_forward: 33.0%
+  berlin_wall: 30.6%
+  k2_k3_echo: 16.4%
+  egypt: 14.7%
+  navigation_clean: 14.2%
+  sculpture_action: 9.7%
+  espionage: 2.8%

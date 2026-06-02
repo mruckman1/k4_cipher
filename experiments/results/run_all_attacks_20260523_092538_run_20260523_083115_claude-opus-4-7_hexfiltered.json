@@ -1,0 +1,229 @@
+{
+  "run_dir": "experiments/results/n1_claude_outputs/run_20260523_083115_claude-opus-4-7_hexfiltered",
+  "n_candidates": 18372,
+  "n2_hypotheses_dir": "experiments/results/n2_claude_outputs/run_20260522_233722_claude-sonnet-4-6",
+  "quick": false,
+  "skip": [],
+  "only": [],
+  "total_elapsed_s": 2625.0,
+  "total_solves": 0,
+  "results": [
+    {
+      "exp_id": "024",
+      "script": "experiments/024_tierA_known_plaintext.py",
+      "exit_code": 0,
+      "elapsed_s": 41.4,
+      "stdout_tail": "Loaded 18372 candidates\n\n=== Vigenere/Beaufort periodic L=1..30 ===\n  [standard       vigenere          ]      0 solves (0.04s)\n  [standard       beaufort          ]      0 solves (0.04s)\n  [standard       variant_beaufort  ]      0 solves (0.04s)\n  [kryptos_keyed  vigenere          ]      0 solves (0.04s)\n  [kryptos_keyed  beaufort          ]      0 solves (0.04s)\n  [kryptos_keyed  variant_beaufort  ]      0 solves (0.04s)\n\n=== Hill 2x2 and 3x3 ===\n  [standard       hill_2x2]      0 solves (9.03s)\n  [standard       hill_3x3]      0 solves (7.75s)\n  [kryptos_keyed  hill_2x2]      0 solves (11.14s)\n  [kryptos_keyed  hill_3x3]      0 solves (12.63s)\n\n=== Autokey (plaintext / ciphertext modes), primer L=1..10 ===\n  [standard       autokey_plaintext  ]      0 solves (0.04s)\n  [standard       autokey_ciphertext ]      0 solves (0.03s)\n  [kryptos_keyed  autokey_plaintext  ]      0 solves (0.04s)\n  [kryptos_keyed  autokey_ciphertext ]      0 solves (0.03s)\n\nTotal solves: 0 in 41.0s\nJSONL: experiments/results/2026-05-22_024_tierA_known_plaintext.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_024_tierA_known_plaintext.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_solves": 0,
+        "elapsed_s": 41.0
+      }
+    },
+    {
+      "exp_id": "023",
+      "script": "experiments/023_sonnet_candidate_shift_vs_generators.py",
+      "exit_code": 0,
+      "elapsed_s": 26.0,
+      "stdout_tail": "  [11500/18372] 16.0s, records=0, interesting>=8=0, win>=10=0\n  [12000/18372] 16.8s, records=0, interesting>=8=0, win>=10=0\n  [12500/18372] 17.5s, records=0, interesting>=8=0, win>=10=0\n  [13000/18372] 18.1s, records=0, interesting>=8=0, win>=10=0\n  [13500/18372] 18.8s, records=0, interesting>=8=0, win>=10=0\n  [14000/18372] 19.5s, records=0, interesting>=8=0, win>=10=0\n  [14500/18372] 20.2s, records=0, interesting>=8=0, win>=10=0\n  [15000/18372] 20.9s, records=0, interesting>=8=0, win>=10=0\n  [15500/18372] 21.6s, records=0, interesting>=8=0, win>=10=0\n  [16000/18372] 22.3s, records=0, interesting>=8=0, win>=10=0\n  [16500/18372] 23.0s, records=0, interesting>=8=0, win>=10=0\n  [17000/18372] 23.7s, records=0, interesting>=8=0, win>=10=0\n  [17500/18372] 24.4s, records=0, interesting>=8=0, win>=10=0\n  [18000/18372] 25.1s, records=0, interesting>=8=0, win>=10=0\n\n======================================================================\nSonnet-candidate shift sequence vs generator library \u2014 summary\n======================================================================\n  candidates:               18,372\n  generators:               20,524\n  total comparisons:        754,133,856\n  records logged:           0\n  noncrib_mc >= 8 (interesting): 0\n  noncrib_mc >= 10 (WIN):         0\n  elapsed:                  25.6s\n  jsonl:                    experiments/results/2026-05-22_023_sonnet_candidate_shift_vs_generators.jsonl\n\n=== TOP 0 by non-crib max-consecutive run ===\n  nc_mc nc_tot full_mc full_tot  alphabet       generator\n  ----- ------ ------- --------  -------------- ------------------------------------------------------------",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_023_sonnet_candidate_shift_vs_generators.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_generators": 20524,
+        "n_alphabets": 2,
+        "total_comparisons": 754133856,
+        "n_records_logged": 0,
+        "n_above_interesting": 0,
+        "n_above_win": 0,
+        "elapsed_s": 25.6
+      }
+    },
+    {
+      "exp_id": "025",
+      "script": "experiments/025_w_segmented_heterogeneous.py",
+      "exit_code": 0,
+      "elapsed_s": 0.5,
+      "stdout_tail": "Loaded 18372 candidates.\n\n=== Per-segment consistency sweep ===\n  seg 0 ( 0..19, len 20): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 1 (21..35, len 15): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 2 (37..47, len 11): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 3 (49..57, len  9): sum over (alpha,conv,L>=2) of consistents = 2\n  seg 4 (59..73, len 15): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 5 (75..96, len 22): sum over (alpha,conv,L>=2) of consistents = 0\n\n=== Cross-segment combination ===\n  Candidates with 6/6 segments passing (any params per seg, L>=2): 0\n\nDistribution of (n segments passed per candidate):\n  0/6: 18370  ############################################################\n  1/6:     2  \n  2/6:     0  \n  3/6:     0  \n  4/6:     0  \n  5/6:     0  \n  6/6:     0  \n\nTotal elapsed: 0.0s\n\nJSONL: experiments/results/2026-05-22_025_w_segmented_heterogeneous.jsonl\n  fully solved: 0\n  near miss (>=4 segs): 0",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_025_w_segmented_heterogeneous.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_fully_solved": 0,
+        "n_near_miss_4plus": 0,
+        "elapsed_s": 0.0
+      }
+    },
+    {
+      "exp_id": "026",
+      "script": "experiments/026_composite_q3_transforms.py",
+      "exit_code": 0,
+      "elapsed_s": 84.4,
+      "stdout_tail": "Loaded 18372 candidates.\n\n=== Family A: Q3 with arithmetic offset (a*i + b) ===\n  [standard      ] 0 solves (41.5s)\n  [kryptos_keyed ] 0 solves (83.2s)\n\n=== Family B: reversed plaintext / ciphertext ===\n  [standard      ] 0 solves (0.2s)\n  [kryptos_keyed ] 0 solves (0.4s)\n\n=== Family D: even/odd interleaved dual-key Q3 ===\n  [standard      ] 0 solves (0.0s)\n  [kryptos_keyed ] 0 solves (0.0s)\n\n=== TOTAL SOLVES across all 3 families: 0 ===\n  Family A (arithmetic offset):        0\n  Family B (reversed direction):       0\n  Family D (even/odd interleaved):     0\nJSONL: experiments/results/2026-05-22_026_composite_q3_transforms.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_026_composite_q3_transforms.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_solves_by_family": {
+          "A": 0,
+          "B": 0,
+          "D": 0
+        }
+      }
+    },
+    {
+      "exp_id": "028",
+      "script": "experiments/028_hill_block_sizes_4_to_8.py",
+      "exit_code": 0,
+      "elapsed_s": 109.8,
+      "stdout_tail": "Loaded 18372 candidates.\n\n=== Hill 4x4 ===\n  [standard      ]      0 solves (13.0s)\n  [kryptos_keyed ]      0 solves (10.8s)\n\n=== Hill 5x5 ===\n  [standard      ]      0 solves (12.0s)\n  [kryptos_keyed ]      0 solves (11.6s)\n\n=== Hill 6x6 ===\n  [standard      ]      0 solves (12.3s)\n  [kryptos_keyed ]      0 solves (12.0s)\n\n=== Hill 7x7 ===\n  [standard      ]      0 solves (9.9s)\n  [kryptos_keyed ]      0 solves (9.3s)\n\n=== Hill 8x8 ===\n  [standard      ]      0 solves (9.3s)\n  [kryptos_keyed ]      0 solves (9.3s)\n\n=== Total Hill solves across block sizes [4, 5, 6, 7, 8]: 0 ===\nElapsed: 109.4s\nJSONL: experiments/results/2026-05-22_028_hill_block_sizes_4_to_8.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_028_hill_block_sizes_4_to_8.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "total_solves": 0,
+        "block_sizes_tested": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "elapsed_s": 109.4
+      }
+    },
+    {
+      "exp_id": "029",
+      "script": "experiments/029_compose_pipelines.py",
+      "exit_code": 0,
+      "elapsed_s": 1525.5,
+      "stdout_tail": "  columnar perms:           5163\n  pipeline shapes:          A (Q3\u2218remap), B (remap\u2218Q3), C (col\u2218Q3\u2218remap)\n  alphabets:                ['standard', 'kryptos_keyed']\n  conventions:              vigenere, beaufort, variant_beaufort\n  periods:                  L=1..15\n\n=== Shape A: Q3 \u2218 positional_remap ===\n  Shape A done; 0 solves; 0.3s elapsed\n\n=== Shape B: positional_remap \u2218 Q3 ===\n  Shape B done; 0 solves; 1.3s elapsed\n\n=== Shape C: columnar(W=W,perm) \u2218 Q3 \u2218 positional_remap ===\n  [5163 columnar perms \u00d7 10 remaps \u00d7 2 alphas = 103260 pipelines]\n  [500/5163] col perms done; 0 solves so far; 149.3s\n  [1000/5163] col perms done; 0 solves so far; 296.1s\n  [1500/5163] col perms done; 0 solves so far; 442.8s\n  [2000/5163] col perms done; 0 solves so far; 589.0s\n  [2500/5163] col perms done; 0 solves so far; 735.7s\n  [3000/5163] col perms done; 0 solves so far; 885.5s\n  [3500/5163] col perms done; 0 solves so far; 1035.0s\n  [4000/5163] col perms done; 0 solves so far; 1181.5s\n  [4500/5163] col perms done; 0 solves so far; 1328.1s\n  [5000/5163] col perms done; 0 solves so far; 1475.1s\n  Shape C done; 0 solves; 1523.4s elapsed\n\n=== TOTAL SOLVES across all Compose pipeline shapes: 0 ===\n  Pipelines tested:  103,300\n  Elapsed:           1525.0s\n  JSONL:             experiments/results/2026-05-22_029_compose_pipelines.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_029_compose_pipelines.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_pipelines_tested": 103300,
+        "total_solves": 0,
+        "elapsed_s": 1525.0
+      }
+    },
+    {
+      "exp_id": "030",
+      "script": "experiments/030_playfair_dedicated_search.py",
+      "exit_code": 0,
+      "elapsed_s": 46.8,
+      "stdout_tail": "  worker batch 14/14 done; total 36744 records (41.5s)\n\n2x13 top 10:\n  c[5205] score= 35/97\n  c[4642] score= 34/97\n  c[11860] score= 34/97\n  c[9781] score= 34/97\n  c[16993] score= 34/97\n  c[8907] score= 34/97\n  c[17088] score= 33/97\n  c[17509] score= 33/97\n  c[14650] score= 33/97\n  c[3963] score= 33/97\n\n13x2 top 10:\n  c[12967] score= 36/97\n  c[2794] score= 34/97\n  c[6384] score= 34/97\n  c[10590] score= 34/97\n  c[11148] score= 34/97\n  c[3038] score= 33/97\n  c[3258] score= 33/97\n  c[14589] score= 33/97\n  c[15195] score= 33/97\n  c[4642] score= 33/97\n\nPhase 2/3 done in 41.6s\n\n=== exp 030 done in 46.4s ===\nJSONL: experiments/results/2026-05-22_030_playfair_dedicated_search.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_030_playfair_dedicated_search.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "elapsed_s": 46.4
+      }
+    },
+    {
+      "exp_id": "031",
+      "script": "experiments/031_two_pass_columnar_q3.py",
+      "exit_code": 0,
+      "elapsed_s": 4.8,
+      "stdout_tail": "Candidates: 18372\n\nKeywords: ['KRYPTOS', 'ABSCISSA', 'PALIMPSEST', 'BERLIN', 'CLOCK', 'BERLINCLOCK', 'WELTZEITUHR', 'DYAHR', 'SANBORN', 'LANGLEY', 'IQLUSION', 'UNDERGRUUND']\n  KRYPTOS (W=7): column_order=(0, 5, 3, 1, 6, 4, 2)\n  ABSCISSA (W=8): column_order=(0, 7, 1, 3, 4, 2, 5, 6)\n  PALIMPSEST (W=10): column_order=(1, 7, 3, 2, 4, 0, 5, 6, 8, 9)\n  BERLIN (W=6): column_order=(0, 1, 4, 3, 5, 2)\n  CLOCK (W=5): column_order=(0, 3, 4, 1, 2)\n  BERLINCLOCK (W=11): column_order=(0, 6, 9, 1, 4, 10, 3, 7, 5, 8, 2)\n  WELTZEITUHR (W=11): column_order=(1, 5, 9, 6, 2, 10, 3, 7, 8, 0, 4)\n  DYAHR (W=5): column_order=(2, 0, 3, 4, 1)\n  SANBORN (W=7): column_order=(1, 3, 2, 6, 4, 5, 0)\n  LANGLEY (W=7): column_order=(1, 5, 3, 0, 4, 2, 6)\n  IQLUSION (W=8): column_order=(0, 5, 2, 7, 6, 1, 4, 3)\n  UNDERGRUUND (W=11): column_order=(2, 10, 3, 5, 1, 9, 4, 6, 0, 7, 8)\n\n=== Shape B1: pipeline(plain) = col2(col1(plain, kw1), kw2) ===\n  Shape B1 done; 0 solves; best partial 16/97; 0.2s elapsed\n\n=== Shape B4: Q3(col2(col1(plain, kw1), kw2), q3_key) ===\n  Shape B4 done; 0 solves; 4.2s elapsed\n\n=== Two-pass columnar + Q3 composite ===\n  candidates:    18372\n  keywords:      12\n  B1 solves:     0\n  B4 solves:     0\n  B1 best partial: 16/97 {'kw1': 'UNDERGRUUND', 'kw2': 'WELTZEITUHR', 'cand_idx': 16587}\n  elapsed:       4.4s\n  JSONL:         experiments/results/2026-05-23_031_two_pass_columnar_q3.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-23_031_two_pass_columnar_q3.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "keywords": [
+          "KRYPTOS",
+          "ABSCISSA",
+          "PALIMPSEST",
+          "BERLIN",
+          "CLOCK",
+          "BERLINCLOCK",
+          "WELTZEITUHR",
+          "DYAHR",
+          "SANBORN",
+          "LANGLEY",
+          "IQLUSION",
+          "UNDERGRUUND"
+        ],
+        "shape_B1_solves": 0,
+        "shape_B4_solves": 0,
+        "near_miss_B1": [
+          16,
+          {
+            "kw1": "UNDERGRUUND",
+            "kw2": "WELTZEITUHR",
+            "cand_idx": 16587
+          }
+        ],
+        "elapsed_s": 4.4
+      }
+    },
+    {
+      "exp_id": "032",
+      "script": "experiments/032_single_letter_ciphertext_error.py",
+      "exit_code": 0,
+      "elapsed_s": 608.5,
+      "stdout_tail": "Using experiments/results/n1_claude_outputs/run_20260523_083115_claude-opus-4-7_hexfiltered\nCandidates: 18372\n  [standard] pos 20/97 done; solves so far=0; 62.6s\n  [standard] pos 40/97 done; solves so far=0; 125.4s\n  [standard] pos 60/97 done; solves so far=0; 188.1s\n  [standard] pos 80/97 done; solves so far=0; 250.7s\n  [kryptos_keyed] pos 20/97 done; solves so far=0; 366.7s\n  [kryptos_keyed] pos 40/97 done; solves so far=0; 429.4s\n  [kryptos_keyed] pos 60/97 done; solves so far=0; 492.1s\n  [kryptos_keyed] pos 80/97 done; solves so far=0; 554.8s\n\n=== Single-letter ciphertext-error model ===\n  candidates:    18372\n  positions:     97\n  total solves:  0\n  elapsed:       608.0s\n  JSONL:         experiments/results/2026-05-23_032_single_letter_ciphertext_error.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-23_032_single_letter_ciphertext_error.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_positions": 97,
+        "total_solves": 0,
+        "elapsed_s": 608.0
+      }
+    },
+    {
+      "exp_id": "027",
+      "script": "experiments/027_trifid_hillclimb.py",
+      "exit_code": 0,
+      "elapsed_s": 131.1,
+      "stdout_tail": "  worker batch 4/14 done; total results so far 5242 (130.1s)\n  worker batch 5/14 done; total results so far 6555 (130.1s)\n  worker batch 6/14 done; total results so far 7868 (130.2s)\n  worker batch 7/14 done; total results so far 9181 (130.2s)\n  worker batch 8/14 done; total results so far 10494 (130.2s)\n  worker batch 9/14 done; total results so far 11807 (130.2s)\n  worker batch 10/14 done; total results so far 13120 (130.3s)\n  worker batch 11/14 done; total results so far 14433 (130.3s)\n  worker batch 12/14 done; total results so far 15746 (130.3s)\n  worker batch 13/14 done; total results so far 17059 (130.4s)\n  worker batch 14/14 done; total results so far 18372 (130.9s)\n\n=== Trifid hill-climb summary ===\n  candidates:         18372\n  full solves (97):   0\n  score >= 50:        0\n  max score:          38\n  elapsed:            130.9s\n\nTop 10 by score:\n  c[12724] score= 38/97  period=5  cand=POSITIONYOURSELFFACINEASTNORTHEASTGTHESQUARETHELIGHTSWILLGUI...\n  c[18326] score= 37/97  period=9  cand=NINENOVEMBERTHEHOURWAEASTNORTHEASTSVISIBLEONTHEBRONZEDRUMOFZ...\n  c[7440] score= 37/97  period=9  cand=WHATTHEEYEALMOSTSEESXEASTNORTHEASTTURNSTOMEANINGONLYWHENTHEL...\n  c[7604] score= 37/97  period=7  cand=WEFOLLOWEDTHECROWDDUEEASTNORTHEASTPASTFIFTYTWOTHIRTYTHREEONE...\n  c[1250] score= 37/97  period=5  cand=REMEMBERHARALDJAEGERXEASTNORTHEASTHEOPENEDBORNHOLMERWITHOUTO...\n  c[6754] score= 36/97  period=5  cand=INTHEINTERVALOFADOUBXEASTNORTHEASTTLIESTHEPUREFORMOFTHEUNSPO...\n  c[3253] score= 36/97  period=5  cand=NORTHOFTHEPOTOMACTHEXEASTNORTHEASTAGENCYHASITSDOORATTHATPOIN...\n  c[3720] score= 36/97  period=7  cand=WEHEARDTHEHAMMERFALLAEASTNORTHEASTGAINANDAGAINUPONTHESTONESA...\n  c[15604] score= 36/97  period=5  cand=INDREAMSOFBOYHOODIIXXEASTNORTHEASTMAGINEDTHEFLAMESOFILIUMAND...\n  c[13736] score= 36/97  period=7  cand=FROMTHETOPOFTHESTAIRSEASTNORTHEASTCOULDHEARDISTANTVOICESCRYI...",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_027_trifid_hillclimb.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 18372,
+        "n_full_solves": 0,
+        "n_above_50": 0,
+        "max_score": 38,
+        "elapsed_s": 130.9,
+        "params": {
+          "periods": [
+            5,
+            7,
+            9
+          ],
+          "n_restarts": 8,
+          "n_iters": 5000
+        }
+      }
+    },
+    {
+      "exp_id": "N2_XP",
+      "elapsed_s": 46.1,
+      "n_solves": 0,
+      "stdout_tail": "Hypotheses loaded: 272 from experiments/results/n2_claude_outputs/run_20260522_233722_claude-sonnet-4-6/hypotheses_parsed.jsonl\nN1 candidates loaded: 18372 from experiments/results/n1_claude_outputs/run_20260523_083115_claude-opus-4-7_hexfiltered\nOutput: experiments/results/n2_claude_outputs/run_20260522_233722_claude-sonnet-4-6/verify_vs_n1_candidates.jsonl\nUnique hypothesis structures: 209\n  [40/209] 367,440 attempts, 0 solved, best partial 15/97 (9.4s)\n  [60/209] 587,904 attempts, 0 solved, best partial 15/97 (14.6s)\n  [100/209] 881,856 attempts, 0 solved, best partial 15/97 (20.2s)\n  [160/209] 1,653,480 attempts, 0 solved, best partial 15/97 (35.8s)\n  [180/209] 1,837,200 attempts, 0 solved, best partial 15/97 (40.2s)\n\n=== N2 cipher hypotheses vs N1 candidates ===\n  unique hypotheses:  209\n  cipher build OK:    113\n  candidates:         18372\n  encrypt attempts:   2,076,036\n  SOLVES:             0\n  best partial match: 15/97\n  best partial: cipher=Nicodemus hyp=7 cand=382\n  elapsed:            46.0s"
+    }
+  ]
+}

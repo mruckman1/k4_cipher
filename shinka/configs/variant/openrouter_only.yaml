@@ -1,0 +1,59 @@
+# @package _global_
+# Gemini 3.5 Flash via OpenRouter, with reasoning_effort=minimal +
+# extra_body.reasoning.exclude=true (set by shinka-adapter's openrouter patch).
+# Requires OPENROUTER_API_KEY.
+#
+# Why Flash instead of Pro:
+# - About 25-30% cheaper per token than Gemini 3.1 Pro ($1.50/$9.00 vs
+#   $2.00/$12.00 per MTok in/out) and meaningfully faster per call. The
+#   speed lets generations land more frequently and gives you a tighter
+#   iteration loop on whether the run is converging.
+# - Flash is less capable per call at structured cipher reasoning than Pro.
+#   If after ~50 generations the best score is stuck at the seed baseline
+#   (~-14), the model is the bottleneck — switch back to Pro by changing
+#   the slug to openrouter/google/gemini-3.1-pro-preview, or go multi_arm.
+
+defaults:
+  - /evolution: default
+  - /database: default
+  - /runner: local
+  - /evaluator: in_process
+  - _self_
+
+task_name: k4_gemini35flash
+results_dir: results/${task_name}/${now:%Y-%m-%d_%H-%M-%S}
+
+init_program_path: problem/initial.py
+
+llm_models:
+  - openrouter/google/gemini-3.5-flash
+prompt_llm_models:
+  - openrouter/google/gemini-3.5-flash
+meta_llm_models:
+  - openrouter/google/gemini-3.5-flash
+novelty_llm_models:
+  - openrouter/google/gemini-3.5-flash
+
+llm_dynamic_selection: null
+
+llm_kwargs:
+  temperatures: [0.3, 0.7, 1.0]
+  max_tokens: 6144
+  reasoning_efforts: ["minimal"]
+
+# At $1.50/$9.00 per MTok in/out, a typical generation (proposal +
+# evaluation + meta/novelty checks) costs roughly $0.08-0.12. 250 gens fits
+# under a $25 cap with headroom. Bump after the first run shows the LM is
+# mutating productively (scores climbing above the seed baseline).
+num_generations: 250
+max_api_costs: 25.0
+
+benchmark_set: default
+cascade_stages:
+  - { name: smoke, instances: 1, timeout_s: 10, reject_if_solved_ratio_below: 0.0 }
+  - { name: main,  instances: 1, timeout_s: 30, reject_if_solved_ratio_below: 0.0 }
+
+seeds: [17, 42, 1337]
+num_runs: 1
+
+holdout_every_n_generations: 50

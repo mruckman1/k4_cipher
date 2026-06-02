@@ -1,0 +1,6 @@
+# Cyrillic Projector (UNC Charlotte, 1997).
+# Solved 2003 by Frank Corr / Mike Bales / Elonka Dunin's Kryptos Group.
+# Both sides decode (one side classified KGB text on psychological control of
+# sources; the other a memo about Sakharov).
+# Populate this file from a reliable source (elonka.com/kryptos) before use as a
+# potential primer/theme corpus.

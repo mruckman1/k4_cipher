@@ -1,0 +1,3 @@
+{"_header": true, "name": "014_q3_doubled_l_27letter", "ts": 1779338436.625855, "argv": ["experiments/014_q3_doubled_l_27letter.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"alphabet": "kryptos_with_extra_L", "chi_threshold": 95.0}
+{"summary": true, "grand_tried": 14900031, "grand_below": 0, "elapsed_s": 272.14694345893804}

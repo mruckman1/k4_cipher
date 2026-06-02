@@ -1,0 +1,1232 @@
+{
+  "top_20_rules": [
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 1,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 33
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 1,
+      "b": 2,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 33
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 3,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 32
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 1,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 32
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 3,
+      "b": 2,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 32
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 1,
+      "b": 2,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 32
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 3,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 31
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 3,
+      "b": 2,
+      "k": 4,
+      "k_used": 4,
+      "scheidt_score": 31
+    }
+  ],
+  "rule_seeds": [
+    {
+      "rule_idx": 0,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 1,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 33
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 6,
+          "constraints": {
+            "14": "Q",
+            "19": "R",
+            "4": "G",
+            "17": "P",
+            "8": "T",
+            "2": "M"
+          },
+          "best_seeds": [
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            },
+            {
+              "keyword": "SCHABOWSKI",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+            },
+            {
+              "keyword": "TUTANKHAMEN",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "TUANKHMEBCDFGIJLOPQRSVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 5,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "17": "P",
+            "4": "Y",
+            "11": "V"
+          },
+          "best_seeds": [
+            {
+              "keyword": "VALLEY",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 6,
+          "constraints": {
+            "0": "L",
+            "19": "V",
+            "18": "S",
+            "1": "N",
+            "14": "F",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 1,
+              "max": 6,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 7,
+          "constraints": {
+            "4": "F",
+            "7": "N",
+            "0": "K",
+            "19": "S",
+            "13": "T",
+            "11": "Z",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "TREMBLING",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+            },
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 1,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "pos_mod_3",
+        "a": 1,
+        "b": 2,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 33
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 6,
+          "constraints": {
+            "14": "Q",
+            "19": "R",
+            "4": "G",
+            "17": "P",
+            "8": "T",
+            "2": "M"
+          },
+          "best_seeds": [
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            },
+            {
+              "keyword": "SCHABOWSKI",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+            },
+            {
+              "keyword": "TUTANKHAMEN",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "TUANKHMEBCDFGIJLOPQRSVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 5,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "17": "P",
+            "4": "Y",
+            "11": "V"
+          },
+          "best_seeds": [
+            {
+              "keyword": "VALLEY",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 6,
+          "constraints": {
+            "0": "L",
+            "19": "V",
+            "18": "S",
+            "1": "N",
+            "14": "F",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 1,
+              "max": 6,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 7,
+          "constraints": {
+            "4": "F",
+            "7": "N",
+            "0": "K",
+            "19": "S",
+            "13": "T",
+            "11": "Z",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "TREMBLING",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+            },
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 2,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "pos_mod_3",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 3,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 6,
+          "constraints": {
+            "14": "Q",
+            "19": "R",
+            "4": "G",
+            "17": "P",
+            "8": "T",
+            "2": "M"
+          },
+          "best_seeds": [
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            },
+            {
+              "keyword": "SCHABOWSKI",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+            },
+            {
+              "keyword": "TUTANKHAMEN",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "TUANKHMEBCDFGIJLOPQRSVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 7,
+          "constraints": {
+            "4": "F",
+            "7": "N",
+            "0": "K",
+            "19": "S",
+            "13": "T",
+            "11": "Z",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "TREMBLING",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+            },
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 6,
+          "constraints": {
+            "0": "L",
+            "19": "V",
+            "18": "S",
+            "1": "N",
+            "14": "F",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 1,
+              "max": 6,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 5,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "17": "P",
+            "4": "Y",
+            "11": "V"
+          },
+          "best_seeds": [
+            {
+              "keyword": "VALLEY",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 3,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 1,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 7,
+          "constraints": {
+            "0": "L",
+            "19": "R",
+            "4": "G",
+            "1": "N",
+            "17": "P",
+            "2": "M",
+            "14": "F"
+          },
+          "best_seeds": [
+            {
+              "keyword": "LODESTONE",
+              "overlap": 3,
+              "max": 7,
+              "alphabet": "LODESTNABCFGHIJKMPQRUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 5,
+          "constraints": {
+            "4": "F",
+            "17": "P",
+            "19": "S",
+            "13": "T",
+            "11": "Z"
+          },
+          "best_seeds": [
+            {
+              "keyword": "DYAHR",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "URANIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 5,
+          "constraints": {
+            "19": "V",
+            "14": "Q",
+            "18": "S",
+            "8": "T",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "BERLIN",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "BERLINACDFGHJKMOPQSTUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 7,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "7": "N",
+            "0": "K",
+            "4": "Y",
+            "11": "V",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "WALL",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "WALBCDEFGHIJKMNOPQRSTUVXYZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 4,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "pos_mod_3",
+        "a": 3,
+        "b": 2,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 6,
+          "constraints": {
+            "14": "Q",
+            "19": "R",
+            "4": "G",
+            "17": "P",
+            "8": "T",
+            "2": "M"
+          },
+          "best_seeds": [
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            },
+            {
+              "keyword": "SCHABOWSKI",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+            },
+            {
+              "keyword": "TUTANKHAMEN",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "TUANKHMEBCDFGIJLOPQRSVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 7,
+          "constraints": {
+            "4": "F",
+            "7": "N",
+            "0": "K",
+            "19": "S",
+            "13": "T",
+            "11": "Z",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "TREMBLING",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+            },
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 6,
+          "constraints": {
+            "0": "L",
+            "19": "V",
+            "18": "S",
+            "1": "N",
+            "14": "F",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 6,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 1,
+              "max": 6,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 5,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "17": "P",
+            "4": "Y",
+            "11": "V"
+          },
+          "best_seeds": [
+            {
+              "keyword": "VALLEY",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "DYAHR",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 5,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "pos_mod_5",
+        "a": 1,
+        "b": 2,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 32
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 7,
+          "constraints": {
+            "0": "L",
+            "19": "R",
+            "4": "G",
+            "1": "N",
+            "17": "P",
+            "2": "M",
+            "14": "F"
+          },
+          "best_seeds": [
+            {
+              "keyword": "LODESTONE",
+              "overlap": 3,
+              "max": 7,
+              "alphabet": "LODESTNABCFGHIJKMPQRUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 5,
+          "constraints": {
+            "4": "F",
+            "17": "P",
+            "19": "S",
+            "13": "T",
+            "11": "Z"
+          },
+          "best_seeds": [
+            {
+              "keyword": "DYAHR",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "URANIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 5,
+          "constraints": {
+            "19": "V",
+            "14": "Q",
+            "18": "S",
+            "8": "T",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "BERLIN",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "BERLINACDFGHJKMOPQSTUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 7,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "7": "N",
+            "0": "K",
+            "4": "Y",
+            "11": "V",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "WALL",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "WALBCDEFGHIJKMNOPQRSTUVXYZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 6,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "pos_mod_5",
+        "fb": "consonant_count",
+        "a": 2,
+        "b": 3,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 31
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 7,
+          "constraints": {
+            "0": "L",
+            "19": "R",
+            "4": "G",
+            "1": "N",
+            "17": "P",
+            "2": "M",
+            "14": "F"
+          },
+          "best_seeds": [
+            {
+              "keyword": "LODESTONE",
+              "overlap": 3,
+              "max": 7,
+              "alphabet": "LODESTNABCFGHIJKMPQRUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 7,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "7": "N",
+            "0": "K",
+            "4": "Y",
+            "11": "V",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "WALL",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "WALBCDEFGHIJKMNOPQRSTUVXYZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 5,
+          "constraints": {
+            "19": "V",
+            "14": "Q",
+            "18": "S",
+            "8": "T",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "BERLIN",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "BERLINACDFGHJKMOPQSTUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 5,
+          "constraints": {
+            "4": "F",
+            "17": "P",
+            "19": "S",
+            "13": "T",
+            "11": "Z"
+          },
+          "best_seeds": [
+            {
+              "keyword": "DYAHR",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "URANIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_idx": 7,
+      "rule": {
+        "kind": "linear_compound",
+        "fa": "consonant_count",
+        "fb": "pos_mod_5",
+        "a": 3,
+        "b": 2,
+        "k": 4,
+        "k_used": 4,
+        "scheidt_score": 31
+      },
+      "seeds_per_color": [
+        {
+          "color": 0,
+          "n_constraints": 7,
+          "constraints": {
+            "0": "L",
+            "19": "R",
+            "4": "G",
+            "1": "N",
+            "17": "P",
+            "2": "M",
+            "14": "F"
+          },
+          "best_seeds": [
+            {
+              "keyword": "LODESTONE",
+              "overlap": 3,
+              "max": 7,
+              "alphabet": "LODESTNABCFGHIJKMPQRUVWXYZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "EAST",
+              "overlap": 2,
+              "max": 7,
+              "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 1,
+          "n_constraints": 7,
+          "constraints": {
+            "18": "R",
+            "13": "Q",
+            "7": "N",
+            "0": "K",
+            "4": "Y",
+            "11": "V",
+            "2": "P"
+          },
+          "best_seeds": [
+            {
+              "keyword": "KRYPTOS",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+            },
+            {
+              "keyword": "ABSCISSA",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+            },
+            {
+              "keyword": "WALL",
+              "overlap": 1,
+              "max": 7,
+              "alphabet": "WALBCDEFGHIJKMNOPQRSTUVXYZ"
+            }
+          ]
+        },
+        {
+          "color": 2,
+          "n_constraints": 5,
+          "constraints": {
+            "19": "V",
+            "14": "Q",
+            "18": "S",
+            "8": "T",
+            "10": "K"
+          },
+          "best_seeds": [
+            {
+              "keyword": "STANDARD",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "CIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+            },
+            {
+              "keyword": "BERLIN",
+              "overlap": 1,
+              "max": 5,
+              "alphabet": "BERLINACDFGHJKMOPQSTUVWXYZ"
+            }
+          ]
+        },
+        {
+          "color": 3,
+          "n_constraints": 5,
+          "constraints": {
+            "4": "F",
+            "17": "P",
+            "19": "S",
+            "13": "T",
+            "11": "Z"
+          },
+          "best_seeds": [
+            {
+              "keyword": "DYAHR",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+            },
+            {
+              "keyword": "UNDERGRUUND",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+            },
+            {
+              "keyword": "URANIA",
+              "overlap": 2,
+              "max": 5,
+              "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "n_valid_rules_total": 984,
+  "n_k4_rules": 8
+}

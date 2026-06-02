@@ -1,0 +1,125 @@
+{
+  "n_cribs": 24,
+  "n_conflict_edges": 22,
+  "per_k": {
+    "3": {
+      "n_trials": 10000,
+      "n_satisfied": 0,
+      "rate": 0.0,
+      "rate_se": 0.0,
+      "median_violations": 7,
+      "viol_dist_head": [
+        0,
+        9,
+        64,
+        219,
+        647,
+        1164,
+        1615,
+        1812,
+        1649,
+        1289
+      ]
+    },
+    "4": {
+      "n_trials": 10000,
+      "n_satisfied": 18,
+      "rate": 0.0018,
+      "rate_se": 0.0004238820590683215,
+      "median_violations": 5,
+      "viol_dist_head": [
+        18,
+        122,
+        465,
+        1011,
+        1622,
+        1958,
+        1907,
+        1306,
+        884,
+        392
+      ]
+    },
+    "5": {
+      "n_trials": 10000,
+      "n_satisfied": 67,
+      "rate": 0.0067,
+      "rate_se": 0.0008157885755512883,
+      "median_violations": 4,
+      "viol_dist_head": [
+        67,
+        400,
+        1060,
+        1821,
+        2095,
+        1856,
+        1387,
+        747,
+        379,
+        121
+      ]
+    },
+    "6": {
+      "n_trials": 10000,
+      "n_satisfied": 176,
+      "rate": 0.0176,
+      "rate_se": 0.0013149235719234788,
+      "median_violations": 4,
+      "viol_dist_head": [
+        176,
+        767,
+        1714,
+        2327,
+        2041,
+        1487,
+        879,
+        385,
+        149,
+        57
+      ]
+    },
+    "7": {
+      "n_trials": 10000,
+      "n_satisfied": 322,
+      "rate": 0.0322,
+      "rate_se": 0.0017653090381006945,
+      "median_violations": 3,
+      "viol_dist_head": [
+        322,
+        1251,
+        2109,
+        2511,
+        1893,
+        1127,
+        499,
+        211,
+        55,
+        14
+      ]
+    },
+    "8": {
+      "n_trials": 10000,
+      "n_satisfied": 525,
+      "rate": 0.0525,
+      "rate_se": 0.002230330692969094,
+      "median_violations": 3,
+      "viol_dist_head": [
+        525,
+        1645,
+        2549,
+        2367,
+        1563,
+        861,
+        347,
+        95,
+        35,
+        8
+      ]
+    }
+  },
+  "natural_compound_yield_estimate": {
+    "rules_tested": 25000,
+    "rules_valid": 1009,
+    "rate": 0.04036
+  }
+}

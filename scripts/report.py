@@ -1,0 +1,241 @@
+"""Aggregate every experiment verdict into a running findings ledger.
+
+Scans experiments/results/*.jsonl (and *.json) for `_verdict` records,
+then regenerates:
+
+  - experiments/results/FINDINGS.md   (human ledger: status table, cumulative
+                                        rulings, live leads ranked, search-space
+                                        narrowing, and the all-time best decrypt)
+  - experiments/results/findings.json (machine aggregate for tooling / future
+                                        LLM passes)
+
+Run any time:   python scripts/report.py
+The ledger is idempotent and safe to regenerate after every experiment.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import date
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+RESULTS = REPO / "experiments" / "results"
+
+STATUS_RANK = {  # for sorting: leads first, closed last
+    "solved": 0, "promising": 1, "partial": 2,
+    "inconclusive": 3, "ruled_out": 4, "retired": 4.5, "error": 5,
+}
+STATUS_EMOJI = {
+    "solved": "SOLVED", "promising": "lead", "partial": "partial",
+    "inconclusive": "??", "ruled_out": "closed", "retired": "retired", "error": "err",
+}
+
+# --- Manual reclassification, applied at aggregation (reproducible, no re-run) ---
+# Some verdicts were left "inconclusive" but a LATER experiment turned them into a
+# hard negative, or they used a now-retired (LLM) method. Without this, report.py
+# would over-count "live leads". Each entry is (new_status, reason).
+RECLASSIFY = {
+    "067": ("ruled_out", "register-rescue closed (superseded by 097/100)"),
+    "084": ("ruled_out", "flattening-modification candidates ruled out by 086/087"),
+    "091": ("ruled_out", "no shared K1-K3 invariant above chance -> no forward filter"),
+    "097": ("ruled_out", "register signal shown CIRCULAR by exp 100 (search artifact)"),
+    "102": ("ruled_out", "0 public-method-clue gaps -> no untested clue-implied mechanism"),
+    "104": ("ruled_out", "0 physical-feature gaps -> nothing un-extracted"),
+    "108": ("ruled_out", "author n-gram prior does NOT resolve k=4 (prior-robust)"),
+    "057": ("retired", "ollama/gemma N1 calibration -- LLM method retired"),
+    "095": ("retired", "semantic LLM judge -- LLM retired (finding: semantic under-determination)"),
+    "096": ("retired", "Z3 MaxSAT solver-limited + LLM check -- retired"),
+}
+# Non-negative results that ESTABLISH a fact -- tagged so they are not mistaken
+# for 'promising leads toward a solve'.
+CATEGORY = {
+    "058": "knowledge", "065": "knowledge", "071": "knowledge", "092": "knowledge",
+    "093": "knowledge", "098": "knowledge", "106": "knowledge", "107": "knowledge",
+    "117": "knowledge", "118": "knowledge", "119": "knowledge",
+    "120": "knowledge", "124": "knowledge", "125": "knowledge", "128": "knowledge",
+    "053": "tooling",
+}
+
+
+def bucket(v: dict) -> str:
+    s, c = v.get("status"), v.get("category")
+    if s == "solved":
+        return "solved"
+    if s == "ruled_out":
+        return "ruled_out"
+    if s == "retired":
+        return "retired"
+    if c == "knowledge":
+        return "knowledge"
+    if c == "tooling":
+        return "tooling"
+    if s in ("promising", "partial"):
+        return "promising"
+    return "inconclusive"
+
+
+def collect_verdicts() -> list[dict]:
+    verdicts: dict[str, dict] = {}  # exp -> latest verdict (by ts)
+    for path in sorted(RESULTS.glob("*.json*")):
+        try:
+            text = path.read_text()
+        except Exception:
+            continue
+        lines = text.splitlines() if path.suffix == ".jsonl" else [text]
+        for line in lines:
+            line = line.strip()
+            if not line or '"_verdict"' not in line:
+                continue
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+            if not isinstance(rec, dict) or not rec.get("_verdict"):
+                continue
+            exp = rec.get("exp", path.stem)
+            prev = verdicts.get(exp)
+            if prev is None or rec.get("ts", 0) >= prev.get("ts", 0):
+                rec["_source"] = path.name
+                verdicts[exp] = rec
+    # apply manual reclassification + categories
+    for v in verdicts.values():
+        exp = v.get("exp")
+        if exp in RECLASSIFY:
+            v["_orig_status"] = v.get("status")
+            v["status"], v["_reclass_reason"] = RECLASSIFY[exp]
+        if exp in CATEGORY:
+            v["category"] = CATEGORY[exp]
+    return sorted(
+        verdicts.values(),
+        key=lambda r: (STATUS_RANK.get(r.get("status"), 9), r.get("exp", "")),
+    )
+
+
+def fmt_score(v: dict) -> str:
+    s = v.get("best_score")
+    if not isinstance(s, (int, float)) or s <= -90:
+        return "—"          # sentinel: no decryptable English candidate
+    return f"{s:.2f}"
+
+
+def render_markdown(verdicts: list[dict]) -> str:
+    out: list[str] = []
+    out.append("# K4 findings ledger")
+    out.append("")
+    out.append(f"_Auto-generated by `scripts/report.py` on {date.today().isoformat()}. "
+               "One row per experiment; regenerate after each run._")
+    out.append("")
+    out.append("Hexagram fitness reference: real English ≈ **-13/char**, gibberish ≈ **-24/char**. "
+               "The ShinkaEvolve ceiling to date is **71.98 composite** (≈ -17/char on free positions).")
+    out.append("")
+
+    solved = [v for v in verdicts if v.get("status") == "solved"]
+    if solved:
+        out.append("## 🟢 SOLVED")
+        for v in solved:
+            out.append(f"- **exp {v['exp']} — {v['title']}**: `{json.dumps(v.get('solved_params'))}`")
+        out.append("")
+
+    # Status table
+    out.append("## Status table")
+    out.append("")
+    out.append("| exp | status | title | best hex/char | best partial | space | source |")
+    out.append("|-----|--------|-------|---------------|--------------|-------|--------|")
+    for v in verdicts:
+        space = v.get("search_space")
+        space_s = f"{space:,}" if isinstance(space, int) else "—"
+        out.append(
+            f"| {v.get('exp','?')} | {STATUS_EMOJI.get(v.get('status'),'?')} "
+            f"| {v.get('title','')} | {fmt_score(v)} | {v.get('best_partial','—')} "
+            f"| {space_s} | {v.get('_source','')} |"
+        )
+    out.append("")
+
+    # Knowledge / structural findings (established facts, not solve-leads)
+    knowledge = [v for v in verdicts if bucket(v) in ("knowledge", "tooling")]
+    if knowledge:
+        out.append("## 📐 Knowledge & tooling (established facts — NOT solve-leads)")
+        out.append("")
+        for v in knowledge:
+            out.append(f"- **exp {v['exp']} — {v['title']}** ({v.get('category')}): {v.get('best_partial','')}")
+        out.append("")
+
+    # Genuinely-open leads (promising/partial + still-undecided inconclusive)
+    leads = [v for v in verdicts if bucket(v) in ("promising", "inconclusive")]
+    out.append("## 🔎 Genuinely-open items (ranked) — undecided, not yet a hard negative")
+    out.append("")
+    if leads:
+        for v in leads:
+            out.append(f"### exp {v['exp']} — {v['title']}  ({v['status']}, best {fmt_score(v)})")
+            out.append(f"_{v.get('hypothesis','')}_")
+            for ins in v.get("insights", []):
+                out.append(f"- insight: {ins}")
+            for nxt in v.get("next_steps", []):
+                out.append(f"- **next:** {nxt}")
+            out.append("")
+    else:
+        out.append("_None: 0 promising solution paths remain open._")
+        out.append("")
+
+    # Retired-method experiments (LLM-based; excluded from 'live')
+    retired = [v for v in verdicts if v.get("status") == "retired"]
+    if retired:
+        out.append("## 🗄️ Retired-method experiments (LLM-based; findings kept, not pursued)")
+        out.append("")
+        for v in retired:
+            out.append(f"- **exp {v['exp']} — {v['title']}**: {v.get('_reclass_reason','')}")
+        out.append("")
+
+    # Cumulative rulings (closed)
+    closed = [v for v in verdicts if v.get("status") == "ruled_out"]
+    if closed:
+        out.append("## ⛔ Cumulative rulings (closed)")
+        out.append("")
+        for v in closed:
+            ins = "; ".join(v.get("insights", [])) or v.get("hypothesis", "")
+            sp = v.get("search_space")
+            sp_s = f" ({sp:,} configs)" if isinstance(sp, int) else ""
+            out.append(f"- **exp {v['exp']} — {v['title']}**{sp_s}: {ins}")
+        out.append("")
+
+    # All-time best decrypt
+    scored = [v for v in verdicts if isinstance(v.get("best_score"), (int, float))]
+    if scored:
+        best = max(scored, key=lambda v: v["best_score"])
+        out.append("## Best decrypt to date")
+        out.append("")
+        out.append(f"- exp {best['exp']} ({best['title']}): **{best['best_score']:.2f}/char**")
+        bp = best.get("metrics", {}).get("best_plaintext")
+        if bp:
+            out.append(f"  - `{bp}`")
+        out.append("")
+
+    # Aggregate insights feed (everything we now know)
+    out.append("## All insights (chronological feed)")
+    out.append("")
+    for v in sorted(verdicts, key=lambda r: r.get("ts", 0)):
+        for ins in v.get("insights", []):
+            out.append(f"- [{v['exp']}] {ins}")
+    out.append("")
+    return "\n".join(out)
+
+
+def main() -> int:
+    verdicts = collect_verdicts()
+    md = render_markdown(verdicts)
+    (RESULTS / "FINDINGS.md").write_text(md)
+    (RESULTS / "findings.json").write_text(json.dumps(verdicts, indent=2, default=str))
+    from collections import Counter
+    cats = Counter(bucket(v) for v in verdicts)
+    print(f"Aggregated {len(verdicts)} experiment verdicts: "
+          f"{cats['solved']} solved, {cats['promising']} promising, {cats['knowledge']} knowledge, "
+          f"{cats['tooling']} tooling, {cats['inconclusive']} inconclusive, {cats['retired']} retired, "
+          f"{cats['ruled_out']} ruled_out.")
+    print(f"  -> {RESULTS / 'FINDINGS.md'}")
+    print(f"  -> {RESULTS / 'findings.json'}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

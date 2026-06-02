@@ -1,0 +1,45 @@
+[project]
+name = "k4-shinka"
+version = "0.1.0"
+description = "ShinkaEvolve-driven cipher-class exploration for Kryptos K4 (N2 replacement)."
+requires-python = ">=3.11,<3.12"
+readme = "README.md"
+license = { text = "MIT" }
+
+dependencies = [
+    "shinka-adapter @ file:///Users/mruckman1/Desktop/dev/shinka_hybrid",
+    "kryptos",
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+]
+
+# kryptos is declared EDITABLE so src/ edits (new cipher primitives,
+# fixes) propagate to the evaluator subprocess without reinstalling.
+# Without this, `uv run shinka` re-resolves on every invocation and
+# reinstalls kryptos as a non-editable copy in site-packages, which
+# silently overrides any prior editable install. shinka-adapter is
+# kept non-editable (we don't modify its source, and editable mode
+# moves its evaluate.py off the site-packages path SHINKA_ADAPTER_EVAL_MODULE
+# expects).
+[tool.uv.sources]
+kryptos = { path = "/Users/mruckman1/Desktop/dev/k4_cipher", editable = true }
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1",
+    "pytest-timeout>=2.3",
+]
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["problem"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --timeout=60"

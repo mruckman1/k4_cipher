@@ -1,0 +1,18 @@
+# Magnetic compass / lodestone observations at the Kryptos courtyard.
+#
+# The engraved compass rose in the courtyard pavement marks geographic
+# north at 0 degrees. A separate lodestone is embedded nearby; the iron
+# in the lodestone deflects a magnetic compass needle to approximately
+# 248 degrees true (west-southwest), per published rubbings.
+#
+# K2's plaintext is overtly about magnetic field measurement, K2's "Only
+# WW" (Webster) is geographically northeast of the sculpture, and K4's
+# confirmed NORTHEAST crib reinforces that physical orientation is part
+# of the narrative.
+#
+# As a cipher parameter: tested as a Caesar shift (no match) and as a
+# keystream seed angle (no convergence) by community researchers.
+
+compass_rose_north_degrees,0
+lodestone_deflected_bearing_degrees,248
+sculpture_to_USGS_marker_bearing_degrees,45     # approximate, northeast

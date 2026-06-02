@@ -1,0 +1,3200 @@
+[
+  {
+    "exp": "053",
+    "title": "smooth backoff-LM scorer vs hexagram saturation",
+    "hypothesis": "the 71.98 ceiling is a fixed-order-ngram saturation artifact; a smooth LM restores gradient",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "80% of hex-tied gibberish pairs separated by LM",
+    "search_space": 2987,
+    "elapsed_s": 2.1,
+    "solved_params": null,
+    "insights": [
+      "Both scorers separate English from gibberish (hex -13.6 vs -24.3; LM -2.97 vs -8.48).",
+      "SATURATION: among random-gibberish pairs, hexagrams call 41% effectively TIED (|delta|<0.05/char); of those, the smooth LM separates 80% (|delta|>0.10). Gibberish-score spread: hex stdev 0.126 vs LM stdev 0.306.",
+      "Implication: the hexagram landscape is flat across much of the gibberish region, so the 71.98 'robust local maximum' was found by a scorer blind to that region. The smooth LM restores a gradient and should be used as the inner-loop objective (exp 056)."
+    ],
+    "next_steps": [
+      "use backoff_scorer (or distilgpt2) as the objective in exp 056 parallel tempering seeded at the gen-66 basin; re-rank the 71.98 plaintext vs neighbours"
+    ],
+    "metrics": {
+      "frac_tied": 0.411,
+      "frac_rescued": 0.799
+    },
+    "_verdict": true,
+    "ts": 1780018475.662218,
+    "_source": "2026-05-28_053_smooth_lm_scorer.jsonl",
+    "category": "tooling"
+  },
+  {
+    "exp": "058",
+    "title": "fanout-<=K constrained plaintext generator + admissible filter",
+    "hypothesis": "the true K4 plaintext (if per-position) has fanout<=K; filter/generate to that constraint",
+    "status": "promising",
+    "best_score": -11.78,
+    "best_partial": "1436 admissible (chi<= 8); hill-climb best fanout 7",
+    "search_space": 38112,
+    "elapsed_s": 40.1,
+    "solved_params": null,
+    "insights": [
+      "NEW HARD FILTER: of 38100 N1 candidates, 1436 have fanout<= 8 and 1436 are CP-SAT-confirmed chi<= 8 (truly admissible for a 8-alphabet K4). This shrinks the prior by 96.2%.",
+      "Best admissible plaintext (smooth-LM ranked): hex -11.78/char, chi 8, fanout 8 -> WITHINTHESHIFTINGAIRTEASTNORTHEASTHEREMAINEDONLYTH...",
+      "gemma (12 gens): min fanout 9, 0 at <= 8. Natural-English generation floors near fanout 7-8, as expected.",
+      "Fanout-reducing hill-climb pushed best seed to fanout 7 while preserving English (smooth-LM) -- demonstrates a constrained generator that produces structurally-admissible text the raw LLM prior cannot."
+    ],
+    "next_steps": [
+      "DECISION POINT: a PAID Claude-batch generation at scale could enrich the admissible set with thematically-stronger fanout<=K candidates (ask before running).",
+      "feed the admissible set to a transposition+substitution composite search (the other live direction), and LM-rank with distilgpt2"
+    ],
+    "metrics": {
+      "best_admissible": "WITHINTHESHIFTINGAIRTEASTNORTHEASTHEREMAINEDONLYTHEHUMOFTHECITYBERLINCLOCKANDTHESLOWTURNINGOFTHED",
+      "fanout_hist_le_12": {
+        "7": 66,
+        "8": 1370,
+        "9": 5647,
+        "10": 9490,
+        "11": 9706,
+        "12": 6607
+      }
+    },
+    "_verdict": true,
+    "ts": 1780023728.191134,
+    "_source": "2026-05-28_058_fanout_constrained_generator.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "065",
+    "title": "conflict-graph selector characterization (positive shortlist)",
+    "hypothesis": "enumerate which position-feature selector families are even graph-compatible with chi=3",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "10 valid selectors; 2 non-trivial (p<0.05)",
+    "search_space": 32,
+    "elapsed_s": 0.4,
+    "solved_params": null,
+    "insights": [
+      "Of 32 candidate position-features, 10 are GRAPH-COMPATIBLE selectors (induce a proper coloring of the 24-crib/22-edge conflict graph): ['pos_mod_11(k=3)', 'pos_mod_13(k=3)', 'w_dist_next(k=3)', 'w_dist_prev(k=3)', 'w_signed_nearest(k=3)', 'priorA_mod_4(k=4)', 'priorA_mod_8(k=4)', 'pos_mod_8(k=4)', 'cc_mod_8(k=4)', 'pos_mod_12(k=4)'].",
+      "NON-trivially compatible (valid AND p<0.05 under a scrambled-edge control): ['priorA_mod_4', 'priorA_mod_8'] -- these are the ONLY position-feature selector families not dead a priori; every downstream positional search should use one of them or a non-positional rule.",
+      "Confirmed: pos_mod_m is NOT a valid selector for any m<=7; phillips_block_5x8 is INVALID (decides exp 069 admissibility); W-distance features ['w_dist_next', 'w_dist_prev', 'w_signed_nearest']."
+    ],
+    "next_steps": [
+      "restrict all downstream positional searches to the shortlisted selectors; if phillips_block valid -> run exp 069 SA; route remaining effort to non-positional rules (plaintext-letter/feedback) for the families with no compatible position-feature"
+    ],
+    "metrics": {
+      "valid_features": [
+        {
+          "feature": "pos_mod_11",
+          "valid": true,
+          "min_k": 3,
+          "n_values": 11,
+          "p_valid_by_chance": 0.288
+        },
+        {
+          "feature": "pos_mod_13",
+          "valid": true,
+          "min_k": 3,
+          "n_values": 13,
+          "p_valid_by_chance": 0.3883
+        },
+        {
+          "feature": "w_dist_next",
+          "valid": true,
+          "min_k": 3,
+          "n_values": 15,
+          "p_valid_by_chance": 0.4677
+        },
+        {
+          "feature": "w_dist_prev",
+          "valid": true,
+          "min_k": 3,
+          "n_values": 15,
+          "p_valid_by_chance": 0.475
+        },
+        {
+          "feature": "w_signed_nearest",
+          "valid": true,
+          "min_k": 3,
+          "n_values": 15,
+          "p_valid_by_chance": 0.489
+        },
+        {
+          "feature": "priorA_mod_4",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 4,
+          "p_valid_by_chance": 0.0033
+        },
+        {
+          "feature": "priorA_mod_8",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 6,
+          "p_valid_by_chance": 0.0123
+        },
+        {
+          "feature": "pos_mod_8",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 8,
+          "p_valid_by_chance": 0.0923
+        },
+        {
+          "feature": "cc_mod_8",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 8,
+          "p_valid_by_chance": 0.1027
+        },
+        {
+          "feature": "pos_mod_12",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 12,
+          "p_valid_by_chance": 0.3353
+        }
+      ],
+      "sharp_features": [
+        {
+          "feature": "priorA_mod_4",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 4,
+          "p_valid_by_chance": 0.0033
+        },
+        {
+          "feature": "priorA_mod_8",
+          "valid": true,
+          "min_k": 4,
+          "n_values": 6,
+          "p_valid_by_chance": 0.0123
+        }
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780028090.102633,
+    "_source": "2026-05-28_065_selector_characterization.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "071",
+    "title": "model-agnostic measurements (shift clustering, restricted shifts, entropy floor)",
+    "hypothesis": "the ciphertext+cribs carry model-agnostic structure that constrains the cipher",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "shift-table fit 12/24 within +/-1; entropy 4.33 (p99 3.88)",
+    "search_space": 24,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "(1) Shift-as-fn-of-plaintext: a single 26-entry shift table T (per-letter median) satisfies 8/24 cribs exactly, 12/24 within |delta|<=1, 16/24 within <=2. Per-letter spread (max-min) for multi-occurrence letters: {'E': 19, 'A': 1, 'S': 1, 'T': 23, 'N': 3, 'O': 15, 'R': 0, 'L': 4, 'C': 3}.",
+      "(2) The 24 cribs use 14/26 distinct shift values [0, 1, 2, 6, 9, 12, 13, 14, 15, 16, 20, 23, 24, 25]; fixed points (shift 0) at positions [33, 74]; P(<= 14 distinct by chance under uniform) = 0.191.",
+      "(3) Free-positions (73) unigram entropy = 4.332 bits; monoalphabetic-English-at-N p99 = 3.885, frac of English samples with entropy >= K4's = 0.000. Best autocorrelation offset = 7 (9 coincidences).",
+      "CONSTRAINT: K4's free-position entropy (4.33) exceeds the monoalphabetic-English null (p99=3.88) -- a flatness bound proving a polyalphabetic/fractionating stage is required (lower bound on period/order, analogous to chi=3)."
+    ],
+    "next_steps": [
+      "if shift-table fit strong: solve T over free positions and verify; use the entropy floor to set the minimum period in any future polyalphabetic sweep"
+    ],
+    "metrics": {
+      "shift_fit_within1": 12,
+      "free_entropy": 4.332,
+      "distinct_shifts": 14
+    },
+    "_verdict": true,
+    "ts": 1780028570.447475,
+    "_source": "2026-05-28_071_measurements.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "114",
+    "title": "homophonic chromatic number (chi_b) -- does a non-bijective chart need fewer alphabets?",
+    "hypothesis": "K4 is a homophonic chart cipher needing fewer than 3 decryption charts (chi_b < 3), which would also explain the frequency flattening",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "chi_full=3, chi_a=3, chi_b=2; homophonic_helps=True",
+    "search_space": 1,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Crib conflict chromatic numbers: chi_full (both conflict types, the published bound) = 3; chi_a (same-plaintext->diff-cipher only) = 3; chi_b (same-cipher->diff-plaintext only, the ONLY constraint on a homophonic decryption chart) = 2. Edge counts: a=12, b=10, both=22.",
+      "HOMOPHONIC LOOPHOLE OPEN: chi_b=2 < chi_full=3 -- a homophonic cipher (which is allowed the 12 'same-plaintext->different-cipher' conflicts as legitimate homophones) needs only 2 decryption charts, FEWER than the 3 proven for bijective alphabets. AND homophonic substitution flattens frequency (our Fact 2) by design. So K4 could be a 2-chart homophonic 'chart-based coding system' -- a model the bijective analysis (035/085/106) over-constrained.",
+      "a homophonic decryption chart is NON-injective, so its free (non-crib) cipher entries are unconstrained -> the free 73 positions are under-determined exactly as in the bijective case; homophony reduces the CHART COUNT but not the under-determination."
+    ],
+    "next_steps": [
+      "chi_b=2<3 -- build the homophonic 2-chart per-position model with a simple selector and test decrypt (note: free chart entries are still under-determined)"
+    ],
+    "metrics": {
+      "chi_full": 3,
+      "chi_a": 3,
+      "chi_b": 2,
+      "homophonic_helps": true
+    },
+    "_verdict": true,
+    "ts": 1780365497.1333241,
+    "_source": "2026-06-01_114_homophonic_chromatic.jsonl"
+  },
+  {
+    "exp": "115",
+    "title": "homophonic flatten floor -- does k=2 homophonic reach K4's entropy?",
+    "hypothesis": "a homophonic cipher flattens to K4's 4.33-bit entropy with <=2 charts, so a 2-chart homophonic model satisfies both hard facts (cribs chi_b=2 + flattening)",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "homophonic flatten floor k=2 (bijective k*=4); chi_b=2; relief=True",
+    "search_space": 5,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Homophonic flatten curve (best-case cipher entropy by chart count k): {1: 4.007, 2: 4.631, 3: 4.677, 4: 4.684, 5: 4.684}. K4's free-position entropy target = 4.33 bits (Fact 2). Homophonic flatten FLOOR (min k reaching it) = 2. Bijective-rotation floor (085) = k*=4.",
+      "RE-OPENED: a homophonic cipher flattens to K4's entropy with only k=2 chart(s) -- and 114 showed the cribs are satisfiable with chi_b=2 homophonic charts. So a 2-chart HOMOPHONIC model satisfies BOTH hard facts (cribs via chi_b=2, flattening via homophones) with FAR fewer charts than the bijective >=4 the squeeze assumed. The squeeze (082/085/106) is a BIJECTIVE-model bound; it does NOT bind a homophonic chart. This is a genuinely simpler, un-refuted model consistent with the 'chart-based coding system' description -- the strongest new lead since the structural bounds.",
+      "CAVEAT (kept in view): a homophonic chart is still non-injective with free non-crib entries, so DECRYPTION of the 73 free positions remains under-determined (092/093). But the MODEL is simpler (2 charts, both facts) and is the right next target: a crib-constrained 2-chart homophonic KPA."
+    ],
+    "next_steps": [
+      "build the crib-constrained 2-chart HOMOPHONIC KPA (exp 116): 2 non-injective charts + a simple selector, cribs pin entries, decrypt + score -- the squeeze does not bind this model"
+    ],
+    "metrics": {
+      "flatten_curve": {
+        "1": 4.007,
+        "2": 4.631,
+        "3": 4.677,
+        "4": 4.684,
+        "5": 4.684
+      },
+      "homophonic_floor": 2,
+      "chi_b": 2,
+      "relief": true
+    },
+    "_verdict": true,
+    "ts": 1780155454.853822,
+    "_source": "2026-05-30_115_homophonic_flatten_floor.jsonl"
+  },
+  {
+    "exp": "117",
+    "title": "enumerate proper 2-colourings of the b-conflict graph (homophonic crib-split space)",
+    "hypothesis": "the homophonic b-graph admits FAR FEWER crib-feasible colourings than the bijective 3-colouring space, narrowing the selector's crib-position freedom",
+    "status": "promising",
+    "best_score": null,
+    "best_partial": "512 structural 2-colourings (256 distinct chart-pairs) vs 23887872 bijective 3-colourings; narrows=True",
+    "search_space": 16384,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "b-conflict graph: 10 edges over 24 crib nodes. Connected structure: 9 edge-bearing component(s) (sizes [2, 2, 2, 2, 3, 2, 2, 2, 2]) + 5 isolated nodes. A proper 2-colouring is a crib-feasible split of the 24 crib positions into 2 homophonic charts.",
+      "COUNT (exact, factored over components): the forced splits give 512 structural 2-colourings (256 up to chart-swap); 256 DISTINCT pinned chart-pairs. With the 5 isolated crib nodes free to sit in either chart, the full 2-colouring count is 16,384. The bijective full graph admits 23,887,872 proper 3-colourings.",
+      "HOMOPHONIC NARROWS THE CRIB SPACE: the homophonic model's forced crib-split space (512 structural 2-colourings) is SMALLER than the bijective 3-colouring space (23,887,872). The cribs pin the 2-chart partition far more tightly than the bijective view could see -- the structural opening 116 hinted at, made quantitative.",
+      "SCOPE: this counts crib-feasible CHART PARTITIONS, not decryptions -- the 73 free positions still need a selector value and the charts' free (non-crib) entries are open (092/093 under-determination). 118 does the exact forced/free entry accounting per partition; 119 the determinacy floor + decrypt census."
+    ],
+    "next_steps": [
+      "118: under each distinct 2-colouring, count cipher->plain entries forced vs free per chart, and the selector-independent forced free-position set (exact, supersedes 098's sampling)",
+      "119: homophonic determinacy floor + decrypt census over the enumerated 2-colourings"
+    ],
+    "metrics": {
+      "n_b_edges": 10,
+      "n_2colorings_structural": 512,
+      "n_distinct_chart_pairs": 256,
+      "n_3colorings_full": 23887872,
+      "b_isolated": 5,
+      "narrows": true
+    },
+    "_verdict": true,
+    "ts": 1780365497.199766,
+    "_source": "2026-06-01_117_homophonic_2coloring_enumeration.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "080",
+    "title": "forward stage-structure classifier (calibrated on K1-K3)",
+    "hypothesis": "ciphertext-only statistics identify K4's stage structure / outermost-stage type",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "calibration_ok=False; K4 nearest=quagmire_7",
+    "search_space": 5400,
+    "elapsed_s": 0.4,
+    "solved_params": null,
+    "insights": [
+      "Calibration on known ciphers: K1->quagmire_5, K2->bifid, K3->columnar (expected quagmire/quagmire/columnar). Classifier trustworthy = False.",
+      "K4 nearest construction clouds: [('quagmire_7', 3.23), ('trifid', 3.32), ('sub_then_transpose', 3.33)].",
+      "FORWARD CONSTRAINT (exact, plaintext-invariant): K4 IoC=0.0361 is flattened (English ~0.066, transposition preserves it) -> the OUTERMOST stage is a flattener, NOT a pure transposition. K4 top5-mass=0.320 vs single-Quagmire centroid 0.365 -> K4 is FLATTER than a single substitution alphabet, evidence the flattening exceeds one alphabet (multi-alphabet / fractionation / composite outermost stage)."
+    ],
+    "next_steps": [
+      "use the forward bound (outermost stage flattens beyond one alphabet, is not pure transposition) to prune which composites get a backward KPA; re-apply to K5 when released"
+    ],
+    "metrics": {
+      "K4_top3": [
+        [
+          "quagmire_7",
+          3.2339988486188385
+        ],
+        [
+          "trifid",
+          3.3208261074713543
+        ],
+        [
+          "sub_then_transpose",
+          3.3300922215744624
+        ]
+      ],
+      "K4_features": [
+        4.5547809200742915,
+        0.03608247422680412,
+        0.31958762886597936,
+        0.0625,
+        0.0625,
+        0.042105263157894736,
+        0.0425531914893617,
+        0.053763440860215055,
+        0.03260869565217391,
+        0.03296703296703297,
+        0.1,
+        0.02247191011235955,
+        0.03409090909090909,
+        0.05747126436781609,
+        0.046511627906976744,
+        0.047058823529411764,
+        0.047619047619047616,
+        0.024096385542168676,
+        0.024390243902439025
+      ],
+      "calibration": false
+    },
+    "_verdict": true,
+    "ts": 1780034188.645767,
+    "_source": "2026-05-28_080_forward_stage_classifier.jsonl"
+  },
+  {
+    "exp": "092",
+    "title": "unicity-distance / identifiability analysis of K4",
+    "hypothesis": "with 97 letters + 24 cribs, K4's plaintext is uniquely determined for the hand-crafted multi-alphabet model it is forced into",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "measured D=3.62 b/char; hand-crafted unicity crossover at k=5 (flatten floor k*=4); collision=False",
+    "search_space": 6,
+    "elapsed_s": 0.2,
+    "solved_params": null,
+    "insights": [
+      "Measured English: order-6 conditional entropy rate r = 1.085 bits/char -> redundancy D = 3.616 bits/char (k-gram conditional entropies: {1: 4.19, 2: 3.62, 3: 3.14, 4: 2.48, 5: 1.71, 6: 1.08}). One arbitrary 26-letter alphabet carries log2(26!) = 88.4 bits.",
+      "UNICITY by model. Cheap 'k rotations of a keyed base' alphabets: [(1, 25.7), (2, 28.7), (3, 30.0), (4, 31.3), (5, 32.6), (6, 33.9)] bits-distance vs N=97 -> all solvable (U<<97) -- but 085/088 already RULED these out (no cheap/structured alphabet set fits the cribs and flattens).",
+      "HAND-CRAFTED alphabets (what 033/088 force). Under-determination gap (residual key bits MINUS the 264 bits of free-position English redundancy), by k: [(1, -262.9), (2, -185.3), (3, -100.4), (4, -13.6), (5, 69.4), (6, 161.6)]. Crossover to UNDER-DETERMINED at k = 5.",
+      "The hand-crafted unicity crossover (k=5) sits ABOVE the flatten floor (k*=4), so K4 may still be uniquely determined; an MDL search up to k* is warranted (exp 093)."
+    ],
+    "next_steps": [
+      "unicity crossover above k*=4 -> a unique solution may exist; build the MDL-regularized search (exp 093) up to k* with crib + n-gram fitness"
+    ],
+    "metrics": {
+      "r": 1.085,
+      "D": 3.616,
+      "crossover_k": 5,
+      "collision_with_flatten_floor": false,
+      "table": [
+        {
+          "k": 1,
+          "HK_handcrafted_bits": 88.4,
+          "U_handcrafted": 24.4,
+          "crib_pinned_bits": 87.4,
+          "residual_key_bits": 1.0,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": -262.9,
+          "uniquely_solvable_handcrafted": true,
+          "HK_rotations_bits": 93.1,
+          "U_rotations": 25.7,
+          "rotations_solvable": true
+        },
+        {
+          "k": 2,
+          "HK_handcrafted_bits": 182.8,
+          "U_handcrafted": 50.5,
+          "crib_pinned_bits": 104.1,
+          "residual_key_bits": 78.7,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": -185.3,
+          "uniquely_solvable_handcrafted": true,
+          "HK_rotations_bits": 103.8,
+          "U_rotations": 28.7,
+          "rotations_solvable": true
+        },
+        {
+          "k": 3,
+          "HK_handcrafted_bits": 271.1,
+          "U_handcrafted": 75.0,
+          "crib_pinned_bits": 107.6,
+          "residual_key_bits": 163.5,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": -100.4,
+          "uniquely_solvable_handcrafted": true,
+          "HK_rotations_bits": 108.5,
+          "U_rotations": 30.0,
+          "rotations_solvable": true
+        },
+        {
+          "k": 4,
+          "HK_handcrafted_bits": 359.5,
+          "U_handcrafted": 99.4,
+          "crib_pinned_bits": 109.2,
+          "residual_key_bits": 250.3,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": -13.6,
+          "uniquely_solvable_handcrafted": true,
+          "HK_rotations_bits": 113.2,
+          "U_rotations": 31.3,
+          "rotations_solvable": true
+        },
+        {
+          "k": 5,
+          "HK_handcrafted_bits": 447.9,
+          "U_handcrafted": 123.9,
+          "crib_pinned_bits": 114.6,
+          "residual_key_bits": 333.3,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": 69.4,
+          "uniquely_solvable_handcrafted": false,
+          "HK_rotations_bits": 117.9,
+          "U_rotations": 32.6,
+          "rotations_solvable": true
+        },
+        {
+          "k": 6,
+          "HK_handcrafted_bits": 536.3,
+          "U_handcrafted": 148.3,
+          "crib_pinned_bits": 110.7,
+          "residual_key_bits": 425.6,
+          "free_redundancy_bits": 263.9,
+          "underdetermination_gap_bits": 161.6,
+          "uniquely_solvable_handcrafted": false,
+          "HK_rotations_bits": 122.6,
+          "U_rotations": 33.9,
+          "rotations_solvable": true
+        }
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780084736.927837,
+    "_source": "2026-05-29_092_unicity_identifiability.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "093",
+    "title": "max-likelihood decipherment + degeneracy census (tests exp 092)",
+    "hypothesis": "a crib-consistent max-likelihood (most-English) decryption under a few hand-crafted alphabets singles out K4's plaintext",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "0 simple proper selectors; distinct-English-by-k {3: 1, 4: 10, 5: 21, 6: 25}; empirical crossover k=4; best hex -14.11 vs English bar -16.21",
+    "search_space": 120,
+    "elapsed_s": 9.5,
+    "solved_params": null,
+    "insights": [
+      "PART A (support): of 8 simple low-MDL position selectors, 0 properly colour the chi=3 crib conflict graph -> NONE. With NONE, a max-likelihood search over SIMPLE-selector full-alphabet models has EMPTY support: the only crib-valid selectors are arbitrary/idiosyncratic colourings (re-confirms 085/090).",
+      "PART B (degeneracy census SWEPT over alphabet count k, the empirical complement to 092). Distinct crib-consistent plaintexts reaching the real-English bar (-16.21), by k: {3: 1, 4: 10, 5: 21, 6: 25}. Best free-hex by k: {3: -15.88, 4: -14.96, 5: -14.4, 6: -14.11} (real-English mean -14.61).",
+      "EMPIRICAL CROSSOVER at k=4: below it the model cannot manufacture English (crib-constrained, well-determined); at/above it many distinct English-statistic decrypts appear (free alphabet/selector entries manufacture English) -> n-gram max-likelihood cannot single out THE plaintext. This MATCHES 092's analytic unicity crossover (k=5 over-determined, k=4 ~14-bit margin): the degeneracy turns on right where the information runs out.",
+      "DICHOTOMY: no SIMPLE selector is crib-valid (Part A), and the VALID arbitrary-selector model is either well-determined-but-unsolvable-without-the-key (low k) or degenerate (high k) (Part B). So an n-gram max-likelihood search is structurally insufficient for K4 -- exactly what the unicity result (092) predicts. Progress now requires a constraint OUTSIDE letter-statistics."
+    ],
+    "next_steps": [
+      "092+093 establish K4 is under-determined for n-gram cryptanalysis. The only honest levers: (a) a Sanborn DOMAIN prior that is public & decipherment-legal (Berlin-Clock-derived selector/keystream, exp 094); (b) a far stronger SEMANTIC language prior to break ties among English-statistic decrypts; (c) write up the rigorous bounded/under-determined negative. No further single-cipher KPA will help."
+    ],
+    "metrics": {
+      "proper_simple": [],
+      "n_distinct_by_k": {
+        "3": 1,
+        "4": 10,
+        "5": 21,
+        "6": 25
+      },
+      "best_hex_by_k": {
+        "3": -15.88,
+        "4": -14.96,
+        "5": -14.4,
+        "6": -14.11
+      },
+      "empirical_crossover_k": 4,
+      "best_hex": -14.11,
+      "english_bar": -16.21
+    },
+    "_verdict": true,
+    "ts": 1780085280.192728,
+    "_source": "2026-05-29_093_mdl_maxlikelihood_decipher.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "098",
+    "title": "partial / consensus determination of free positions",
+    "hypothesis": "some free positions are pinned by crib-letter reuse and recoverable even though the whole plaintext is under-determined",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "0 free positions consensus-determined at >=50% (0 at >=90%) of 73; 30 free positions even contain a crib letter",
+    "search_space": 4000,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Crib dictionary: 14 distinct ciphertext letters are crib-mapped, 5 UNAMBIGUOUSLY (single plaintext target). Of the 73 free positions, 30 have a ciphertext letter that appears in the cribs (9 unambiguously) -- these are the only free positions that can EVER be pinned by crib-letter reuse.",
+      "CONSENSUS over 4000 crib-valid models (proper 3-colouring x uniform free class assignment): a free position is 'consensus-determined' when one forced letter dominates. Counts -- >=50% conf: 0; >=70%: 0; >=90%: 0 of 73 free positions.",
+      "Skeleton (cribs UPPER, >=50%-confident free positions lower, undetermined '\u00b7'):\n  \u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7EASTNORTHEAST\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7BERLINCLOCK\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7",
+      "At >=90% confidence the determined free letters are essentially only those whose ciphertext letter is pinned in EVERY class it appears in -- 0 positions. The remaining 73 free positions are genuinely under-determined (consistent with 092/093): no amount of cribs + selector marginalisation fixes them. This is the honest partial recovery -- a real skeleton, far short of the plaintext, and a quantified floor on how little the cribs alone determine."
+    ],
+    "next_steps": [
+      "the consensus skeleton is a quantified partial recovery; combine with a register prior (097) to constrain the undetermined positions, or accept it as the determinable floor. Remaining mechanism probe: the interruptor keystream (exp 099)"
+    ],
+    "metrics": {
+      "n_free": 73,
+      "consensus_ge50": 0,
+      "consensus_ge70": 0,
+      "consensus_ge90": 0,
+      "free_with_cribletter": 30,
+      "unambiguous_cipher_letters": 5
+    },
+    "_verdict": true,
+    "ts": 1780098050.3357189,
+    "_source": "2026-05-29_098_consensus_determination.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "106",
+    "title": "CP-SAT joint selector falsification (squeeze as solver-proven statements)",
+    "hypothesis": "some closed-form selector admits a crib-consistent decryption that is uniquely English",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "11/12 crib-infeasible; 1/1 feasible-and-degenerate; English bar 26/96 bigrams",
+    "search_space": 12,
+    "elapsed_s": 1.5,
+    "solved_params": null,
+    "insights": [
+      "OR-Tools CP-SAT joint falsification over 12 closed-form selectors (i%m m=2-8, row-7, non-vowel clock, prior-A). Real-English common-bigram density: mean 34.3/96, 5th-pct bar 26. Per selector, CP-SAT maximises crib-consistent common-bigram count to provable optimum.",
+      "RESULT: 11/12 selectors are CRIB-INFEASIBLE (CP-SAT proves no k-alphabet decryption satisfies the cribs -- they are not proper colourings, confirming 093 Part A). Of the 1 feasible selectors, 1 reach English-bigram density -- i.e. DEGENERATE (English manufacturable), confirming the 093 degeneracy.",
+      "Per-selector: [('i%2', 'infeasible', None), ('i%3', 'infeasible', None), ('i%4', 'infeasible', None), ('i%5', 'infeasible', None), ('i%6', 'infeasible', None), ('i%7', 'infeasible', None), ('i%8', 'optimal', 67), ('row7%3', 'infeasible', None), ('cc%3', 'infeasible', None), ('priorA3', 'infeasible', None), ('priorA4', 'infeasible', None), ('(i+cc)%4', 'infeasible', None)].",
+      "THE SQUEEZE, SOLVER-PROVEN: no closed-form selector is BOTH crib-feasible AND English-determined -- feasible selectors are degenerate (high-k, English manufacturable) and crib-determined-only selectors are infeasible (cannot 3-colour). CP-SAT converts the empirical squeeze (082/085/093) into a deterministic per-family proof. No selector family yields a unique English decryption."
+    ],
+    "next_steps": [
+      "the squeeze is now CP-SAT-proven per selector family; pair with HMM/MCMC joint estimation (C) and the Sanborn-prior degeneracy census (D)"
+    ],
+    "metrics": {
+      "n_selectors": 12,
+      "n_infeasible": 11,
+      "n_feasible_reach_english": 1,
+      "english_p05": 26,
+      "results": [
+        {
+          "selector": "i%2",
+          "k": 2,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%3",
+          "k": 3,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%4",
+          "k": 4,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%5",
+          "k": 5,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%6",
+          "k": 6,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%7",
+          "k": 7,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "i%8",
+          "k": 8,
+          "cpsat_status": "optimal",
+          "max_common_bigrams": 67,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": true
+        },
+        {
+          "selector": "row7%3",
+          "k": 3,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "cc%3",
+          "k": 3,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "priorA3",
+          "k": 3,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "priorA4",
+          "k": 4,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        },
+        {
+          "selector": "(i+cc)%4",
+          "k": 4,
+          "cpsat_status": "infeasible",
+          "max_common_bigrams": null,
+          "english_mean": 34.3,
+          "english_p05_bar": 26,
+          "reaches_english": false
+        }
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780120334.737411,
+    "_source": "2026-05-29_106_cpsat_selector_falsification.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "107",
+    "title": "MCMC joint substitution+selector posterior estimation",
+    "hypothesis": "a Bayesian MCMC/HMM estimator localises K4's plaintext where point-optimisation could not",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "mean marginal posterior entropy 4.09/4.7 bits; 0/73 positions <1 bit; 0 distinct English in posterior",
+    "search_space": 4800,
+    "elapsed_s": 2.9,
+    "solved_params": null,
+    "insights": [
+      "MCMC (Metropolis-Hastings, beta=6.0, 6 chains, 4800 thinned samples) over the joint (free-position selector class x k=4 hand-crafted alphabets) posterior, cribs enforced via a fixed proper 3-colouring. Classical sampler, no LLM.",
+      "BAYESIAN UNDER-DETERMINATION: mean per-free-position marginal posterior entropy = 4.09 bits (max 4.70); only 0/73 free positions are near-determined (<1 bit). 0 distinct English-level decryptions appear in the posterior.",
+      "The posterior is DIFFUSE (mean marginal entropy 4.09 bits ~ near-uniform) -- the cribs + ciphertext do not localise the plaintext; the MCMC/HMM estimator CONFIRMS the under-determination (092/093/098) from a Bayesian angle, by a method (posterior sampling) distinct from the 093 optimisation and the 106 CP-SAT proof."
+    ],
+    "next_steps": [
+      "MCMC confirms the diffuse posterior; the under-determination is now shown three ways (092 analytic, 093 optimisation, 106 CP-SAT, 107 Bayesian). A sharper plaintext prior (Sanborn-conditioned, exp 108) is the only remaining lever within decipherment-only"
+    ],
+    "metrics": {
+      "mean_marginal_entropy": 4.095,
+      "positions_below_1bit": 0,
+      "n_free": 73,
+      "n_distinct_english": 0,
+      "diffuse": true
+    },
+    "_verdict": true,
+    "ts": 1780120583.7736251,
+    "_source": "2026-05-29_107_mcmc_joint_posterior.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "116",
+    "title": "2-chart homophonic model: simple-selector feasibility + decrypt census",
+    "hypothesis": "a 2-chart homophonic K4 with a SIMPLE 2-class selector is crib-feasible (where the bijective model was not) and may decrypt uniquely",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "0/9 simple selectors 2-colour the b-graph (bijective had 0); distinct English 0; best hex -99.00",
+    "search_space": 9,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "b-conflict graph (same-cipher->different-plaintext): 10 edges, chi_b=2 (exp 114). Of 9 simple 2-class selectors, 0 properly 2-COLOUR it: NONE. (Contrast 106: ZERO simple selectors 3-colour the bijective graph -- so homophony genuinely opens simple-selector feasibility where the bijective model had none.)",
+      "No simple selector 2-colours the b-graph; an idiosyncratic 2-colouring would be needed.",
+      "STATUS OF THE HOMOPHONIC THREAD: a 2-chart homophonic model satisfies both hard facts (114 chi_b=2, 115 flatten floor 2) AND needs an idiosyncratic selector."
+    ],
+    "next_steps": [
+      "the 2-chart homophonic model is simple-selector-feasible and matches both facts -- the most viable model found; decryption multiplicity is the remaining gap. Next: constrain the free homophonic entries with a stronger (deterministic) plaintext prior, or enumerate the feasible selectors' decryptions for a thematic/crib-extended filter"
+    ],
+    "metrics": {
+      "chi_b": 2,
+      "n_feasible_simple_selectors": 0,
+      "feasible": [],
+      "total_distinct_english": 0,
+      "best_hex": -99.0,
+      "best_selector": null
+    },
+    "_verdict": true,
+    "ts": 1780155556.190078,
+    "_source": "2026-05-30_116_homophonic_simple_selector.jsonl"
+  },
+  {
+    "exp": "118",
+    "title": "crib-extended homophonic KPA -- exact forced/free entry & position accounting",
+    "hypothesis": "under the 2-chart homophonic model the cribs force a larger guaranteed-determined free-position set than the bijective 3-chart model (098), because 2 charts each cover more crib letters",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "forced-both 0-0/73 per colouring; 0 guaranteed across all 16384 colourings; ~14.5 free entries/chart",
+    "search_space": 16384,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Cribs hold 23 distinct (cipher->plain) pairs over 14 distinct cipher letters; 9 cipher letters are AMBIGUOUS (map to >1 plaintext: {'F': ['E', 'O'], 'R': ['S', 'T'], 'V': ['L', 'T'], 'Q': ['N', 'O'], 'P': ['C', 'R'], 'N': ['B', 'H'], 'K': ['A', 'K'], 'S': ['S', 'T'], 'T': ['I', 'N']}) -- these are exactly what force the 9 b-graph splits. Enumerated all 16,384 crib-feasible 2-colourings (exact, no sampling).",
+      "PER-CHART ENTRY ACCOUNTING: each homophonic chart has 26 cipher->plain entries; the cribs FORCE 9-14 of them in chart 0 and 9-14 in chart 1 (median 11.5/11.5), leaving ~14.5/14.5 entries FREE per chart. Non-injective free entries are the residual degrees of freedom (092/093).",
+      "FREE-POSITION DETERMINATION (of 73 free positions): per colouring, 0-0 are forced REGARDLESS of selector (cipher letter pinned identically in both charts); 30-30 are forced only on one selector branch. 30 free positions are touched by a crib letter at all.",
+      "GUARANTEED DETERMINED FLOOR: 0 free positions are forced to ONE consistent letter across ALL 16,384 crib-feasible colourings -- selector- AND colouring-independent. This is the exact homophonic determination floor; compare 098's bijective 3-chart consensus (sampled). The remaining free positions stay under-determined: the homophonic model escapes the bijective squeeze structurally (117) but the free chart entries leave decryption multiplicity (the honest gap)."
+    ],
+    "next_steps": [
+      "119: homophonic determinacy floor as a per-position probability over the full model space (exact enumeration) head-to-head with 098, plus a decrypt-multiplicity census"
+    ],
+    "metrics": {
+      "n_colourings": 16384,
+      "n_guaranteed_determined": 0,
+      "forced_both_max": 0,
+      "free_entries_per_chart_median": [
+        14.5,
+        14.5
+      ],
+      "ambiguous_cipher_letters": [
+        "F",
+        "R",
+        "V",
+        "Q",
+        "P",
+        "N",
+        "K",
+        "S",
+        "T"
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780165857.4838688,
+    "_source": "2026-05-30_118_homophonic_crib_kpa.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "119",
+    "title": "homophonic-aware consensus determination (098 redone for the 2-chart model)",
+    "hypothesis": "the 2-chart homophonic model's smaller chart count lifts the consensus-determined free-position floor above the bijective model's 0 (098)",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "homophonic consensus strictly >50%:0 >=70%:0 =100%:0/73 (max consensus 0.50; the 30 at '>=50%' are all exactly 0.5 coin-flips); bijective 098: 0",
+    "search_space": 32768,
+    "elapsed_s": 0.3,
+    "solved_params": null,
+    "insights": [
+      "Exact marginal over the full 2-chart homophonic model space (16,384 crib-feasible colourings x 2 chart choices per free position = 32,768 instances; no sampling). Diagnostics match 098: 5 unambiguous crib cipher letters, 30 free positions carry a crib letter (9 unambiguously).",
+      "HOMOPHONIC CONSENSUS: >=50%: 30; STRICTLY >50%: 0; >=70%: 0; >=90%: 0; =100%: 0 of 73 free positions. MAX consensus over all free positions = 0.500. The 30 positions counted at '>=50%' are ALL at EXACTLY 0.5 -- a coin-flip, not a determination. NOTHING exceeds a coin-flip.",
+      "WHY exactly 0.5 (and why 098 got 0): a single-instance crib cipher letter is pinned in exactly 1 of the 2 homophonic charts, so over (colouring x chart-choice) it forces its letter in exactly 1/2 of instances; in the bijective 3-chart model the same letter is pinned in 1 of 3 charts -> 1/3 < 0.5, which is why 098 reported 0 at >=50%. The only change from 098 is 1/2 vs 1/3 -- the 2-chart count lands single-instance letters exactly ON the 0.5 boundary. Ambiguous letters split their two plaintexts so their dominant letter also caps at <=0.5. No free position is determined above a coin-flip in either model.",
+      "Honest skeleton (cribs UPPER, free positions STRICTLY better than a coin-flip lower, rest middot):\n  \u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7EASTNORTHEAST\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7BERLINCLOCK\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\n  (every free slot is middot -- nothing is determined.)",
+      "HEAD-TO-HEAD VERDICT: the homophonic reframe narrows the crib-PARTITION space ~47000x (117) and pins ~half of each chart's entries (118), yet the free-position determinacy floor is UNCHANGED from the bijective model -- nothing is determined above a coin-flip. Under-determination of the 73 free positions (092/093/098) is now confirmed MODEL-ROBUST: it holds exactly for the 2-chart homophonic model. The homophonic model is structurally the most viable (both hard facts, far fewer colourings) but decryption still requires information BEYOND the cribs -- a stronger deterministic plaintext constraint, not more crib/selector algebra."
+    ],
+    "next_steps": [
+      "under-determination is model-robust (bijective AND homophonic): the cribs determine NO free position above a coin-flip under any chart model. The only remaining lever is a stronger DETERMINISTIC plaintext prior over the free positions, not more crib/selector algebra"
+    ],
+    "metrics": {
+      "n_colourings": 16384,
+      "consensus_ge50_coinflip": 30,
+      "consensus_gt50_strict": 0,
+      "consensus_ge70": 0,
+      "consensus_eq100": 0,
+      "max_consensus": 0.5,
+      "avg_pinned_fraction": 0.349,
+      "bijective_098_ge50": 0
+    },
+    "_verdict": true,
+    "ts": 1780365497.565289,
+    "_source": "2026-06-01_119_homophonic_consensus.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "120",
+    "title": "diagnostic gate -- FP/mask-budget, free-cell coupling, 30/43 split",
+    "hypothesis": "cheap structural diagnostics re-price the homophonic attack menu: the mask budget, the joint-decode cell dimension, and the exact selector-locked/prior-determined split",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "FP/mask-pass 2^-10 (N_max=52); 43 free cells (not 73); split 30 selector-locked / 43 prior-determined",
+    "search_space": 16384,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "(A) COLOURING-PASS FP RATE = 0.000976562 = 2^-10.0 (check 16384/2^24 = 0.000976562). Per-component: eight 2-cliques at p=1/2, one 3-node path at p=1/4, five isolated at p=1. => A random selector mask 2-colours the cribs ~0.1% of the time. MASK BUDGET: testing up to N_max=52 structured masks keeps the family-wise colouring-pass false positive under 5% -- beyond that, a colouring-pass is expected by chance and must clear the decrypt null (106/111), not just the colouring test.",
+      "(B) FREE-CELL COUPLING: the 73 free positions use 22 distinct ciphertext letters; the joint chart-aware decode therefore has at most 43 free cells (chart x cipher-letter) -- NOT 73 independent letters. 1 ciphertext letter(s) occur once among free positions. This 43-cell space (vs 73) is the true dimension of T1-A/T2-E and the ceiling on what a joint n-gram decode can resolve.",
+      "(C) THE SPLIT (exact): 30 SELECTOR-LOCKED free positions (ciphertext letter is crib-pinned -> chart entry known -> only the selector bit free -> 0.50 coin-flip; movable ONLY by a selector-coupled M1/M2 fact) and 43 PRIOR-DETERMINED (ciphertext letter never in cribs -> both chart entries free -> decided by the deterministic plaintext prior). Path A owns the 43; Path B (selector-coupled) owns the 30.",
+      "(C-proxy) Of the 43 prior-determined positions, 0 are singletons (unique free cipher letter -> decided by n-gram CONTEXT alone, no cross-position tie) and the rest fall in 12 tied groups (decided JOINTLY -- repeated cipher letter forces equal plaintext within a chart). Tied groups are where the homophonic structure adds decode leverage beyond a plain per-position n-gram."
+    ],
+    "next_steps": [
+      "T1-B selector-mask harness must cap at N_max masks and clear the decrypt null, not just the colouring test (122)",
+      "T1-A chart-tie + T2-E joint decode operate over the 43-cell space, not 73 letters (121/124)",
+      "Path A (plaintext prior) targets the 43 prior-determined; Path B (selector-coupled) targets the 30 selector-locked -- build both, they are disjoint"
+    ],
+    "metrics": {
+      "colouring_pass_fp_rate": 0.0009765625,
+      "mask_budget_N_max": 52,
+      "max_free_cells": 43,
+      "n_selector_locked": 30,
+      "n_prior_determined": 43,
+      "prior_determined_singletons": 0
+    },
+    "_verdict": true,
+    "ts": 1780169048.989825,
+    "_source": "2026-05-30_120_diagnostic_gate.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "124",
+    "title": "joint chart-aware decode -- per-position stability confirms the 30/43 split",
+    "hypothesis": "under the joint n-gram decode the 43 prior-governed positions converge (language pins them) while the 30 selector-locked stay split -- the 120 decomposition, measured",
+    "status": "inconclusive",
+    "best_score": null,
+    "best_partial": "best free-hex -12.94; 80 English (80 distinct); entropy prior 3.190005924991011 vs locked 1.0753652015428534 (confirmed=False, n_ok=True)",
+    "search_space": 80,
+    "elapsed_s": 5.1,
+    "solved_params": null,
+    "insights": [
+      "Joint decode (strongest tried): 80 restarts, each a JOINT SA over the free chart cells AND the 73 free-position selector bits; best free-hex -12.94; 80 reached the English bar (80 distinct decrypts). The distinct count is the honest residual-ambiguity measure of the homophonic decode.",
+      "PER-POSITION STABILITY across 80 English decrypts -- mean letter ENTROPY: prior-governed (43) = 3.190005924991011 bits vs selector-locked (30) = 1.0753652015428534 bits; mean MODE-FRACTION: prior 0.22936046511627908 vs locked 0.7025. Prior-determined are NOT cleanly more determined than selector-locked on this ensemble -- the joint SA collapses each restart to a different local fluent optimum, so per-position entropy reflects the decode's multiplicity, not the structural split.",
+      "HONEST SCOPE: this MEASURES residual ambiguity; it does not pin the plaintext. The selector-locked 30 stay at a coin-flip (119, 121-123); a stronger non-saturating prior (PPM/word-level) is the open Path-A lever for the 43 prior-governed positions, but cannot touch the 30 -- those need an EXTERNAL per-position selector fact, which 121/122/123 showed is neither a chart-tie, the clock, nor a message-internal autokey."
+    ],
+    "next_steps": [
+      "Path A: swap the saturating hexagram for a PPM/word-level prior to sharpen the 43 prior-governed positions; the 30 selector-locked remain blocked pending an external per-position selector fact (engraving layout / 5th positional crib)"
+    ],
+    "metrics": {
+      "distinct_english": 80,
+      "mean_entropy_prior_governed": 3.19,
+      "mean_entropy_selector_locked": 1.075,
+      "decomposition_confirmed": false
+    },
+    "_verdict": true,
+    "ts": 1780169062.601734,
+    "_source": "2026-05-30_124_joint_decode_stability.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "125",
+    "title": "sharper deterministic prior (backoff char-LM + word-level) over the 43 prior-governed",
+    "hypothesis": "a non-saturating backoff char-LM / word-level prior collapses the residual ambiguity of the 43 prior-governed free positions that the saturating hexagram left wide open (124)",
+    "status": "inconclusive",
+    "best_score": -3.003,
+    "best_partial": "entropy_prior 3.38 (hexagram 3.19); distinct 60/60; best -25.2\u03c3, word-cov 72%; collapsed=False",
+    "search_space": 60,
+    "elapsed_s": 12.5,
+    "solved_params": null,
+    "insights": [
+      "Sharper prior = stupid-backoff char-LM (maxn=7, non-saturating; the allowed char-LM class). Real-English 97-char windows score mean -0.54\u00b10.10. Best joint-decode score -3.00 (-25.2\u03c3 vs English), word-coverage 72%. Over 60 restarts: 60 distinct decrypts (20 distinct among the top-20).",
+      "RESIDUAL AMBIGUITY head-to-head vs 124's saturating hexagram: per-position entropy of the PRIOR-GOVERNED 43 = 3.38 (all) / 2.84 (top-20) vs hexagram's 3.19; SELECTOR-LOCKED 30 = 1.15 / 0.97 vs hexagram's 1.08. The sharper prior does NOT collapse the 43: even a smooth non-saturating char-LM leaves the prior-governed positions highly ambiguous. The under-determination of the 43 is information-theoretic (the homophonic flattening destroyed the per-position signal), not a weakness of the hexagram floor.",
+      "WORD-LEVEL check: best decrypt segments 72% into dictionary words. Char-statistical fluency does not imply word-level English here; many distinct decrypts share similar char-LM scores -- the hallmark of genuine under-determination, not a scorer artifact.",
+      "VERDICT ON LEVER 1: a sharper deterministic prior does NOT break the 43; combined with 121-123 (selector mechanisms closed for the 30), NO admissible deterministic lever in hand resolves K4's free positions. The remaining levers are genuinely external (engraving layout / 5th positional crib, exp 126) -- not more priors or selector algebra."
+    ],
+    "next_steps": [
+      "the 43 are information-theoretically under-determined by char-level priors too; Path A is effectively exhausted for unique recovery. Only an external per-position selector fact (126) can advance the 30, and only a higher-order semantic constraint (disallowed: LLM) could further bias the 43"
+    ],
+    "metrics": {
+      "entropy_prior_all": 3.385,
+      "entropy_prior_top20": 2.836,
+      "entropy_locked_all": 1.147,
+      "distinct_all": 60,
+      "best_sigma": -25.23,
+      "best_word_coverage": 0.722,
+      "collapsed_43": false
+    },
+    "_verdict": true,
+    "ts": 1780178001.048005,
+    "_source": "2026-05-30_125_sharper_prior_43.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "128",
+    "title": "Ventris-style hypothesized thematic cribs -- cascade + self-confirmation test",
+    "hypothesis": "a hypothesized thematic crib word, slotted into a free window, cascades through the homophonic chart cells and self-confirms (makes other positions read as English) better than a random word -- the Linear-B decipherment move applied to K4",
+    "status": "inconclusive",
+    "best_score": -13.44,
+    "best_partial": "consistency 685/4012 (null 636/4012); cascade max 19 (null 19); self-confirm -13.44 vs null -13.53; lead=False",
+    "search_space": 8024,
+    "elapsed_s": 6.0,
+    "solved_params": null,
+    "insights": [
+      "Tested 70 context-derived thematic crib words (direction/Berlin/clock theme + public K1-K3 narrative) across 4012 free-window placements; a random-word null of matched lengths gives 4012 placements. CONSISTENCY (extended b-graph stays 2-colourable): thematic 685/4012 (17%) vs null 636/4012 (16%). As expected the homophonic model is PERMISSIVE -- consistency alone does not privilege a thematic guess.",
+      "CASCADE (Ventris reach: free positions a word newly anchors): thematic max 19 mean 8.24 vs null max 19 mean 8.33. Privileged over null: False. Thematic cribs do not cascade further than random length-matched strings: the reach is a function of WHICH cipher letters a word's positions carry, not of the word's meaning.",
+      "SELF-CONFIRMATION (hex at positions OUTSIDE the hypothesized word, best of top-18 by cascade): thematic -13.44 vs null -13.53 (English bar -15.0). Fit privileged: False. No thematic crib makes the rest read as English better than a random word does: pinning a thematically-plausible word HERE does not make the text read THERE. The Ventris cascade does not close -- consistent with the proven under-determination (the cribs+guessing do not lock K4).",
+      "VERDICT: the Ventris move does NOT break K4. Unlike Linear B -- where place-names cascaded through Kober's grid and self-confirmed on the tripod tablet -- K4's homophonic grid is too permissive and its redundancy too exhausted for a hypothesized crib to cascade or self-confirm above chance. This is the negative the Linear-B analogy predicts: the missing information is genuinely external (a measured selector or a Sanborn-released 5th positional crib), not recoverable by thematic guessing."
+    ],
+    "next_steps": [
+      "hypothesized thematic cribs do not cascade/self-confirm above a random-word null; the Ventris move is exhausted. The missing information is external (measured selector or 5th positional crib), exactly as the under-determination result predicts"
+    ],
+    "metrics": {
+      "consistent_thematic": 685,
+      "consistency_rate_null": 0.159,
+      "cascade_thematic_max": 19,
+      "cascade_null_max": 19,
+      "self_confirm_thematic_best": -13.44,
+      "self_confirm_null_best": -13.53,
+      "cascade_privileged": false,
+      "fit_privileged": false,
+      "lead": false
+    },
+    "_verdict": true,
+    "ts": 1780197965.4301,
+    "_source": "2026-05-30_128_ventris_hypothesized_cribs.jsonl",
+    "category": "knowledge"
+  },
+  {
+    "exp": "043",
+    "title": "substitution-then-keyed-columnar-transposition",
+    "hypothesis": "K4 = periodic substitution then a final keyed columnar transposition (K3's mask reused)",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable pairings; 0 with minL<=16",
+    "search_space": 340200,
+    "elapsed_s": 42.6,
+    "solved_params": null,
+    "insights": [
+      "Tested 340,200 (width,order,alpha,conv) pairings; 0 were consistent at a fully-pinned period L<= 20 (decryptable). Best free-position hexagram = -99.00/char (English ~-13, gibberish ~-24).",
+      "min-consistent-L histogram (lower=more constrained): {}",
+      "No decryptable pairing yields English; substitution-then-columnar-shred is closed for these widths. The transposition relabelling does not recover a short clean period that decrypts to English."
+    ],
+    "next_steps": [
+      "push decryptable best with free-slot hill-climb",
+      "compose with exp 049 Weltzeituhr column order; try rail/zigzag routes (exp 052)"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780017505.871496,
+    "_source": "2026-05-28_043_substitution_then_transposition.jsonl"
+  },
+  {
+    "exp": "044",
+    "title": "null-deletion / misspelling period restoration",
+    "hypothesis": "K4 is a short-period substitution with a few inserted null ciphertext letters",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable; 0 minL<=16",
+    "search_space": 64897,
+    "elapsed_s": 7.3,
+    "solved_params": null,
+    "insights": [
+      "Tested 64,897 deletion sets (1-3 nulls from the 73 non-crib positions); 0 decryptable at fully-pinned L<= 20. Best hexagram = -99.00/char.",
+      "min-consistent-L histogram: {}",
+      "Removing up to N salted nulls does not restore a short periodic substitution that decrypts to English. The period-displacement-by-nulls hypothesis is closed at this depth."
+    ],
+    "next_steps": [
+      "extend to quad deletions (--max-deletions 4); try deletions of crib-adjacent positions"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780017508.906568,
+    "_source": "2026-05-28_044_null_deletion_restoration.jsonl"
+  },
+  {
+    "exp": "045",
+    "title": "sub-uniform IoC discriminator + keyed fractionation KPA",
+    "hypothesis": "K4's sub-uniform IoC is a fractionation signature; a length-preserving keyed fractionation fits",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable fractionation configs",
+    "search_space": 800,
+    "elapsed_s": 0.2,
+    "solved_params": null,
+    "insights": [
+      "K4 IoC 0.0361 is nominally sub-uniform (< 0.03846), BUT 23% of random 97-char strings are also at/below it -- at N=97 the sub-uniform IoC is small-sample noise, NOT a fractionation signature. The idea-#3 premise does not survive the exact small-sample null.",
+      "Every tested family (random, Q3 L>=7, Trifid, 2x13/13x2 fractionation) has 0.0361 inside its N=97 IoC distribution; IoC does not discriminate among them.",
+      "KeyedFractionation KPA: 0 crib-consistent configs, 0 fully-pinned/decryptable; best hexagram -99.00/char (no English).",
+      "RULING: K4's IoC carries no structural information at this length; stop using 'sub-uniform IoC => fractionation' as a motivation. The 2x13/13x2 keyed fractionation is over-constrained by the cribs (0 consistent configs)."
+    ],
+    "next_steps": [
+      "if fractionation implicated: search more grids (BERLINCLOCK fills, route-filled grids) and add a free-slot hill-climb; combine with exp 046 alphabets",
+      "compute the EXACT small-sample IoC null for N=97 to confirm 0.0361 is not just random tail"
+    ],
+    "metrics": {
+      "best": null,
+      "ioc_report": {
+        "random_uniform": {
+          "mean": 0.03831,
+          "stdev": 0.00281,
+          "min": 0.03222,
+          "max": 0.04983,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.23
+        },
+        "Q3_L3": {
+          "mean": 0.04781,
+          "stdev": 0.00648,
+          "min": 0.03544,
+          "max": 0.0857,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.003
+        },
+        "Q3_L5": {
+          "mean": 0.04401,
+          "stdev": 0.00446,
+          "min": 0.03286,
+          "max": 0.07388,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.011
+        },
+        "Q3_L7": {
+          "mean": 0.04056,
+          "stdev": 0.00335,
+          "min": 0.03351,
+          "max": 0.0552,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.068
+        },
+        "Q3_L9": {
+          "mean": 0.04087,
+          "stdev": 0.00326,
+          "min": 0.03372,
+          "max": 0.05176,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.054
+        },
+        "Q3_L12": {
+          "mean": 0.04123,
+          "stdev": 0.00345,
+          "min": 0.03393,
+          "max": 0.05455,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.046
+        },
+        "Trifid_p5": {
+          "mean": 0.04078,
+          "stdev": 0.00314,
+          "min": 0.03329,
+          "max": 0.05219,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.044
+        },
+        "Trifid_p7": {
+          "mean": 0.04116,
+          "stdev": 0.00342,
+          "min": 0.03329,
+          "max": 0.0582,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.051
+        },
+        "Trifid_p9": {
+          "mean": 0.04053,
+          "stdev": 0.00334,
+          "min": 0.03308,
+          "max": 0.06293,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.064
+        },
+        "Fractionation_2x13": {
+          "mean": 0.04347,
+          "stdev": 0.0053,
+          "min": 0.03393,
+          "max": 0.06765,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.044
+        },
+        "Fractionation_13x2": {
+          "mean": 0.04494,
+          "stdev": 0.00597,
+          "min": 0.03329,
+          "max": 0.06916,
+          "contains_K4_ioc": true,
+          "frac_below_K4": 0.029
+        }
+      }
+    },
+    "_verdict": true,
+    "ts": 1780017659.196955,
+    "_source": "2026-05-28_045_ioc_discriminator_fractionation.jsonl"
+  },
+  {
+    "exp": "046",
+    "title": "tableau-route alphabets vs \u03c7=3 crib cover",
+    "hypothesis": "K4's >=3 hand-crafted alphabets are geometric routes through the KRYPTOS tableau",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "best 3 routes cover 12/23; greedy needs k=9",
+    "search_space": 232,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "No 3 route alphabets cover all 23 crib constraints (\u03c7=3 lower bound NOT met by routes).",
+      "Greedy needs k=9 route alphabets to cover 23/23; best 3 route alphabets cover only 12/23 constraints. Tableau-route alphabets alone do not realize K4's 3-colouring."
+    ],
+    "next_steps": [
+      "expand the route family (knight walks on a Quagmire tableau; mixed-base routes), or combine routes with compass-seeded alphabets (exp 047) and the Sanborn-typo family (exp 048)"
+    ],
+    "metrics": {
+      "greedy_k": 9,
+      "greedy_labels": [
+        "diag6[KRY]",
+        "rot5[ZXW]",
+        "col11[ABC]",
+        "rot8[ZXW]",
+        "rot0[ABC]",
+        "rot18[ZXW]",
+        "rot16[ZYX]",
+        "rot1[KRY]",
+        "rot3[KRY]"
+      ],
+      "best_partial_k3": 12,
+      "exact_3_cover": false
+    },
+    "_verdict": true,
+    "ts": 1780017719.4671202,
+    "_source": "2026-05-28_046_tableau_route_alphabets.jsonl"
+  },
+  {
+    "exp": "047",
+    "title": "compass/lodestone bearing-seeded alphabets vs \u03c7=3",
+    "hypothesis": "K4's hand-crafted alphabets are seeded by the 248deg/45deg physical bearings",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "best 3 cover 11/23; greedy k=11",
+    "search_space": 84,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "No 3 compass-seeded alphabets cover the 23 crib constraints; greedy needs k=11 (22/23), best 3 cover 11/23. Bearing 248/45 (mod26 14/19) seeded affine/rotation/decimation alphabets do not realize K4's 3-colouring."
+    ],
+    "next_steps": [
+      "combine compass alphabets with route (exp 046) + Sanborn-typo (exp 048) pools in one cover"
+    ],
+    "metrics": {
+      "greedy_k": 11,
+      "exact_3_cover": false,
+      "best_partial_k3": 11
+    },
+    "_verdict": true,
+    "ts": 1780017807.702691,
+    "_source": "2026-05-28_047_compass_bearing_alphabets.jsonl"
+  },
+  {
+    "exp": "048",
+    "title": "Sanborn deliberate-typo keyed alphabets vs \u03c7=3",
+    "hypothesis": "K4's hand-crafted alphabets are themed keywords carrying a single Sanborn-style typo",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "best 3 cover 10/23; greedy k=9",
+    "search_space": 6408,
+    "elapsed_s": 0.4,
+    "solved_params": null,
+    "insights": [
+      "No 3 Sanborn-typo alphabets cover the 23 crib constraints; greedy needs k=9 (17/23); best 3 (top-120) cover 10/23. Single-typo keyed alphabets do not realize K4's 3-colouring -- consistent with exp 037 (alphabets are not keyword-derived, even with one typo)."
+    ],
+    "next_steps": [
+      "pool the route (046) + compass (047) + typo (048) alphabets into ONE cover search; feed the per-constraint covering sets to exp 055 CP-SAT as the alphabet candidate lists"
+    ],
+    "metrics": {
+      "greedy_k": 9,
+      "exact_3_cover": false,
+      "best_partial_k3": 10
+    },
+    "_verdict": true,
+    "ts": 1780017808.191835,
+    "_source": "2026-05-28_048_sanborn_typo_alphabets.jsonl"
+  },
+  {
+    "exp": "049",
+    "title": "Weltzeituhr 24-column order as transposition key",
+    "hypothesis": "K4's masking step is a columnar transposition keyed by the Weltzeituhr UTC-column order",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable",
+    "search_space": 5,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Tested 5 physical Weltzeituhr column orders as transposition keys; 0 decryptable short-period pairings; best free-position hexagram -99.00/char.",
+      "No Weltzeituhr-derived 24-column transposition re-pairs the cribs into a short periodic substitution that decrypts to English. The clock order is not the transposition key (consistent with exp 043's general columnar ruling)."
+    ],
+    "next_steps": [
+      "try the clock order as an ALPHABET selection rule (24->k) rather than a transposition; feed to exp 055 CP-SAT"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780017959.671169,
+    "_source": "2026-05-28_049_weltzeituhr_transposition.jsonl"
+  },
+  {
+    "exp": "050",
+    "title": "morse slabs as binary mask / 2-alphabet selector",
+    "hypothesis": "Scheidt's 'masking' is implemented by the courtyard morse dot/dash pattern",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "selector hits: []",
+    "search_space": 16,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Role A (morse null-mask -> delete -> short-period KPA): best free hexagram -99.00/char.",
+      "Role B (morse dot/dash -> 2 route alphabets): 0 masks admit a covering route-alphabet pair .",
+      "Morse slabs as either a null-mask or a binary 2-alphabet selector do not satisfy the cribs / restore English. The morse content is thematic, not structural."
+    ],
+    "next_steps": [
+      "morse not structural; deprioritise. Try morse as a transposition route instead."
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780017959.7279959,
+    "_source": "2026-05-28_050_morse_mask.jsonl"
+  },
+  {
+    "exp": "051",
+    "title": "sister-sculpture (Cyrillic Projector/Antipodes) running key",
+    "hypothesis": "K4's running key is the text of a Sanborn sister sculpture",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 crib survivors",
+    "search_space": 12174,
+    "elapsed_s": 0.5,
+    "solved_params": null,
+    "insights": [
+      "Tested 12,174 (key_text, alphabet, convention, offset) running-key decryptions; 0 passed the cribs; best free hexagram -99.00/char.",
+      "Now includes the Cyrillic Projector first message in 3 forms (phonetic-fold transliteration, Elonka 32->Latin raw, English translation) + K1-K3. 0 of these produce K4's cribs under any offset/alphabet/convention.",
+      "PROVISIONAL: the CP transliterations use a hand-chosen Cyrillic->Latin fold; Sanborn's exact keystream convention is unknown, so this NEGATIVE is not a hard ruling -- a wrong transliteration desyncs a running key. The 2nd CP message (Sakharov/Pugwash) and a verified verbatim transcript are still untested."
+    ],
+    "next_steps": [
+      "BLOCKED ON DATA: obtain + verify the full Cyrillic Projector English plaintext and the Antipodes panel text, add to KEY_TEXTS, re-run; also test Cyrillic->Latin transliteration of the Russian original"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780023025.945825,
+    "_source": "2026-05-28_051_sister_sculpture_running_key.jsonl"
+  },
+  {
+    "exp": "052",
+    "title": "rail-fence / route / engraved-layout transposition masking",
+    "hypothesis": "K4's masking is a non-rectangular route transposition (incl. the physical engraving layout)",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable; engraving [4,31,31,31] tested",
+    "search_space": 47,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Tested 47 non-rectangular route transpositions (rail-fence d2-24, boustrophedon w3-24, AND the verified physical K4 engraving layout [4,31,31,31] fwd+rev); 0 decryptable short-period pairings; best free hexagram -99.00/char.",
+      "No route -- including the VERIFIED K4 engraved line layout (OBKR + 3x31, from the Elonka/Wikipedia transcript) -- re-pairs the cribs into a short periodic substitution that decrypts to English. The engraving-as-transposition hypothesis is now CLOSED (no longer data-blocked). Consistent with 043/049: route geometry is not K4's masking."
+    ],
+    "next_steps": [
+      "engraving layout now closed; whole-panel transposition (K3 tail + K4 sharing rows) remains the only untested geometric variant -- low prior"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780023026.00051,
+    "_source": "2026-05-28_052_route_transposition.jsonl"
+  },
+  {
+    "exp": "054",
+    "title": "latent selection-rule fit over candidate plaintexts",
+    "hypothesis": "some N1 candidate is a clean per-position substitution under a simple closed-form rule",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "min violations 20",
+    "search_space": 30000,
+    "elapsed_s": 0.4,
+    "solved_params": null,
+    "insights": [
+      "Best structural fit over 2000 candidates x 15 rules: 20 positions must be violated (min over all (candidate,rule,k)). Rule cc_mod_8 on the best candidate.",
+      "Per-rule minimum violations: {'cc_mod_8': 20, 'pos_mod_8': 21, 'cc_mod_7': 26, 'priorA_mod_7': 26, 'priorA_mod_8': 26, 'pos_mod_7': 28} ...",
+      "0 candidate+rule combos reach ZERO violations (= a clean per-position decryption).",
+      "No N1 candidate is consistent with ANY tested closed-form selection rule at k<=8 (min violations far from 0). Consistent with exp 055: the LLM prior plaintexts are structurally incompatible with a simple-rule per-position cipher; the true plaintext and/or rule lies outside the current prior + closed-form-rule families."
+    ],
+    "next_steps": [
+      "the rule must be non-closed-form (hand-crafted lookup) OR plaintext outside prior; generate fanout<=k plaintexts (exp 055 filter) and re-fit; try W-segment rules"
+    ],
+    "metrics": {
+      "per_rule_min": {
+        "pos_mod_4": 39,
+        "cc_mod_4": 40,
+        "priorA_mod_4": 39,
+        "pos_mod_5": 36,
+        "cc_mod_5": 35,
+        "priorA_mod_5": 34,
+        "pos_mod_6": 29,
+        "cc_mod_6": 31,
+        "priorA_mod_6": 33,
+        "pos_mod_7": 28,
+        "cc_mod_7": 26,
+        "priorA_mod_7": 26,
+        "pos_mod_8": 21,
+        "cc_mod_8": 20,
+        "priorA_mod_8": 26
+      },
+      "best": {
+        "rule": "cc_mod_8",
+        "k": 8,
+        "violations": 20,
+        "free_hex": -14.03,
+        "plaintext": "DIGGINGTHROUGHTHEDEBREASTNORTHEASTISIFOUNDTHESEALEDCHAMBERXTHISBERLINCLOCKNOTHERPASSAGEWAYBELOWXX"
+      }
+    },
+    "_verdict": true,
+    "ts": 1780018563.977233,
+    "_source": "2026-05-28_054_latent_rule_fit.jsonl"
+  },
+  {
+    "exp": "055",
+    "title": "CP-SAT chromatic / fanout structural filter on N1 candidates",
+    "hypothesis": "K4 is a k-alphabet per-position substitution; candidate plaintexts with fanout>k are impossible",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "min fanout 7; 0 candidates admissible at k<=4",
+    "search_space": 5220,
+    "elapsed_s": 2.0,
+    "solved_params": null,
+    "insights": [
+      "Fanout lower-bound distribution over 5220 N1 candidates: {7: 5, 8: 134, 9: 619, 10: 1254, 11: 1415, 12: 1034, 13: 506, 14: 184, 15: 53, 16: 12, 17: 2, 18: 1, 22: 1}. Minimum fanout = 7 (=> EVERY candidate needs >= 7 alphabets for a per-position cipher to K4).",
+      "Admissible at k<=4: 0; k<=5: 0; k<=6: 0 (out of 5220).",
+      "Exact CP-SAT chromatic number on the 30 lowest-fanout candidates: {7: 3, 8: 27}.",
+      "STRUCTURAL RULING: a K=4 per-position substitution requires a plaintext where every letter maps to <=4 distinct K4 letters. The minimum any N1 candidate achieves is 7. Real English (K1 plaintext) fanout vs a random target is 14. => the true K4 plaintext (if K<=4) is FAR more repetition-constrained than any natural-English N1 candidate -- strong evidence that either the prior misses the real plaintext OR K4 is NOT a low-k per-position cipher."
+    ],
+    "next_steps": [
+      "the fanout result is a HARD constraint on the true plaintext: search/generate ONLY plaintexts with per-letter fanout<=4 against K4 (a strong new N1 filter); feed those to exp 054",
+      "if no plausible English has fanout<=4, that argues K4's masking is NOT per-position substitution -- revisit transposition-composite families"
+    ],
+    "metrics": {
+      "fanout_distribution": {
+        "7": 5,
+        "8": 134,
+        "9": 619,
+        "10": 1254,
+        "11": 1415,
+        "12": 1034,
+        "13": 506,
+        "14": 184,
+        "15": 53,
+        "16": 12,
+        "17": 2,
+        "18": 1,
+        "22": 1
+      },
+      "min_fanout": 7,
+      "best_plaintext": null
+    },
+    "_verdict": true,
+    "ts": 1780018369.8377228,
+    "_source": "2026-05-28_055_cpsat_structural.jsonl"
+  },
+  {
+    "exp": "056",
+    "title": "parallel tempering + contrastive coherence (smooth LM)",
+    "hypothesis": "a better scorer + tempering escapes the 71.98 basin to per-colour-coherent English at K=4",
+    "status": "ruled_out",
+    "best_score": -20.15,
+    "best_partial": "per-colour hex [-24.41, -23.9, -24.01, -24.41]",
+    "search_space": 12500,
+    "elapsed_s": 2.7,
+    "solved_params": null,
+    "insights": [
+      "K=4 Prior-A tempered search with the SMOOTH LM objective: best global free-hexagram -20.15/char, LM global -5.61, per-colour hexagrams [-24.41, -23.9, -24.01, -24.41].",
+      "Per-colour partitions remain GIBBERISH (each ~-24.2/char vs English -13). This matches exp 055's prediction: a 4-alphabet per-position cipher cannot make all four colour partitions English, so the cross-colour 'words' the 71.98 basin shows are an artifact, not a decryption.",
+      "Even with a non-saturating scorer and parallel tempering + contrastive per-colour coherence, the K=4 per-position model stays at the cross-colour-fragment wall. Combined with exp 055 (min fanout 7), this is strong evidence K4 is NOT a 4-alphabet per-position substitution -- the dominant repo hypothesis should be downweighted."
+    ],
+    "next_steps": [
+      "abandon K=4 per-position as the primary model (055+056 agree); pursue transposition+substitution composites and the fanout<=k plaintext-generation filter (055)"
+    ],
+    "metrics": {
+      "best": {
+        "plaintext": "XIKDMMGGYRAULTGAMELIZEASTNORTHEASTGIWIFUGITSDIFLSDBYIZAZTUSCHODBERLINCLOCKWHOWFGNYWUCYWASMURCKAKT",
+        "obj": -8.922,
+        "free_hex": -20.15,
+        "lm_global": -5.605,
+        "lm_coherence": -6.634,
+        "per_color_hex": [
+          -24.41,
+          -23.9,
+          -24.01,
+          -24.41
+        ]
+      }
+    },
+    "_verdict": true,
+    "ts": 1780018652.783394,
+    "_source": "2026-05-28_056_tempering_contrastive.jsonl"
+  },
+  {
+    "exp": "059",
+    "title": "retire the per-position-substitution model (degeneracy proof)",
+    "hypothesis": "a hand-crafted-rule K=8 per-position cipher uniquely explains K4",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "15 distinct plaintexts byte-verify under K=8 free assignment",
+    "search_space": 15,
+    "elapsed_s": 0.6,
+    "solved_params": null,
+    "insights": [
+      "With K=8 alphabets and a FREE (hand-crafted) per-position assignment, 15 of 15 completely different fluent English plaintexts byte-exactly encrypt to K4 -- each with its own valid set of 8 alphabets. Examples of mutually-exclusive 'solutions': ['WITHINTHESHIFTINGAIRTE', 'THEDIVISIONISENDINGSOE', 'BEYONDTHEBOUNDARYLINEE'].",
+      "The hand-crafted-rule per-position model is therefore DEGENERATE: it 'verifies' a large family of distinct plaintexts and cannot single out K4's. Combined with exp 054 (no closed-form rule fits ANY candidate), BOTH horns of the per-position-substitution hypothesis are closed:",
+      "  (a) closed-form selection rule -> infeasible (exp 054, min 20/97 violations);",
+      "  (b) hand-crafted/free selection rule -> unfalsifiable (this exp, many plaintexts verify).",
+      "RULING: stop spending compute on per-position substitution as K4's structure. It is either impossible (closed-form) or vacuous (free). This also explains the ShinkaEvolve 71.98 basin as a free-assignment artifact, not a near-solution. Pivot to few-parameter composites (Scheidt: 'simple, can be remembered and executed years later')."
+    ],
+    "next_steps": [
+      "pursue few-parameter composites (exp 060 autokey families); search with smooth LM (061)",
+      "any future per-position claim must specify a CONCRETE, K1-K3-style memorable rule + alphabets, not 'hand-crafted', or it is vacuous"
+    ],
+    "metrics": {
+      "verified_examples": [
+        "WITHINTHESHIFTINGAIRTEASTNORTHEASTHEREMAINEDONLYTHEHUMOFTHECITYBERLINCLOCKANDTHESLOWTURNINGOFTHED",
+        "THEDIVISIONISENDINGSOEASTNORTHEASTALLTHEPEOPLEAREMOVINGWESTWARDBERLINCLOCKCOUNTINGTHESECONDSUNTIL",
+        "BEYONDTHEBOUNDARYLINEEASTNORTHEASTPEOPLEMARCHINGTOWARDTHECENTERBERLINCLOCKSOUNDINGTHEALARMFORALLX",
+        "FINDTHEHIDDENLANDMARKEASTNORTHEASTALONGTHEROUTEANDMOVINGTOWARDTBERLINCLOCKHECLOCKWORKSTATIONKINDX",
+        "THEBOUNDARYISBREAKINGEASTNORTHEASTASLIGHTSHINESUPONTHECITYOFTHEBERLINCLOCKSTARSANDNEWBEGINNINGSKX",
+        "FOLLOWTHELINESOFPOWEREASTNORTHEASTACROSSLANDSANDTHROUGHTHEVALEXBERLINCLOCKTHEENDISNEARBYTHEWALLKX"
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780024658.074482,
+    "_source": "2026-05-28_059_retire_per_position_model.jsonl"
+  },
+  {
+    "exp": "060",
+    "title": "few-parameter autokey crib-chain propagation",
+    "hypothesis": "K4 is a plaintext/ciphertext autokey (few params) over a keyed alphabet",
+    "status": "ruled_out",
+    "best_score": -24.13,
+    "best_partial": "60/73 derived, LM -7.284",
+    "search_space": 55,
+    "elapsed_s": 1.5,
+    "solved_params": null,
+    "insights": [
+      "Tested 55 autokey configs ((plaintext|ciphertext) x L=1-30 x 6 alphabets x 3 conventions); 55 were crib-consistent.",
+      "Best (>=40 non-crib positions derived): plaintext_autokey L=28 standard/vigenere, coverage 60/73, hexagram -24.13/char, smooth-LM -7.284. Derived plaintext: YGCKAZ?HCVGHDGEBRK???EASTNORTHEAST?MUYKLGKORNA???WTRRYGMPTSI...",
+      "No autokey family (plaintext- or ciphertext-keyed, any L<=30, standard or keyed alphabet, any convention) propagates the cribs into English. The crib chains either conflict (rejected) or derive gibberish. Few-parameter autokey is closed."
+    ],
+    "next_steps": [
+      "try Gromark/running-key with text-derived primers; combine a short transposition with autokey (2-param composite)"
+    ],
+    "metrics": {
+      "best": {
+        "mode": "plaintext_autokey",
+        "L": 28,
+        "alphabet": "standard",
+        "convention": "vigenere",
+        "coverage_noncrib": 60,
+        "n_scored": 60,
+        "hex": -24.13,
+        "lm": -7.284,
+        "plaintext": "YGCKAZ?HCVGHDGEBRK???EASTNORTHEAST?MUYKLGKORNA???WTRRYGMPTSIVM?BERLINCLOCK???OGGCLWRTNSMMI?TATRSE"
+      }
+    },
+    "_verdict": true,
+    "ts": 1780024757.6216981,
+    "_source": "2026-05-28_060_autokey_crib_propagation.jsonl"
+  },
+  {
+    "exp": "061",
+    "title": "smooth-LM insurance re-rank (did hexagrams bury a signal?)",
+    "hypothesis": "the saturating hexagram scorer hid a real, more-English candidate",
+    "status": "ruled_out",
+    "best_score": -12.988,
+    "best_partial": "LM/hex top-5 overlap 3/5",
+    "search_space": 220,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Re-scored 220 candidates with hexagram + smooth-LM. The LM top-5 and hexagram top-5 overlap on 3/5 candidates -- the two scorers largely AGREE on the best fluent candidates.",
+      "LM's #1 (admissible_058): hex -12.988, lm -2.04, hexagram-rank 14. Not buried by hexagrams.",
+      "Insurance result: swapping in the smooth LM re-orders ties but does NOT surface a hidden, markedly-more-English candidate that the hexagram scorer discarded. The scorer choice did not hide a basin among the candidates we have; the live bottleneck is structural (model), not scoring."
+    ],
+    "next_steps": [
+      "scoring is exonerated; focus on cipher STRUCTURE -- few-parameter composites beyond autokey (short transposition + short-period substitution, Gromark with text primer)"
+    ],
+    "metrics": {
+      "top_lm_plaintext": "IHEARDTHEMCRYINGANDLAEASTNORTHEASTUGHINGATTHECLOCKINTHEDARKNIGHBERLINCLOCKTWHENTHEWALLWASOPENEDXX",
+      "overlap": 3
+    },
+    "_verdict": true,
+    "ts": 1780024837.6917188,
+    "_source": "2026-05-28_061_smooth_lm_research.jsonl"
+  },
+  {
+    "exp": "062",
+    "title": "Vimark/Gromark algebraic KPA, all primer lengths + keyed alphabets + word primers",
+    "hypothesis": "K4 is a Vimark/Gromark (lagged-Fibonacci) cipher with a memorable primer over a keyed alphabet",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "230 inconsistent / 0 tested / 0 degenerate; max determined L=0",
+    "search_space": 230,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Algebraic Vimark/Gromark KPA over primer lengths L=2-24 x 5 alphabets x 2 conventions (230 systems) -- reaching lengths 6-24 that exp 002's brute force (L=4-5 only) cannot. Of these: 230 are crib-INCONSISTENT (no primer fits the 24 cribs -> REFUTED), 0 are over/exactly-determined & enumerable (tested), 0 are underdetermined (consistent but too many primers -> degenerate, like the per-position model).",
+      "No consistent system produced a scorable decrypt.",
+      "Largest primer length still over/exactly-determined (a real test, not degenerate): L=0.",
+      "RULING: for every memorable/short primer length (the over-determined regime), K4's cribs are algebraically INCONSISTENT with the lagged-Fibonacci recurrence over both standard and keyed alphabets and both conventions -- no Vimark/Gromark primer exists. At long primer lengths the model is underdetermined (degenerate, like per-position). The leading academic hypothesis (Bean 2021 Vimark) is closed across the FULL primer-length range, not just the L=4-5 exp 002 brute-forced."
+    ],
+    "next_steps": [
+      "try the 2-stage tiny composite (short transposition + short-period substitution); Vimark with a DIFFERENT recurrence (s_i = s_{i-j}+s_{i-k}) for non-adjacent lags"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780026028.478307,
+    "_source": "2026-05-28_062_vimark_algebraic_kpa.jsonl"
+  },
+  {
+    "exp": "063",
+    "title": "Vimark non-adjacent-lag recurrences (full lagged-Fibonacci family)",
+    "hypothesis": "K4 is a two-term linear-recurrence keystream cipher for some lag pair (j,k)",
+    "status": "ruled_out",
+    "best_score": -23.79,
+    "best_partial": "2514 inconsistent / 16 tested / 0 degenerate",
+    "search_space": 2530,
+    "elapsed_s": 2.2,
+    "solved_params": null,
+    "insights": [
+      "Generalised Vimark KPA to non-adjacent lags s_i=s_(i-j)+s_(i-k), 2<=j<k<=24 (2530 systems x 5 alphabets x 2 conventions): 2514 crib-INCONSISTENT (refuted), 16 determined (tested), 0 underdetermined (degenerate). Largest determined k = 24.",
+      "Best decrypt: j=17 k=24 keyed_BERLIN/vigenere hexagram -23.79/char",
+      "Across ALL lag pairs (j,k) and primer lengths, K4's cribs are inconsistent with the linear lagged-Fibonacci keystream in the determined regime (and degenerate in the underdetermined one). The ENTIRE two-term linear-recurrence keystream family (Vimark/Gromark/Fibonacci, any lags) is now closed, not just the adjacent-lag case."
+    ],
+    "next_steps": [
+      "the linear-recurrence keystream family is exhausted; pursue 2-stage tiny composites (064)"
+    ],
+    "metrics": {
+      "best": {
+        "j": 17,
+        "k": 24,
+        "alphabet": "keyed_BERLIN",
+        "convention": "vigenere",
+        "space": 26,
+        "primer": [
+          6,
+          3,
+          23,
+          8,
+          22,
+          21,
+          20,
+          22,
+          9,
+          5,
+          6,
+          13,
+          25,
+          15,
+          11,
+          17,
+          20,
+          3,
+          20,
+          12,
+          3,
+          8,
+          23,
+          10
+        ],
+        "plaintext": "FXPUYULTEAMPELIJGAAMTEASTNORTHEASTAJHEYIDJJIGWDAKUSOXYTDPLDQABPBERLINCLOCKSZNFOKBJNLPKWTUXMERLCRF",
+        "hex": -23.79
+      }
+    },
+    "_verdict": true,
+    "ts": 1780026379.8738072,
+    "_source": "2026-05-28_063_vimark_general_lags.jsonl"
+  },
+  {
+    "exp": "064",
+    "title": "tiny 2-stage composite (short block transposition + short-period substitution)",
+    "hypothesis": "K4 = a short block transposition coupled with a short-period substitution",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 fully-pinned decryptable combos",
+    "search_space": 5912,
+    "elapsed_s": 1.2,
+    "solved_params": null,
+    "insights": [
+      "Swept 5912 block permutations (period d=2-7, all d! perms) x 2 alphabets x 3 conventions x 2 stage-orders x L=1-24; 0 combos were fully crib-pinned and decryptable. Best free-position hexagram -99.00/char.",
+      "No fully-pinned decryptable composite.",
+      "No tiny 2-stage composite (short block transposition + short-period substitution, either order) decrypts K4 to English. The coupling of two short stages -- the last few-parameter structure consistent with Scheidt's 'simple, memorable' -- is closed for block periods 2-7 and substitution periods 1-24."
+    ],
+    "next_steps": [
+      "widen block period to 8-14; add a SECOND substitution stage; or couple a route (non-block) short transposition with substitution"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780026526.339048,
+    "_source": "2026-05-28_064_tiny_two_stage_composite.jsonl"
+  },
+  {
+    "exp": "066",
+    "title": "cipher-feedback / convolution matrix KPA",
+    "hypothesis": "K4 is a feedback (CBC) or convolution (FIR) matrix cipher (non-positional, escapes prior rulings)",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 consistent / 32 inconsistent systems",
+    "search_space": 32,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Convolution-FIR + CBC-Hill exact KPA: 0 (family,alphabet,params) systems were crib-CONSISTENT, 32 inconsistent.",
+      "No consistent system decrypted to a scorable plaintext.",
+      "Either the crib system is inconsistent (no kernel/key fits the 24 cribs) or the recovered kernel/key decrypts to gibberish AND fails the independent BERLIN.CLOCK check. Feedback/convolution matrix ciphers (FIR width 2-7, CBC-Hill B=2,3) do not explain K4."
+    ],
+    "next_steps": [
+      "widen to nonlinear feedback (C_b depends on P_{b-1}); larger B with sampled IV; convolution over a keyed-index alphabet (compose with exp 070)"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780028237.076756,
+    "_source": "2026-05-28_066_feedback_convolution_matrix.jsonl"
+  },
+  {
+    "exp": "067",
+    "title": "telegraphic/coordinate-register scorer + restricted-alphabet fanout",
+    "hypothesis": "K4 plaintext is navigational/coordinate register, mis-scored by prose LMs",
+    "status": "ruled_out",
+    "best_score": -5.057,
+    "best_partial": "register min fanout 8; pool 35",
+    "search_space": 635,
+    "elapsed_s": 7.7,
+    "solved_params": null,
+    "insights": [
+      "Built a coordinate/telegraphic-register char-LM and re-scored 35 candidate decryptions. Top register-LM candidate: reg=-5.057 prose=-3.204 -> OURBERLINSTATIONLOSTCEASTNORTHEASTONTACTWITHASSE...",
+      "Restricted-register re-derivation: min fanout over 600 crib-compliant coordinate-register plaintexts = 8 (prose candidates floored at 7); 0 reached fanout<=6.",
+      "Even coordinate-register plaintexts do not beat the fanout-7 floor, and no buried register-fluent candidate emerged. The register mis-calibration did NOT hide an admissible solution; prose-scoring was not the blocker."
+    ],
+    "next_steps": [
+      "register scoring exonerated too; the blocker is structural, not the plaintext model"
+    ],
+    "metrics": {
+      "top_register_plaintext": "OURBERLINSTATIONLOSTCEASTNORTHEASTONTACTWITHASSETRAVENINOCTOBERBERLINCLOCKFOUNDHIMATTHECLOCKWELLX",
+      "register_min_fanout": 8
+    },
+    "_verdict": true,
+    "ts": 1780028321.20046,
+    "_source": "2026-05-28_067_register_scorer.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "register-rescue closed (superseded by 097/100)"
+  },
+  {
+    "exp": "068",
+    "title": "Chaocipher / dynamic self-modifying alphabets",
+    "hypothesis": "K4 is a Chaocipher with memorable keyword-derived starting wheels",
+    "status": "ruled_out",
+    "best_score": -23.64,
+    "best_partial": "best 15/24 cribs",
+    "search_space": 72225,
+    "elapsed_s": 8.5,
+    "solved_params": null,
+    "insights": [
+      "Chaocipher (round-trip validated). Forward keyword-wheel test (225 pairs) + 6 bounded crib-anchored SA runs (12k iters each). Best crib matches = 15/24, hexagram -23.64.",
+      "Best config: SA ['NORTHEAST', 'BERLINCLOCK'] -> SMWHJPRDWOHCYMHQMYCHEELUTNONTLVASTDMIPOKEVEMZR...",
+      "No keyword-derived starting wheels and no bounded SA reach the cribs (best far below 24/24). Chaocipher with memorable keyword wheels does not explain K4; the dynamic self-modifying-alphabet family is not refuted in general (keyspace 2x26! is huge) but the Scheidt-memorable keyword-seeded instances are exhausted."
+    ],
+    "next_steps": [
+      "if any SA run trended toward high crib matches, scale SA; else try Hagelin M-209 lug/pin reconstruction (the mechanical dynamic cousin)"
+    ],
+    "metrics": {
+      "best": {
+        "phase": "SA",
+        "seed": [
+          "NORTHEAST",
+          "BERLINCLOCK"
+        ],
+        "plaintext": "SMWHJPRDWOHCYMHQMYCHEELUTNONTLVASTDMIPOKEVEMZRBHBYGYMIUMDIFPQHDBIRLIBCLFBKOLDUSDHQWPPGKNNMSYLRRWF"
+      }
+    },
+    "_verdict": true,
+    "ts": 1780028570.226638,
+    "_source": "2026-05-28_068_chaocipher.jsonl"
+  },
+  {
+    "exp": "069",
+    "title": "Phillips cipher admissibility (block-mod-8 selector vs cribs)",
+    "hypothesis": "K4 is a Phillips cipher (8 squares cycled by block index)",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "6 monochromatic crib conflicts under floor(i/5) mod 8",
+    "search_space": 22,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Phillips selector b(i)=floor(i/5) mod 8 puts 6 CONFLICTING crib pairs in the same block (monochromatic) -> a single square cannot satisfy them. Example: {'posA': 22, 'posB': 65, 'block': 4, 'cribA': 'E->F', 'cribB': 'E->Y'}.",
+      "Phillips is therefore structurally INADMISSIBLE for K4: its 8-square block cycle forces two cribs that demand different alphabets into the same square. No keyword/SA can fix this (merging never removes a monochromatic conflict). The full Phillips square-search SA is correctly NOT run."
+    ],
+    "next_steps": [
+      "Phillips dead; the k=8 floor is matched by NO admissible named hand cipher -> the k=8 selector (if any) is non-block / non-positional"
+    ],
+    "metrics": {
+      "monochromatic_conflicts": [
+        {
+          "posA": 22,
+          "posB": 65,
+          "block": 4,
+          "cribA": "E->F",
+          "cribB": "E->Y"
+        },
+        {
+          "posA": 26,
+          "posB": 27,
+          "block": 5,
+          "cribA": "N->Q",
+          "cribB": "O->Q"
+        },
+        {
+          "posA": 26,
+          "posB": 69,
+          "block": 5,
+          "cribA": "N->Q",
+          "cribB": "N->T"
+        },
+        {
+          "posA": 32,
+          "posB": 74,
+          "block": 6,
+          "cribA": "A->K",
+          "cribB": "K->K"
+        },
+        {
+          "posA": 33,
+          "posB": 34,
+          "block": 6,
+          "cribA": "S->S",
+          "cribB": "T->S"
+        },
+        {
+          "posA": 68,
+          "posB": 69,
+          "block": 5,
+          "cribA": "I->T",
+          "cribB": "N->T"
+        }
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780028561.7118459,
+    "_source": "2026-05-28_069_phillips_admissibility.jsonl"
+  },
+  {
+    "exp": "070",
+    "title": "keyed-index & GF(2) linear (Hill) ciphers",
+    "hypothesis": "K4 is a Hill cipher over a keyed index space or a GF(2) 5-bit linear map",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 consistent / 6 inconsistent-or-singular",
+    "search_space": 6,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Keyed-index Hill (B=2,3, standard & KRYPTOS-keyed) + GF(2) 5-bit linear maps, exact KPA: 0 consistent / 6 inconsistent-or-singular.",
+      "No consistent invertible map decrypts to English.",
+      "Hill over the KRYPTOS-keyed index (B=2,3) and GF(2) 5-bit linear maps either fail crib-consistency, recover a singular (non-invertible) matrix, or decrypt to gibberish. The keyed/GF(2) linear-algebra extensions of the Bauer-2016 matrix conjecture are closed."
+    ],
+    "next_steps": [
+      "mod-27 Hill over the 27-letter tableau; 10x10 GF(2) over letter-pairs; affine-Hill"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780028570.31422,
+    "_source": "2026-05-28_070_keyed_gf2_hill.jsonl"
+  },
+  {
+    "exp": "072",
+    "title": "Chaocipher at scale (heavy crib-anchored SA)",
+    "hypothesis": "K4 is a Chaocipher recoverable by heavy crib-anchored search",
+    "status": "ruled_out",
+    "best_score": -23.53,
+    "best_partial": "best 16/24 cribs",
+    "search_space": 672000,
+    "elapsed_s": 69.9,
+    "solved_params": null,
+    "insights": [
+      "Heavy Chaocipher SA: 28 restarts x 24000 iters (keyword + random starts). Best crib matches = 16/24, hexagram -23.53. Per-restart best-crib distribution max=16, median=14.",
+      "Best plaintext: UWYGJKXPUQFUJUQMGUUGHDASTMDRTHEPSVJHNFDEOYPDQFDL...",
+      "Across heavy search the crib-match ceiling is 16/24 -- no run approaches a solve, and the distribution shows no trend toward 24. Keyword- and random-seeded Chaocipher does not produce K4; scaling further is unlikely to help (no gradient toward the cribs). The dynamic-alphabet family is exhausted at hand-search scale."
+    ],
+    "next_steps": [
+      "dynamic-alphabet at hand-scale exhausted; mechanical cousin (M-209) in exp 076"
+    ],
+    "metrics": {
+      "best_crib": 16,
+      "trend_max": 16
+    },
+    "_verdict": true,
+    "ts": 1780029579.681319,
+    "_source": "2026-05-28_072_chaocipher_at_scale.jsonl"
+  },
+  {
+    "exp": "073",
+    "title": "3-stage tiny composite (transposition o substitution o transposition)",
+    "hypothesis": "K4 = T1(sub(T2(P))) with two small block transpositions and a short substitution",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable combos",
+    "search_space": 46208,
+    "elapsed_s": 1.8,
+    "solved_params": null,
+    "insights": [
+      "3-stage T1.sub.T2 with block perms d=2-5 (152 each -> 46,208 T-pairs/alphabet) x L=1-24 x 3 conventions x 2 alphabets; 0 fully crib-pinned decryptable combos. Best free hexagram -99.00/char.",
+      "No fully-pinned 3-stage composite.",
+      "No 3-stage block-transposition / short-substitution composite decrypts K4 to English. Adding a third tiny stage does not escape the 2-stage wall (043/064)."
+    ],
+    "next_steps": [
+      "this exhausts tiny multi-stage transposition+substitution; remaining = dynamic/mechanical"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780029778.7079759,
+    "_source": "2026-05-28_073_three_stage_composite.jsonl"
+  },
+  {
+    "exp": "074",
+    "title": "mod-27 / affine / GF(2)-bigram Hill ciphers",
+    "hypothesis": "K4 is a matrix cipher over Z/27, affine, or a 10x10 GF(2) bigram map",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 consistent / 9 fail",
+    "search_space": 9,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "mod-27 Hill (B=2,3) + affine-Hill (B=2,3, standard & keyed) + 10x10 GF(2) bigram: 0 consistent / 9 inconsistent-or-singular.",
+      "No consistent invertible matrix decrypts to English.",
+      "mod-27, affine, and 10x10-GF(2)-bigram matrix ciphers do not explain K4 (crib systems inconsistent, matrices singular, or decryptions gibberish). The matrix-cipher conjecture is now closed across mod-26/27, keyed/standard, linear/affine, and GF(2)."
+    ],
+    "next_steps": [
+      "matrix family exhausted; remaining = dynamic (068/072/076) or 3-stage (073)"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780029778.761772,
+    "_source": "2026-05-28_074_mod27_affine_gf2_hill.jsonl"
+  },
+  {
+    "exp": "075",
+    "title": "route (non-block) transposition + substitution, both orders",
+    "hypothesis": "K4 = a route transposition coupled with a short-period substitution",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "0 decryptable; 73 routes",
+    "search_space": 73,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Swept 73 routes (rail-fence d2-24, boustrophedon/columnar/spiral/diagonal w5-14) x both stage orders x 2 alphabets x 3 conventions x L=1-24; 0 fully crib-pinned decryptable. Best free hexagram -99.00/char.",
+      "No fully-pinned route+substitution composite.",
+      "No route transposition (incl. spiral/diagonal, both stage orders) coupled with a short-period substitution decrypts K4 to English. The route+substitution composite is closed in both orders -- consistent with 043/052/064."
+    ],
+    "next_steps": [
+      "transposition+substitution fully exhausted across block/route/columnar, both orders"
+    ],
+    "metrics": {
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780029778.8276951,
+    "_source": "2026-05-28_075_route_plus_substitution.jsonl"
+  },
+  {
+    "exp": "076",
+    "title": "Hagelin M-209 KPA (bounded hill-climb)",
+    "hypothesis": "K4 is a Hagelin M-209 (pin/lug/cage) Beaufort cipher",
+    "status": "ruled_out",
+    "best_score": -99.0,
+    "best_partial": "best 19/24 crib displacements",
+    "search_space": 400000,
+    "elapsed_s": 13.3,
+    "solved_params": null,
+    "insights": [
+      "M-209 bounded HC: 20 restarts x 20000 iters over pins(131)+lugs(27x2)+starts(6). Best crib-displacement match = 19/24 (max over restarts 19), hexagram -99.00.",
+      "BUDGET CAVEAT: the M-209 key space is enormous; a bounded local HC is NOT a conclusive negative (Lasry-scale search uses far more compute). This is a budgeted SOLUTION ATTEMPT, not a ruling.",
+      "At this budget the HC plateaus at 19/24 crib displacements with no trend to 24; no M-209 key reproducing the cribs was found. Combined with the poor fit to Scheidt's 'keyword' description, M-209 is deprioritised (not formally refuted)."
+    ],
+    "next_steps": [
+      "if a trend toward 24 appeared, scale HC (Lasry-style); else M-209 is low-prior/deprioritised"
+    ],
+    "metrics": {
+      "best_crib": 19,
+      "trend_max": 19
+    },
+    "_verdict": true,
+    "ts": 1780029801.690135,
+    "_source": "2026-05-28_076_m209.jsonl"
+  },
+  {
+    "exp": "077",
+    "title": "Chaocipher Lasry-scale parallel SA",
+    "hypothesis": "K4 is a Chaocipher recoverable by heavy parallel crib+LM search",
+    "status": "ruled_out",
+    "best_score": 84.6,
+    "best_partial": "best 18/24; max 18/24",
+    "search_space": 108918720,
+    "elapsed_s": 1200.2,
+    "solved_params": null,
+    "insights": [
+      "Parallel Chaocipher SA: 12 workers, 108,918,720 total evaluations in 1200s, combined objective (crib bonus + hexagram). Best crib matches = 18/24; max crib-matches reached anywhere = 18/24.",
+      "Best plaintext: GYKYVSPZUUWZSKABWONDSEMUPNDRTHEASTSLOWAXCCPBJAUWSQ...",
+      "At 109M evaluations the crib-match ceiling is 18/24 with no approach to 24 -- consistent with NO basin pulling toward a solution. Lasry-scale would push further, but the absence of a gradient toward the cribs is itself evidence Chaocipher is not K4 (the 2x26! keyspace is not formally refuted)."
+    ],
+    "next_steps": [
+      "no basin at this scale; further Chaocipher compute is low-yield"
+    ],
+    "metrics": {
+      "trend_max": 18,
+      "total_evals": 108918720
+    },
+    "_verdict": true,
+    "ts": 1780031406.275806,
+    "_source": "2026-05-28_077_chaocipher_lasry.jsonl"
+  },
+  {
+    "_verdict": true,
+    "exp": "078",
+    "title": "Hagelin M-209 Lasry-scale parallel SA",
+    "hypothesis": "K4 is a Hagelin M-209 recoverable by heavy parallel crib+LM search",
+    "status": "ruled_out",
+    "best_score": -23.15,
+    "best_partial": "best 22/24 crib-DISPLACEMENTS but decrypt is gibberish (free-hex -23.15)",
+    "search_space": 62561984,
+    "ts": 1780032702.1115782,
+    "insights": [
+      "Parallel M-209 SA: 12 workers, 62,561,984 evaluations. Best crib-DISPLACEMENT match 22/24 (trend max 22), but the decrypt is GIBBERISH (free-position hexagram -23.15/char) and not even the crib letters are clean (NORTHEAST reads as DORTHEAST).",
+      "KEY POINT: matching crib displacements is CHEAP and DEGENERATE for M-209 -- 24 constraints (mod 26) vs an enormous key (131 pins + 27 lug-bars + 6 starts), so a key reproducing 22/24 displacements need not be the true key and yields random free positions. High displacement-match is NOT a near-solve; it is the same underdetermination that retired the per-position model.",
+      "No basin toward a full solve (24/24 + English) appeared at 6e7 evaluations. Practical negative; the full key space is not formally refutable without cluster-scale, but combined with M-209s poor fit to Scheidts keyword framing it is deprioritised."
+    ],
+    "next_steps": [
+      "M-209 practically exhausted at this scale; cluster-scale unlikely to escape the underdetermination (any 24-displacement-consistent key gives gibberish elsewhere)"
+    ],
+    "metrics": {
+      "trend_max": 22,
+      "total_evals": 62561984,
+      "best_free_hex": -23.15
+    },
+    "_source": "2026-05-28_078_m209_lasry.jsonl"
+  },
+  {
+    "exp": "079",
+    "title": "ciphertext-context (self-synchronizing) selector filter + rotation fit",
+    "hypothesis": "K4's alphabet selector is a function of the preceding ciphertext (self-synchronizing)",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 proper colorings, 0 non-chance (p<0.10)",
+    "search_space": 42,
+    "elapsed_s": 0.5,
+    "solved_params": null,
+    "insights": [
+      "Tested 42 ciphertext-context selectors g(C_(i-1),C_(i-2)) against the chi=3 24-node/22-edge crib conflict graph. PROPER colorings (k>=3): [].",
+      "Non-trivially proper (p_chance<0.10 under scrambled-edge control): NONE.",
+      "No proper context-selector admitted a consistent per-class rotation fit.",
+      "No ciphertext-context selector is a non-chance proper coloring -- the 'selector = preceding ciphertext' door (left ajar by 060/065/066) is now CLOSED for 1-2-letter context functions. Combined with exp 065 (position selectors), the only graph-special selector remains the degenerate Prior-A rule."
+    ],
+    "next_steps": [
+      "context-selector door closed; attack the OTHER frames -- key-phase offset sweep and transposed read-order re-indexing of the chi=3 graph (the false-assumption attack)"
+    ],
+    "metrics": {
+      "valid_selectors": [],
+      "sharp_selectors": [],
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780034086.018959,
+    "_source": "2026-05-28_079_ciphertext_context_selector.jsonl"
+  },
+  {
+    "exp": "081",
+    "title": "geometry->coincidence-comb forward map (offset-7 significance)",
+    "hypothesis": "K4's offset-7 autocorrelation tooth is a fractionation-geometry signature",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "offset7=9, corrected p=0.088, geoms@7=['quagmire_7', 'bifid_7']",
+    "search_space": 7,
+    "elapsed_s": 1.4,
+    "solved_params": null,
+    "insights": [
+      "K4 offset-7 autocorrelation = 9 coincidences. Permutation null: a-priori p(>=obs at offset 7) = 0.0051; max-over-30-offsets corrected p = 0.0877. K4's overall peak offset = 7.",
+      "Geometries whose mean autocorrelation PEAKS at offset 7: ['quagmire_7', 'bifid_7']. Calibration: columnar_w7 ac7=5.75, peak 2; quagmire_7 ac7=5.79 (expected flat).",
+      "K4 mean-doublet comparison: K4 has 6 doublets; fractionation_2x13 mean 3.65, columnar_w7 mean 6.12.",
+      "VERDICT: after multiple-comparison correction the offset-7 tooth is NOT significant (p=0.088); it is most likely small-N noise, not a geometric signature. The 'offset-7 => width-7 fractionation' folk hypothesis is not supported. (Width-7 transposition+substitution was already exhausted in 043/052/064/075.)"
+    ],
+    "next_steps": [
+      "offset-7 retired as noise; the only robust forward constraints remain entropy-flatness (071/080): outermost stage flattens beyond one alphabet"
+    ],
+    "metrics": {
+      "p_corrected": 0.0877,
+      "geoms_at_7": [
+        "quagmire_7",
+        "bifid_7"
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780034264.9533591,
+    "_source": "2026-05-28_081_geometry_comb.jsonl"
+  },
+  {
+    "exp": "082",
+    "title": "combined position x ciphertext-context selector (MDL product space)",
+    "hypothesis": "K4's alphabet selector is a short product of a position feature and a ciphertext-context feature",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "6 proper, 2 non-chance combined selectors",
+    "search_space": 80,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Combined (position x ciphertext-context) selectors: 6 are PROPER colorings of the chi=3 graph; 2 are non-chance (p<0.10). Proper-count by class-count k: {4: 0, 6: 0, 8: 2, 2: 0, 7: 0, 9: 0, 12: 2, 11: 0, 3: 0, 10: 0, 14: 1, 13: 1, 15: 0, 5: 0}.",
+      "No proper combined selector admitted a consistent crib-determined rotation fit.",
+      "THE SQUEEZE: a flattening polyalphabetic needs many alphabets (high k), but high-k per-class rotations are crib-under-determined; low-k is crib-determined but cannot flatten to 4.33 bits. Proper-and-determined combined selectors exist by k as {}; none decrypts to English, confirming the bind is real (the simple-selector / flatten requirement is unsatisfiable in the combined-feature space tested)."
+    ],
+    "next_steps": [
+      "the combined-feature selector space is closed at low k; pursue the reflecting-tableau-walk keystream (genuinely-new generator) and the K1/K2 modification-fingerprint forward search"
+    ],
+    "metrics": {
+      "proper_by_k": {
+        "4": 0,
+        "6": 0,
+        "8": 2,
+        "2": 0,
+        "7": 0,
+        "9": 0,
+        "12": 2,
+        "11": 0,
+        "3": 0,
+        "10": 0,
+        "14": 1,
+        "13": 1,
+        "15": 0,
+        "5": 0
+      },
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780068605.271308,
+    "_source": "2026-05-29_082_combined_selector_mdl.jsonl"
+  },
+  {
+    "exp": "083",
+    "title": "reflecting (non-toroidal) tableau-walk keystream",
+    "hypothesis": "K4's per-position shift is a reflecting (triangle-wave) walk that bounces off the KRYPTOS-tableau edges, not a toroidal/period-L keystream",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "7/24 crib shifts (chance ceiling 6, p=0.000); best run 3; free-hex -24.41",
+    "search_space": 169000,
+    "elapsed_s": 1.6,
+    "solved_params": null,
+    "insights": [
+      "Reflecting (triangle-wave, period 50) tableau walks are NOT expressible as any period-L Vigenere or exp-006 modular recurrence -- the one 'simple, memorable' keystream class never enumerated. Swept 169,000 walks (billiard start-cell x step-vector x read-rule + boustrophedon) x 6 alpha/convention targets.",
+      "Best walk reproduces 7/24 crib shifts (billiard/sum, standard/beaufort); longest crib-window run 3 (boundary-aligned 0). Full decrypt free-hex -24.41 -> UDWTWIFUAXIPXEMVAFLNQBPDTSORTDQSQOQJEFGI...",
+      "SCRAMBLED-KEYSTREAM CONTROL: 169,000 uniform-random keystreams reach a max of 8/24 crib matches (99.9th pct 6, mean 2.15); the best walk's 7/24 has chance p=0.0001. does NOT beat the random ceiling.",
+      "VERDICT: reflecting-walk keystreams do not satisfy the 24 crib shifts beyond chance and do not decrypt to English. The reflecting (non-toroidal) generator family is RULED OUT as K4's keystream -- the bounce mechanism is closed; the surviving open directions are the K1/K2 modification-fingerprint forward search and the squeeze-as-lower-bound (README directions #2, #3)."
+    ],
+    "next_steps": [
+      "reflecting-walk keystream closed; build the K1/K2 modification-fingerprint forward search (README #2, reuse exp 080 feats()) and the squeeze lower-bound sweep (README #3)"
+    ],
+    "metrics": {
+      "best_matches": 7,
+      "control_p999": 6,
+      "p_value": 0.0001,
+      "best_free_hex": -24.41,
+      "best_params": {
+        "matches": 7,
+        "family": "billiard",
+        "read": "sum",
+        "row0": 3,
+        "col0": 5,
+        "dr": -4,
+        "dc": -2,
+        "target_idx": 1
+      }
+    },
+    "_verdict": true,
+    "ts": 1780074256.411272,
+    "_source": "2026-05-29_083_reflecting_tableau_walk.jsonl"
+  },
+  {
+    "exp": "084",
+    "title": "forward modification-fingerprint from K1/K2 Quagmire-III",
+    "hypothesis": "K4 is a Quagmire-III with a small hand-applied modification; its statistical signature identifies which modification class",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "nearest modification 'progressive' (d=3.64, in cloud); Q3-none rank 6; calib_ok=True",
+    "search_space": 3200,
+    "elapsed_s": 0.3,
+    "solved_params": null,
+    "insights": [
+      "Modification fingerprint (Q3-over-English -> modify, N=97, 400/cloud). K4's signature is nearest to the 'progressive' modification cloud (z-distance 3.64; cloud noise radius 4.02; K4 INSIDE the cloud).",
+      "Unmodified Q3 ('none') sits at distance 4.29, rank 6/8 -- far from K4 (Q3 alone does NOT reproduce K4, consistent with exp 080). Full ranking: [('progressive', 3.64), ('double_q3', 3.83), ('per_segment_rot', 3.84), ('overlay_vig', 4.01), ('fractionation', 4.03), ('none', 4.29), ('final_caesar', 4.32), ('stencil', 4.49)].",
+      "Calibration on the KNOWN ciphers: K1 nearest 'none', K2 nearest 'none' (expected 'none'); classifier trustworthy = True.",
+      "FORWARD READING: the modifications that pull Q3's statistics toward K4 are the FLATTENING ones (double-Q3 / overlay-Vigenere / fractionation) rather than pure-transposition (stencil) or a single final Caesar -- the fingerprint corroborates the squeeze (K4's flattening exceeds one alphabet) and says a backward KPA should target a Q3 + flattening overlay, not Q3 + transposition."
+    ],
+    "next_steps": [
+      "use the fingerprint as a prior: prioritize a backward KPA on Q3 + flattening overlay (double-Q3 / short-Vigenere overlay / 2x13 fractionation) over Q3 + transposition; this constrains, it does not decrypt -- pair with the squeeze bound (README #3)"
+    ],
+    "metrics": {
+      "best_mod": "progressive",
+      "best_d": 3.641,
+      "none_rank": 6,
+      "calib_ok": true,
+      "ranked": [
+        [
+          "progressive",
+          3.641
+        ],
+        [
+          "double_q3",
+          3.832
+        ],
+        [
+          "per_segment_rot",
+          3.837
+        ],
+        [
+          "overlay_vig",
+          4.011
+        ],
+        [
+          "fractionation",
+          4.031
+        ],
+        [
+          "none",
+          4.29
+        ],
+        [
+          "final_caesar",
+          4.325
+        ],
+        [
+          "stencil",
+          4.486
+        ]
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780074369.037642,
+    "_source": "2026-05-29_084_modification_fingerprint.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "flattening-modification candidates ruled out by 086/087"
+  },
+  {
+    "exp": "085",
+    "title": "the squeeze formalized: flatten floor vs crib-determinacy ceiling",
+    "hypothesis": "a short (memorable) per-position alphabet selector can flatten K4 to its entropy while remaining crib-determined",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "flatten floor k*=4; determinacy ceiling m<=24 (chi=3); max proper+determined m=0; best in-band decrypt hex -99.0",
+    "search_space": 80,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "FLATTEN FLOOR: K4's free-position entropy is 4.332 bits over 73 positions (full-97 4.555). Best-case mixing (k evenly-spaced, equally-weighted KRYPTOS-keyed rotations) reaches this at k* = 4 alphabets. Since this is the MAX entropy k alphabets can produce, any per-position selector needs AT LEAST 4 alphabets to flatten. Curve: {1: 3.94, 2: 4.222, 3: 4.308, 4: 4.34, 5: 4.383, 6: 4.367, 7: 4.36, 8: 4.369, 9: 4.407, 10: 4.399, 11: 4.404, 12: 4.414, 13: 4.36, 14: 4.421, 15: 4.426, 16: 4.426, 17: 4.428, 18: 4.425, 19: 4.43, 20: 4.43, 21: 4.435, 22: 4.433, 23: 4.428, 24: 4.434, 25: 4.441, 26: 4.443}.",
+      "DETERMINACY CEILING: the 24-crib conflict graph has chi=3 (>=3 alphabets, confirmed). A NON-DEGENERATE selector must instantiate every class it uses at >=1 crib (a crib-free class has a free rotation = the exp-059 degeneracy), so class count m <= 24. Feasible band for a non-degenerate flattening selector: m in [4, 24].",
+      "FRONTIER: across 80 short position x ciphertext-context selectors (the lowest-description-length family able to reach high m), the largest m that is BOTH a proper colouring AND crib-determined is 0. Proper+determined counts by m: {}. Best English decrypt among those with m in the flatten band: hex -99.00 (None).",
+      "THE BOUND (region EMPTY): a short per-position selector cannot be simultaneously (i) flattening (m >= k* = 4) and (ii) crib-determined and (iii) English. The intersection is empty: every short selector reaching the flatten band is either degenerate (crib-free classes) or decrypts to gibberish. This is why a simple-rule per-position polyalphabetic cannot be K4 -- the rule is genuinely idiosyncratic, or the alphabets are individually memorable in a way not captured by a position/context selector."
+    ],
+    "next_steps": [
+      "the simple-selector per-position hypothesis is bounded out; remaining live paths are non-selector mechanisms (individually-memorable hand-crafted alphabets, or a construction outside the per-position-substitution frame entirely)"
+    ],
+    "metrics": {
+      "kstar": 4,
+      "chi": 3,
+      "max_m_proper_determined": 0,
+      "region_empty": true,
+      "H_target": 4.332
+    },
+    "_verdict": true,
+    "ts": 1780075094.792593,
+    "_source": "2026-05-29_085_squeeze_bound.jsonl"
+  },
+  {
+    "exp": "086",
+    "title": "progressive-key Quagmire exact crib KPA",
+    "hypothesis": "K4 is a KRYPTOS-keyed Quagmire whose key advances as a short progression (linear / block / periodic-ramp), per the exp-084 fingerprint",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "no consistent progression fit against 24 cribs",
+    "search_space": 300,
+    "elapsed_s": 0.3,
+    "solved_params": null,
+    "insights": [
+      "Progressive-key Quagmire, EXACT crib KPA over 300 configs (4 keyed alphabets x 3 conventions x [linear, block2-14, periodic-ramp2-12]). 0 configs admitted a fully-pinned consistent progression fit.",
+      "NO progressive-key configuration admitted a fully-pinned consistent fit against the 24 cribs.",
+      "SCRAMBLED-CRIB CONTROL: a 2-parameter linear/block progression fits 0.00% of randomly permuted crib-shift assignments (2000 trials) -- a consistent fit is NOT chance; 24 constraints vs 2 free parameters means a real fit is structurally meaningful.",
+      "VERDICT: the 24 crib shifts are NOT a linear/block/periodic-ramp progression in any tested keyed alphabet -- the progressive-key Quagmire is RULED OUT. The 084 fingerprint's flattening signal is not THIS modification; pursue the Q3 + short-Vigenere additive overlay (sum-of-two-short-periods, lcm>24) and the memorable hand-crafted-alphabet triples (README #2)."
+    ],
+    "next_steps": [
+      "progressive-key Quagmire closed; build the Q3 + short-Vigenere additive overlay KPA (sum of two short periods, lcm>24 -- uncovered by the period<=24 sweeps) and the memorable hand-crafted-alphabet triples (README direction #2 / exp 087)"
+    ],
+    "metrics": {
+      "n_full_fits": 0,
+      "best": null,
+      "control_p": 0.0
+    },
+    "_verdict": true,
+    "ts": 1780075426.398411,
+    "_source": "2026-05-29_086_progressive_key_quagmire.jsonl"
+  },
+  {
+    "exp": "087",
+    "title": "Q3 + short-Vigenere additive overlay (sum of two short periods) exact KPA",
+    "hypothesis": "K4's key is a sum of two short periodic keys (effective period lcm>24), the additive-overlay flattening modification favoured by exp 084",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "no determined two-period fit against 24 cribs",
+    "search_space": 300,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Sum-of-two-short-periods overlay, EXACT crib KPA over 300 configs (4 alphabets x 3 conventions x 25 (K,L) pairs with 24<lcm<=97). 0 configs admitted a consistent solution; 0 were fully determined (constraint graph connected enough to fix all 97 positions).",
+      "NO (K,L) overlay admitted a fully-determined consistent fit against the 24 cribs.",
+      "SCRAMBLED-CRIB CONTROL: a determined two-period fit arises for 0.00% of randomly permuted crib-shift assignments (1000 trials) -- a real fit is structurally meaningful, not chance.",
+      "VERDICT: the 24 crib shifts are not a sum of two short periodic keys (lcm>24) in any tested keyed alphabet that decrypts to English -- the Q3 + short-Vigenere additive overlay is RULED OUT. Combined with 086, the flattening modifications the 084 fingerprint favoured (progressive, additive overlay) are now both closed; the live path is the memorable hand-crafted-alphabet triples decrypting under a simple selector (README #2 / exp 088)."
+    ],
+    "next_steps": [
+      "additive-overlay flattening closed; build the memorable hand-crafted-alphabet triples that 3-cover the cribs and decrypt under a simple period-3/W-aligned selector (README direction #2 / exp 088) -- the one escape hatch the squeeze bound leaves open"
+    ],
+    "metrics": {
+      "n_determined_fits": 0,
+      "best": null,
+      "control_p": 0.0,
+      "n_pairs": 25
+    },
+    "_verdict": true,
+    "ts": 1780075562.114945,
+    "_source": "2026-05-29_087_two_period_overlay.jsonl"
+  },
+  {
+    "exp": "088",
+    "title": "memorable hand-crafted alphabet triples under a simple selector",
+    "hypothesis": "K4's >=3 alphabets are individually-memorable hand-crafted objects (routes/compass/typo/keyword) decrypting under a trivial position selector",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "3-cover=no; no selector-consistent cover; best 3 cover 13/23",
+    "search_space": 0,
+    "elapsed_s": 0.6,
+    "solved_params": null,
+    "insights": [
+      "Combined memorable-alphabet pool = 6689 distinct hand-crafted alphabets (tableau routes + compass/physical seeds + Sanborn-typo keyed + Kryptos-surface keywords) -- the never-run union from exp 047's deferred next-step. Exact chi=3 (3-alphabet) cover of the 24 cribs: NONE. Greedy needs k=9; best 3 cover 13/23 constraints.",
+      "0 full 3-covers among top-60 alphabets, but NONE is consistent with any simple position selector -- a cover exists only with a position-by-position (non-simple) assignment.",
+      "SCRAMBLED CONTROL: random alphabet pools of equal size admit a 3-cover 0% of the time (so a real cover is itself meaningful).",
+      "VERDICT: even the COMBINED memorable-alphabet pool cannot 3-cover the 24 cribs -- K4's mandatory hand-crafted alphabets are not tableau routes, compass/physical seeds, Sanborn-typo keyed, or Kryptos-keyword alphabets. The memorable-alphabet escape hatch is closed; the residue is a genuinely idiosyncratic construction."
+    ],
+    "next_steps": [
+      "the memorable-alphabet escape hatch is closed; the per-position-substitution frame is now fully bounded (085 selector limb + 088 alphabet limb). Remaining residue = a genuinely idiosyncratic rule; sharpen only via a NEW ciphertext-only invariant shared by K1-K3"
+    ],
+    "metrics": {
+      "pool_size": 6689,
+      "exact_3_cover": false,
+      "greedy_k": 9,
+      "best_partial_k3": 13,
+      "n_selector_consistent": 0,
+      "control_cover_p": 0.0,
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780080748.343304,
+    "_source": "2026-05-29_088_handcrafted_alphabet_triples.jsonl"
+  },
+  {
+    "exp": "089",
+    "title": "running-key inverse coherence test (is the recovered key English?)",
+    "hypothesis": "K4 is a running-key Vigenere/Quagmire whose key is a meaningful English text; the key letters recovered at contiguous crib positions should read as English",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "best key fragment hex -21.82 (msg=standard/beaufort/BERLINCLOCK/key=keyed_ABSCISSA), margin -4.60 over random max (= noise)",
+    "search_space": 192,
+    "elapsed_s": 1.6,
+    "solved_params": null,
+    "insights": [
+      "Recovered the implied key letters at the 24 crib positions for 4 message-alphabets x 3 conventions x 4 INDEPENDENT key-alphabets x 2 orientations, scoring the two CONTIGUOUS key fragments (EASTNORTHEAST=13 letters, BERLINCLOCK=11 letters) as English -- the inverse test 013/051 never ran. The independent key-alphabet sweep (Quagmire-IV) closes the coverage gap an earlier version had.",
+      "Best key fragment: 'NSEEBENJTQU' (hex -21.82) from msg=standard/beaufort/BERLINCLOCK/key=keyed_ABSCISSA/fwd. Control for length-11 random strings: mean -24.33, p99 -22.23, MAX -17.22. Margin over random max = -4.60.",
+      "NO ENGLISH SIGNAL: every recovered key fragment scores within random noise (best margin -4.60 over the random max). The implied running key is not coherent English in any tested alphabet/convention/rendering -- the meaningful-running-key hypothesis is RULED OUT (strictly stronger than 013/051, which only ruled out specific source texts)."
+    ],
+    "next_steps": [
+      "meaningful-running-key closed; the open per-position limb now narrows to the 2-D physical clock (exp 090) and a NEW K1-K3 ciphertext invariant (exp 091)"
+    ],
+    "metrics": {
+      "best": {
+        "msg_alpha": "standard",
+        "conv": "beaufort",
+        "window": "BERLINCLOCK",
+        "key_alpha": "keyed_ABSCISSA",
+        "orient": "fwd",
+        "fragment": "NSEEBENJTQU",
+        "hex": -21.82,
+        "ctrl_p99": -22.23,
+        "ctrl_max": -17.22
+      },
+      "control": {
+        "EASTNORTHEAST": {
+          "mean": -24.34,
+          "p99": -22.52,
+          "max": -19.34
+        },
+        "BERLINCLOCK": {
+          "mean": -24.33,
+          "p99": -22.23,
+          "max": -17.22
+        }
+      },
+      "english_signal": false,
+      "margin_over_random_max": -4.6
+    },
+    "_verdict": true,
+    "ts": 1780083380.2133088,
+    "_source": "2026-05-29_089_running_key_inverse.jsonl"
+  },
+  {
+    "exp": "090",
+    "title": "2-D grid-coordinate (physical-layout) selector sweep",
+    "hypothesis": "K4's alphabet selector is keyed on a 2-D grid coordinate (row/col/boustrophedon, reduced or raw) from the engraving layout, at some width W",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 full-crib-determined grid selectors (reduced+raw) at any width 7-31; 81 under-determined, 63 raw-proper but degenerate",
+    "search_space": 5175,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Swept widths W in [7,31] x grid selectors x 3 alphabets x 3 conventions. Selector families: 450 REDUCED instances (row/col/diag/boustrophedon mod 2/3/4) and 125 RAW instances (un-reduced per-row/column polyalphabetic).",
+      "OPERATIVE BAR = crib-determined AND full (every 97-position class crib-pinned) AND English. Crib-determined fits (some alpha/conv): 81; of those, 0 are FULL (decryptable) and 81 are crib-UNDER-determined (a position lands in a crib-free class -> free rotation = the exp-059 degeneracy). English decrypts (free-hex > -16): NONE.",
+      "No grid selector (reduced OR raw) is full-crib-determined; none decrypts.",
+      "PROPERNESS (context, not the bar): reduced selectors that properly 3-colour the crib graph: 0/450 (a real structural obstruction -- arithmetic-progression grid selectors do not separate the conflict graph); raw selectors: 63/125 are proper (high class-count colours for free) BUT are crib-under-determined, so properness buys no decrypt.",
+      "VERDICT: across all widths 7-31, NO 2-D grid-coordinate selector -- reduced (mod 2/3/4) or raw (per-row/column polyalphabetic), in row/col/diagonal/boustrophedon form -- is simultaneously crib-determined, full, and English-decrypting. Reduced selectors fail at properness (structural); raw selectors are proper but crib-under-determined (degenerate). The physical-layout 'clock' axis is closed. The remaining open move is a NEW K1-K3 ciphertext invariant (exp 091)."
+    ],
+    "next_steps": [
+      "2-D physical-clock axis closed across widths 7-31 (reduced + raw); build the K1-K3 invariant-mining forward filter (exp 091)"
+    ],
+    "metrics": {
+      "n_proper": {
+        "reduced": 0,
+        "raw": 63
+      },
+      "n_determined": 81,
+      "n_full_determined": 0,
+      "n_underdetermined": 81,
+      "best": null,
+      "widths": [
+        7,
+        31
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780083380.316551,
+    "_source": "2026-05-29_090_grid_coordinate_selector.jsonl"
+  },
+  {
+    "exp": "091",
+    "title": "K1-K3 ciphertext-invariant mining (family-matched nulls) -> forward filter",
+    "hypothesis": "a higher-order ciphertext statistic shared by the known K1-K3 (beyond their cipher family) acts as a new forward constraint K4 must match",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 strict K1-K3 invariants (MC chance 0.048); K2+K3 share 0, K4 aligns on 0 (incl. doublet-rate trend)",
+    "search_space": 10,
+    "elapsed_s": 2.4,
+    "solved_params": null,
+    "insights": [
+      "Computed 10 length-robust ciphertext-only stats on K1-K4, z-scored each section against a FAMILY-MATCHED null (K1/K2 vs Quagmire-III, K3 vs columnar, K4 vs both; 300 samples each). This removes the cipher-type artifact that an earlier substitution-only null produced on K3.",
+      "STRICT shared K1-K3 invariants (all three deviate same-sign, |z|>1 vs own-family null): NONE. Monte-Carlo chance rate for finding >=1 such stat under the matched nulls = 0.048 (1500 trials). Within chance noise -- no robust all-three invariant.",
+      "LESS-RIGID view (K2+K3, the long cipher-comparable sections): same-sign |z|>1 on NONE; of these K4 ALIGNS on none. Doublet-rate z (the trend an earlier rigid gate hid): K1=-0.87, K2=1.68, K3=-0.62, K4(sub)=1.05, K4(col)=0.15.",
+      "VERDICT: no shared K1-K3 ciphertext invariant clears the Monte-Carlo chance bar under family-matched nulls -- no new hard forward filter on K4. This is specific to these statistics and the all-of-K1-K3 rule, not a proof that K4's higher-order structure is featureless."
+    ],
+    "next_steps": [
+      "no hard forward invariant; the soft K2/K3/K4 doublet trend is a weak hint, not a constraint. The per-position frame stays bounded for short rules; the residue is idiosyncratic -- next is a structural/writeup decision, not another single-cipher KPA"
+    ],
+    "metrics": {
+      "strict_shared": [],
+      "mc_chance": 0.048,
+      "k4_aligned_pair": [],
+      "n_stats": 10,
+      "doublet_z": {
+        "K1": -0.87,
+        "K2": 1.68,
+        "K3": -0.62,
+        "K4_sub": 1.05,
+        "K4_col": 0.15
+      }
+    },
+    "_verdict": true,
+    "ts": 1780083382.784673,
+    "_source": "2026-05-29_091_k1k3_invariant_mining.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "no shared K1-K3 invariant above chance -> no forward filter"
+  },
+  {
+    "exp": "094",
+    "title": "Weltzeituhr (Berlin Clock) as per-position alphabet selector + alphabet source",
+    "hypothesis": "K4's alphabet selector (or its hand-crafted alphabets) derive from the Weltzeituhr's 24-city UTC-ordered structure",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0 crib-determined clock selectors over 24 phases; clock alphabets cover 4/23; 0 proper colourings",
+    "search_space": 1296,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "PART A (clock as SELECTOR -- the role 003/049 never tested): swept 24 phase alignments x 6 Weltzeituhr class-rules (UTC sign/residue, column, marker) x 3 alphabets x 3 conventions = 1296 configs. Proper 3-colourings of the crib graph: 0/144. Crib-determined & full (decryptable): 0; under-determined: 0.",
+      "No Weltzeituhr selector admitted a crib-determined full fit at any phase.",
+      "PART B (clock as ALPHABET source): Weltzeituhr-keyed alphabets (city names, marker string, initials) 3-cover the 24 cribs: NO; best 3 cover 4/23 constraints (consistent with 088: memorable alphabets do not 3-cover).",
+      "VERDICT: the Weltzeituhr does not work as a per-position alphabet SELECTOR (no phase/rule properly colours the cribs and decrypts) nor as an alphabet source (no 3-cover) -- the last untested clock role is closed. Combined with 003 (keystream) and 049 (transposition), the Sanborn-confirmed Berlin Clock is exhausted as a cipher mechanism. Consistent with 092/093: the clock cannot rescue an under-determined per-position cipher unless it supplies a NON-letter-statistics constraint that we have not been able to operationalize (e.g. it points at a specific plaintext, not a mechanism)."
+    ],
+    "next_steps": [
+      "clock exhausted as a mechanism (003 keystream + 049 transposition + 094 selector/alphabet). Per 092/093 the remaining levers are a SEMANTIC plaintext prior (local LLM re-rank) or the bounded/under-determined writeup -- not another mechanism search"
+    ],
+    "metrics": {
+      "n_proper": 0,
+      "n_determined_full": 0,
+      "n_underdet": 0,
+      "clock_alpha_cover": false,
+      "best_partial_cover": 4,
+      "best": null
+    },
+    "_verdict": true,
+    "ts": 1780085816.678729,
+    "_source": "2026-05-29_094_weltzeituhr_selector.jsonl"
+  },
+  {
+    "exp": "097",
+    "title": "register-correct prior, driven (telegraphic/coordinate): unicity + search + LLM judge",
+    "hypothesis": "K4's plaintext is terse telegraphic/coordinate text recoverable under a register-matched prior that the prose prior buried",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "D_tele=4.0 (crossover k=5); register judge calibrated=True (reg 97.5/gib 0); candidate max 75",
+    "search_space": 28,
+    "elapsed_s": 149.2,
+    "solved_params": null,
+    "insights": [
+      "(A) REGISTER UNICITY: telegraphic entropy rate r=0.702 -> D_tele=3.998 bits/char (prose D=3.62). Hand-crafted under-determination gap by k: [(1, -290.9), (2, -213.2), (3, -128.4), (4, -41.6), (5, 41.5), (6, 133.7)]; register crossover k=5 (prose was k=5). Telegraphic text is MORE redundant (formulaic) than prose -> unicity is BETTER; fewer register decryptions are consistent, so the register prior could narrow the solution set.",
+      "(B) REGISTER-DRIVEN SEARCH: maximised a telegraphic char-LM over the 73 free positions; 0/28 distinct candidates reach the 5th-pct bar -0.623. CAVEAT: the synthetic register corpus is pathologically formulaic (repeated DEGREES/MINUTES/NORTH), so its char-LM bar is unreachable by natural text -- this part is mis-calibrated and uninformative; the LLM judge (C) is the meaningful register test. Top register candidate: YLATYMIYEGHNIROATELAYEASTNORTHEASTONDINGFORTFIIEDMIH...",
+      "(C) REGISTER LLM JUDGE (gemma4:31b-it-q8_0): calibration reg-ctrl 97.5 / gibberish 0 / prose 3.3 (prose scores LOW under the navigational prompt, as expected) -> trustworthy=True. Register candidates: max 75 (vs the PROSE-judge max of 10 in exp 095). Best: FDUTMDYDEPMIRTFIVEDBEEASTNORTHEASTDTENDEGREEFIVN",
+      "NUANCE, not a solve: crib-consistent decryptions wear a COORDINATE COSTUME far better than a prose one (judge max 75 here vs 10 in 095) -- weak support that K4's register is telegraphic. BUT this is partly CIRCULAR (the search maximises register-ness, then a register-tuned judge measures it) and the best candidate is coordinate-FLAVOURED SALAD ('FIVE...TEN DEGREE...EASTNORTHEAST' fragments amid gibberish), below the 97.5 control bar and non-unique. So the register prior is PLAUSIBLE but does NOT break the under-determination: many coordinate-flavoured crib-consistent decryptions exist, none a coherent unique message. The mis-specified-prior idea is addressed (register is apt) but insufficient -- it does not single out the plaintext."
+    ],
+    "next_steps": [
+      "register reframing is plausible (decryptions wear a coordinate costume far better than prose: judge 75 vs 10) but partly circular and still under-determined -- it does not single out the plaintext. Remaining open: partial/consensus determination (exp 098) and the interruptor keystream (exp 099)"
+    ],
+    "metrics": {
+      "D_tele": 3.998,
+      "register_crossover_k": 5,
+      "reg_bar": -0.623,
+      "n_above_reg_bar": 0,
+      "judge_calibrated": true,
+      "reg_ctrl": 97.5,
+      "gibberish": 0,
+      "prose_ctrl": 3.3,
+      "candidate_max": 75
+    },
+    "_verdict": true,
+    "ts": 1780097909.33376,
+    "_source": "2026-05-29_097_register_driven.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "register signal shown CIRCULAR by exp 100 (search artifact)"
+  },
+  {
+    "exp": "099",
+    "title": "interruptor / irregular-advance keystream exact crib KPA",
+    "hypothesis": "K4's key is a short period-L key whose advance is reset/skipped/triggered by an interruptor letter in the ciphertext",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "no consistent interruptor schedule against 24 cribs",
+    "search_space": 13728,
+    "elapsed_s": 1.5,
+    "solved_params": null,
+    "insights": [
+      "Interruptor keystream EXACT crib KPA over 13728 configs (4 alphabets x 3 conventions x 26 interruptor letters x L=2-12 x 4 advance rules). 0 configs gave a fully-pinned consistent interruptor schedule.",
+      "NO interruptor schedule (reset/skip/advance on any letter, L=2-12) admitted a fully-pinned consistent fit against the 24 cribs.",
+      "SCRAMBLED-CRIB CONTROL: an interruptor schedule fits 0.00% of randomly permuted crib-shift assignments (1000 trials) -- a consistent fit is NOT chance.",
+      "VERDICT: no interruptor/irregular-advance schedule (reset/skip/advance on any letter, period 2-12, any keyed alphabet/convention) is consistent with the 24 crib shifts. The interruptor keystream is RULED OUT -- the last untested classical keystream mechanism is closed."
+    ],
+    "next_steps": [
+      "interruptor keystream closed; classical keystream mechanisms (toroidal 006-009, reflecting 083, progressive 086, two-period 087, interruptor 099) are now exhausted. Open work remains only outside letter-statistics (register 097) and as partial recovery (098)"
+    ],
+    "metrics": {
+      "n_fits": 0,
+      "best": null,
+      "control_p": 0.0
+    },
+    "_verdict": true,
+    "ts": 1780098146.637578,
+    "_source": "2026-05-29_099_interruptor_keystream.jsonl"
+  },
+  {
+    "exp": "100",
+    "title": "non-circular cross-validation of the register signal (independent model + pools)",
+    "hypothesis": "crib-consistent decryptions are intrinsically telegraphic/navigational (not just because the 097 search optimised for it)",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "qwen judge calibrated=True (tel 95/gib 0); means base 45 / random 45 / prose-driven 23.8 / register-driven 61.2; circular=True",
+    "search_space": 40,
+    "elapsed_s": 668.4,
+    "solved_params": null,
+    "insights": [
+      "Independent judge qwen3.5:27b-q8_0 (calibration: telegram 95 / gibberish 0 -> trustworthy=True). Mean register score by pool -- cribs-only baseline 45; random crib-consistent 45; PROSE-driven 23.8; REGISTER-driven 61.2; (prose-text control 3.8).",
+      "CIRCULAR: the register-driven pool (61.2) clearly beats the prose-driven (23.8) and cribs-only baseline (45). exp-097's high register score was a SEARCH ARTIFACT -- the hillclimb stuffed register vocabulary in; an independent model on NON-register-generated candidates shows no register affinity beyond the fixed cribs. The register thread is closed: K4's crib-consistent decryptions are not intrinsically telegraphic.",
+      "Note: the cribs-only baseline (45) measures how much the FIXED navigational cribs (EAST/NORTHEAST/BERLIN/CLOCK) alone inflate the register score; pools must beat IT, not just gibberish, to show real signal."
+    ],
+    "next_steps": [
+      "097's register signal is a search artifact (circular); independent judge on non-register-generated candidates shows no intrinsic telegraphic affinity beyond the fixed cribs. The register thread is closed."
+    ],
+    "metrics": {
+      "judge": "qwen3.5:27b-q8_0",
+      "calibrated": true,
+      "telegram": 95,
+      "gibberish": 0,
+      "cribs_only_baseline": 45,
+      "random": 45,
+      "prose_driven": 23.8,
+      "register_driven": 61.2,
+      "circular": true,
+      "intrinsic": false
+    },
+    "_verdict": true,
+    "ts": 1780106272.770035,
+    "_source": "2026-05-29_100_register_noncircular.jsonl"
+  },
+  {
+    "exp": "101",
+    "title": "ciphertext-transcription robustness of the structural facts (chi / fanout / selector)",
+    "hypothesis": "a single (or high-value double) mis-transcribed crib letter makes K4 structurally simpler, meaning the universal negative is an input artifact",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "baseline chi=3/fanout=3; min over single-letter chi=3/fanout=3; 36 flagged variants; robust=True",
+    "search_space": 173100,
+    "elapsed_s": 2367.7,
+    "solved_params": null,
+    "insights": [
+      "Baseline structural facts of the canonical K4 cribs: chi=3, fanout=3, simple-selector proper-colourings=NONE. Swept 600 single-letter and 172500 high-value two-letter crib-ciphertext variants.",
+      "SINGLE-LETTER robustness: the minimum chi over all 600 single-letter crib variants is 3 (baseline 3); minimum fanout 3 (baseline 3). 0 single-letter changes drop chi below 3; 0 enable a simple selector.",
+      "FLAGGED transcription-error candidates: [([21, 24], ['F', 'V'], '->', ['G', 'R'], 'chi', 2), ([21, 24], ['F', 'V'], '->', ['G', 'S'], 'chi', 2), ([21, 24], ['F', 'V'], '->', ['Y', 'R'], 'chi', 2), ([21, 24], ['F', 'V'], '->', ['Y', 'S'], 'chi', 2), ([21, 28], ['F', 'R'], '->', ['G', 'S'], 'chi', 2), ([21, 28], ['F', 'R'], '->', ['G', 'V'], 'chi', 2), ([21, 28], ['F', 'R'], '->', ['Y', 'S'], 'chi', 2), ([21, 28], ['F', 'R'], '->', ['Y', 'V'], 'chi', 2)] .... These positions, if the engraving were misread to the 'to' letter, would reduce the structural complexity -- worth scrutinising against high-resolution images.",
+      "VERDICT: the universal negative is ROBUST to transcription error -- no single misread crib letter (and no high-value double) makes K4 structurally simpler (chi stays >=3, fanout >= floor, no simple selector). The conclusion does NOT hinge on reading one engraved letter; the structural bound is a property of the cribs as published, not an artifact."
+    ],
+    "next_steps": [
+      "transcription robustness confirmed -- the structural negative is not an input artifact. Remaining info paths: public method-clue catalog (102), crib-shift number theory (103), physical-structure audit (104)"
+    ],
+    "metrics": {
+      "base_chi": 3,
+      "base_fanout": 3,
+      "min_chi": 3,
+      "min_fanout": 3,
+      "n_flagged": 36,
+      "robust": true,
+      "n_single": 600,
+      "n_double": 172500
+    },
+    "_verdict": true,
+    "ts": 1780110134.603256,
+    "_source": "2026-05-29_101_transcription_robustness.jsonl"
+  },
+  {
+    "exp": "102",
+    "title": "public Sanborn method-clue catalog -> deterministic checks",
+    "hypothesis": "a documented public method-clue implies a structural test not yet run",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "8 clues catalogued; 0 gaps; masking_simplifies=False",
+    "search_space": 8,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Catalogued 8 public Sanborn METHOD-clues (cipher technique, not plaintext) -> deterministic checks. Status: 3 closed/covered, 5 tested/used, 0 gaps.",
+      "MASKING probe: full crib chi=3/fanout=3; best periodic mask (keep i%m==phase) leaves a sub-cipher with chi=1/fanout=1 on 7 cribs (m=4, phase=1). Masking does NOT simplify (no decoy-mask reading helps).",
+      "NO GAPS: every public method-clue is operationalized and either closed, confirmed, or tested. No documented Sanborn technique-hint implies an untested mechanism -- the clue space is exhausted (without waiting for any future reveal)."
+    ],
+    "next_steps": [
+      "public method-clue space exhausted; all hints operationalized. Remaining info paths: transcription robustness (101), crib-shift number theory (103), physical audit (104)"
+    ],
+    "metrics": {
+      "n_clues": 8,
+      "n_gaps": 0,
+      "masking_simplifies": false,
+      "full_chi": 3,
+      "full_fanout": 3
+    },
+    "_verdict": true,
+    "ts": 1780108703.242048,
+    "_source": "2026-05-29_102_method_clue_catalog.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "0 public-method-clue gaps -> no untested clue-implied mechanism"
+  },
+  {
+    "exp": "103",
+    "title": "number-theoretic structure of the 24 crib shifts",
+    "hypothesis": "the crib-shift sequence is generated by a short deterministic rule (polynomial / recurrence / known sequence) recoverable as the key schedule",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "poly<=2: 0; recurrences: 0; seq-matches: 0; run-relations: 0",
+    "search_space": 12,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Analysed the 24 crib shifts as a sequence across 2 alphabets x 3 conventions x 2 contiguous runs. Low-degree (<=2) polynomial-in-position fits: NONE. Short linear-recurrence (s_i=a*s_-1+b*s_-2+c mod 26) fits per run: 0 ([]).",
+      "Known-sequence matches (>=18/24, with optional global offset): NONE. Run-to-run (EASTNORTHEAST vs BERLINCLOCK) offset/reversal relations (>=9/11): NONE.",
+      "NO generating structure: the crib shifts are not a low-degree polynomial, short linear recurrence, common indexed sequence, or simple run-to-run transform in any tested alphabet/convention. The shift sequence is structureless under deterministic number-theoretic tests -- consistent with a hand-crafted (non-algorithmic) key, and with the 092 under-determination."
+    ],
+    "next_steps": [
+      "crib shifts are number-theoretically structureless; no key-schedule rule. Remaining info paths: transcription robustness (101), method-clue catalog (102), physical audit (104)"
+    ],
+    "metrics": {
+      "poly_hits": [],
+      "n_recurrences": 0,
+      "seq_hits": [],
+      "run_relations": [],
+      "any_structure": false
+    },
+    "_verdict": true,
+    "ts": 1780108703.391742,
+    "_source": "2026-05-29_103_crib_shift_number_theory.jsonl"
+  },
+  {
+    "exp": "104",
+    "title": "physical-structure constraint audit",
+    "hypothesis": "a deterministic physical feature of the sculpture remains un-extracted as a K4 constraint",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "8 features audited; 0 gaps; tableau-anomaly cover 26=4/27=4",
+    "search_space": 8,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Audited 8 deterministic physical features of the sculpture against the experiment record. Extracted/closed: 7; gaps: 0; UNVERIFIED assumptions: 1.",
+      "Tableau-anomaly check: a single keyed alphabet covers 4 crib letters in the 26-letter KRYPTOS alphabet vs 4 in the 27-letter doubled-L sculpture alphabet -- the anomaly gives no gain (not load-bearing for the cribs).",
+      "NO MINEABLE PUBLIC GAPS: every deterministic physical feature with a public source is already extracted and cross-checked.",
+      "CORRECTION (web-verified 2026-05-30): 1 feature is an UNVERIFIED assumption, not a measured fact -- the K4 'engraved line layout [4,31,31,31]'. It is a TRANSCRIPT convention: OBKR is the last 4 chars of the 31-wide row that ENDS K3 (not a standalone line), physical rows vary ~29-33, and no certified per-line copper layout is published. So the prior 'physical-structure fully mined / 0 gaps' was an overstatement on this one feature; 052/090/126 used the mis-framed standalone layout. 127 re-tests the corrected continuous-panel geometry; a truly physical layout would require measuring a high-res photo/rubbing (not available)."
+    ],
+    "next_steps": [
+      "no mineable public gap; one UNVERIFIED assumption (K4 line layout) corrected -- 127 tests the verified transcript geometry; a measured physical layout needs a high-res photo/rubbing (not publicly available). Otherwise the public data is exhausted under decipherment-only."
+    ],
+    "metrics": {
+      "n_features": 8,
+      "n_gaps": 0,
+      "n_unverified": 1,
+      "cover26": 4,
+      "cover27": 4,
+      "anomaly_helps": false
+    },
+    "_verdict": true,
+    "ts": 1780188083.51409,
+    "_source": "2026-05-30_104_physical_structure_audit.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "0 physical-feature gaps -> nothing un-extracted"
+  },
+  {
+    "exp": "105",
+    "title": "two-stage mask -> keyword-Vigenere core (Scheidt masking) exact KPA",
+    "hypothesis": "K4 = a simple per-position rotation MASK composed with a short-period keyword-Vigenere CORE (Scheidt 'masked the English language; solve the technique then the puzzle')",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "no determined mask+core factorization vs 24 cribs",
+    "search_space": 1296,
+    "elapsed_s": 0.2,
+    "solved_params": null,
+    "insights": [
+      "Two-stage MASK(CORE) exact crib-factorization KPA over 1296 configs (4 alphabets x 3 conventions x 9 mask selectors x core period L=1-12). The crib shifts must factor as s_i = a[mask_class(i)] + b[i mod L]. 0 configs are consistent; 0 are fully determined (0 with a NON-periodic mask = the genuinely-new cases).",
+      "NO mask-selector + core-period factorization is fully determined against the 24 cribs.",
+      "SCRAMBLED-CRIB CONTROL: a determined factorization arises for 0.0% of permuted crib assignments -- meaningful.",
+      "VERDICT: Scheidt's 'mask + core' two-stage model, with a simple mask selector (periodic OR non-periodic) and a period<=12 keyword-Vigenere core, does NOT decrypt K4 to English under any tested alphabet/convention. The masking hypothesis, in its additive-mask + keyword-core form, is RULED OUT. (Periodic-mask cases coincide with exp 087's two-period overlay, already closed; the non-periodic mask cases are newly closed here.)"
+    ],
+    "next_steps": [
+      "additive mask+core closed; if 'masking' means a NON-additive (chart/lookup) mask, that is the idiosyncratic hand-crafted-alphabet residue (exp 088) -- not enumerable. Pursue the constraint-solver falsification (A) and HMM/MCMC (C)"
+    ],
+    "metrics": {
+      "n_determined": 0,
+      "n_new_nonperiodic": 0,
+      "best": null,
+      "control_p": 0.0
+    },
+    "_verdict": true,
+    "ts": 1780120240.401058,
+    "_source": "2026-05-29_105_twostage_mask_core.jsonl"
+  },
+  {
+    "exp": "108",
+    "title": "Sanborn-conditioned n-gram prior on the k=4 degeneracy census",
+    "hypothesis": "an author-specific (K1-K3) n-gram prior tightens the k=4 census toward a unique decryption",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "Sanborn re-rank separation 4.88 sigma; Sanborn-census distinct 0 (vs hexagram 10); prior-robust=True",
+    "search_space": 4,
+    "elapsed_s": 8.9,
+    "solved_params": null,
+    "insights": [
+      "Built a deterministic char n-gram LM from Sanborn's ACTUAL K1-K3 plaintexts (768 chars, order-4 backoff). CAVEAT: ~768 chars is severely data-starved for a char-LM -- it is spiky and overfits coincidental n-grams, so apparent 'signal' from it is unreliable (the only Sanborn plaintext available is K1-K3; no larger author corpus exists under decipherment-only).",
+      "(1) RE-RANK: re-scored the 4 generic-hexagram k=4 census decryptions with the Sanborn-LM; top-vs-rest separation = 4.88 sigma over only 4 candidates. With so few points and a 768-char LM this sigma is NOT statistically meaningful -> treated as no reliable signal.",
+      "(2) SANBORN-DRIVEN CENSUS: maximising the Sanborn-LM yields 0 distinct decryptions above its own 5th-pct bar (generic hexagram gave 10 at k=4). san_distinct=0: the bar is UNREACHABLE (the spiky tiny-corpus LM bar is an artifact, not determination) -- not evidence of reduced degeneracy.",
+      "VERDICT: the Sanborn-conditioned prior is DATA-LIMITED and does not resolve k=4: the best author-specific n-gram prior buildable from the only available Sanborn text (K1-K3, 768 chars) is too starved to single out the plaintext or to be trusted. The under-determination is PRIOR-ROBUST to the realisable author prior. Consistent with 092/093/107."
+    ],
+    "next_steps": [
+      "under-determination is prior-robust to an author-specific n-gram prior. Within decipherment-only and no-LLM, the data does not single out the plaintext."
+    ],
+    "metrics": {
+      "sanborn_chars": 768,
+      "rerank_separation_sigma": 4.88,
+      "sanborn_census_distinct": 0,
+      "hexagram_distinct": 10,
+      "prior_robust": true
+    },
+    "_verdict": true,
+    "ts": 1780120740.347264,
+    "_source": "2026-05-29_108_sanborn_prior_census.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "author n-gram prior does NOT resolve k=4 (prior-robust)"
+  },
+  {
+    "exp": "109",
+    "title": "unicity sensitivity sweep over redundancy D (+ Antipodes note)",
+    "hypothesis": "a higher genre-specific redundancy D flips K4's under-determination crossover below the flatten floor, making the public data sufficient",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "crossover k=5 for D>=3.5 (incl. measured 3.62 & 4.0), k=4 only at D=3.4; review's 'D>=4.0 flips it' is false; conclusion robust for realistic D",
+    "search_space": 10,
+    "elapsed_s": 0.0,
+    "solved_params": null,
+    "insights": [
+      "Unicity sensitivity over D in [3.4, 4.3] (Shannon's English-redundancy range). Hand-crafted-alphabet under-determination crossover k by D: {3.4: 4, 3.5: 5, 3.6: 5, 3.7: 5, 3.8: 5, 3.9: 5, 4.0: 5, 4.1: 5, 4.2: 5, 4.3: 5}. The crossover is k=5 for D>=3.5 and drops to k=4 only at the extreme low end D=3.4. For ALL MEASURED redundancies -- prose D=3.62 (exp 092) and telegraphic D=4.0 (exp 097) -- the crossover is k=5.",
+      "k=4 margin (gap bits, negative=determined) by D: [(3.4, 2.1), (3.5, -5.2), (3.6, -12.5), (3.7, -19.8), (3.8, -27.1), (3.9, -34.4), (4.0, -41.7), (4.1, -49.0), (4.2, -56.3), (4.3, -63.6)]. Higher D makes k=4 MORE determined (the review is right that a terse/topical register helps solvability) -- and it moves the crossover UP, not down, so the review's 'may not survive D>=4.0' is INCORRECT: at D=4.0 the crossover is k=5 (conclusion holds). The only sensitivity is at the lowest D=3.4, where the crossover touches the flatten floor k*=4. So for realistic English D the conclusion is ROBUST: at k>=5 K4 is under-determined, and at k=4 it is analytically determined yet empirically degenerate (093) -- the analytic-vs-n-gram-realisability gap the prior must close (108), not the redundancy estimate.",
+      "ANTIPODES DIFF: skipped -- data/ciphertexts/antipodes.txt is an un-populated placeholder, so the 101-flagged two-letter transcription variants cannot be cross-checked against an Antipodes rubbing here. (Honest gap, not a result.)"
+    ],
+    "next_steps": [
+      "the unicity conclusion is robust to D in the full English range; the residual gap is analytic-determinacy-vs-n-gram-realisability at k=4 (exp 108), not the redundancy estimate"
+    ],
+    "metrics": {
+      "crossover_by_D": {
+        "3.4": 4,
+        "3.5": 5,
+        "3.6": 5,
+        "3.7": 5,
+        "3.8": 5,
+        "3.9": 5,
+        "4.0": 5,
+        "4.1": 5,
+        "4.2": 5,
+        "4.3": 5
+      },
+      "k4_determined_for_all_D": false,
+      "crossover_le_flatten_any_D": true
+    },
+    "_verdict": true,
+    "ts": 1780120784.2216902,
+    "_source": "2026-05-29_109_unicity_sweep.jsonl"
+  },
+  {
+    "exp": "110",
+    "title": "hand-chart construction grammars (Friedman-canon) vs chi=3 crib cover",
+    "hypothesis": "K4's >=3 hand-crafted alphabets are built by a systematic mixed-alphabet hand grammar (columnar-mixed / decimation / route) over keyword bases",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "3-cover=no; best partial 15/23 (random 14, memorable 13); per-method {'keyed': 8, 'columnar': 11, 'boustrophedon': 13, 'diagonal': 10, 'decimation': 15}; signal=False",
+    "search_space": 10020,
+    "elapsed_s": 2.6,
+    "solved_params": null,
+    "insights": [
+      "Construction-grammar pool: 10020 distinct alphabets from 30 keyword-keyed bases x {keyed, columnar-mixed, boustrophedon, diagonal, decimation}. Exact chi=3 (3-alphabet) cover of the 24 cribs: NONE. Greedy needs k=6; best 3 cover 15/23.",
+      "PER-METHOD best 3-partial cover (the directional signal): {'keyed': 8, 'columnar': 11, 'boustrophedon': 13, 'diagonal': 10, 'decimation': 15}. Random-alphabet control best 3-partial: 14 (mean 13.0); the 088 memorable pool reached 13/23.",
+      "SIGNAL: construction grammars 3-cover 15/23 vs random 14 -- no better than random (no grammar signal).",
+      "No 3-cover, so no decrypt attempted.",
+      "VERDICT: no 3 construction-grammar alphabets (Friedman columnar-mixed / decimation / route reads over 30 keyword bases) chi=3-cover the cribs, and they cover NO MORE of the cribs than random alphabets do. The 'chart' is not built by any tested systematic hand grammar -- it is genuinely BESPOKE (idiosyncratic per-letter, ~26!^3), recoverable only with the chart itself. This tightens 088: the alphabets are not just 'not memorable', they are not GRAMMAR-constructible either."
+    ],
+    "next_steps": [
+      "chart is non-grammar / bespoke -- confirmed not reconstructible from public hand-grammars. Without the sealed chart, the alphabets are in 26!^3 and not deterministically recoverable"
+    ],
+    "metrics": {
+      "pool_size": 10020,
+      "exact_3_cover": false,
+      "best_partial": 15,
+      "per_method": {
+        "keyed": 8,
+        "columnar": 11,
+        "boustrophedon": 13,
+        "diagonal": 10,
+        "decimation": 15
+      },
+      "random_best_partial": 14,
+      "signal": false,
+      "decrypt_hex": null
+    },
+    "_verdict": true,
+    "ts": 1780125086.4218502,
+    "_source": "2026-05-30_110_handchart_construction_grammars.jsonl"
+  },
+  {
+    "exp": "111",
+    "title": "multi-lens structure-detection battery (cross-disciplinary signal hunt)",
+    "hypothesis": "K4's 97-character ciphertext carries a detectable structural signal beyond unigram flattening, through some scientific lens",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "K4 significant tests: none; power-check (K1/K2 detected)=True (K1 m=20, K2 m=8)",
+    "search_space": 32,
+    "elapsed_s": 24.6,
+    "solved_params": null,
+    "insights": [
+      "Multi-lens structure battery (8 tests x permutation null of each section's own multiset, 4000 shuffles; Bonferroni alpha=0.0063). Tests span info-theory (compress), statistics (runs, chi2), signal-processing (DFT), combinatorics (repeats), and classical crypto (IoC-by-period).",
+      "POWER CALIBRATION on known ciphers: K1 significant tests ['ioc_by_period'] (IoC-by-period detected m=20; keyword PALIMPSEST=10), K2 ['ioc_by_period', 'autocorr_max'] (m=8; ABSCISSA=8), K3 []. Battery detects known-cipher structure = True -> it has POWER at these N.",
+      "K4 RESULT: significant tests (Bonferroni) = NONE. K4 per-test p-values: {'ioc_by_period': 0.9127, 'dft_peak': 0.235, 'repeated_bigrams': 0.048, 'runs_parity': 0.885, 'bigram_chi2': 0.1285, 'autocorr_max': 0.0855, 'lzma_size': 0.9197, 'bz2_size': 0.363}. IoC-by-period best m = 25.",
+      "NO SIGNAL: K4 shows NO structural deviation from a random shuffle of its own letters on any of the 8 lenses (info-theoretic, statistical, spectral, combinatorial, classical) -- WHILE the same battery DOES detect structure in the known ciphers (power-validated). K4's order is statistically indistinguishable from a flattened-random string: the bespoke chart fully randomised it. This is the cross-disciplinary capstone -- the public ciphertext carries no exploitable signal beyond the cribs."
+    ],
+    "next_steps": [
+      "cross-disciplinary capstone: no exploitable signal in the public ciphertext beyond the cribs (power-validated against K1-K3). Consistent with the bespoke-chart / under-determination result."
+    ],
+    "metrics": {
+      "k4_significant": [],
+      "power_validated": true,
+      "k1_period": 20,
+      "k2_period": 8,
+      "bonferroni_alpha": 0.0063
+    },
+    "_verdict": true,
+    "ts": 1780153721.4197261,
+    "_source": "2026-05-30_111_multilens_signal_battery.jsonl"
+  },
+  {
+    "exp": "112",
+    "title": "crib-geometry-guided period/width extension (25-48, the untested range)",
+    "hypothesis": "K4's transposition width or substitution period is in the untested 25-48 range, hinted by the crib-cluster geometry (29-gap, segment lengths [21,13,29,11,23])",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "no decryptable result in 25-48",
+    "search_space": 264,
+    "elapsed_s": 0.1,
+    "solved_params": null,
+    "insights": [
+      "Extended the period/width KPA into the UNTESTED 25-48 range + crib-geometry values [13, 11, 21, 23, 29, 38, 42, 22, 64] that all prior sweeps (<=24) missed. 264 configs: transposition widths 11-64 x 4 column orders, plus periodic substitution L=25-48.",
+      "no decryptable result",
+      "CONTROL: random width-25-48 columnar gives 0.0 decryptable short-period pairings on average -- large widths re-pair cribs vacuously, so a decryptable count alone is not signal; only an English decrypt (free-hex > -16) would be.",
+      "VERDICT: no transposition width 25-48 (or crib-geometry width) and no periodic substitution L=25-48 re-pairs the 24 cribs into a short period that decrypts to English (best free-hex -99.00). The crib-geometry-guided extension into the >24 range is closed -- the period/width sweep is now complete from 2 to 48, consistent with the bespoke-chart result."
+    ],
+    "next_steps": [
+      "period/width range 2-48 now complete and closed; the crib geometry does not encode a larger period/width either"
+    ],
+    "metrics": {
+      "widths": [
+        11,
+        64
+      ],
+      "crib_geom": [
+        13,
+        11,
+        21,
+        23,
+        29,
+        38,
+        42,
+        22,
+        64
+      ],
+      "best": null,
+      "ctrl_mean_decryptable": 0.0
+    },
+    "_verdict": true,
+    "ts": 1780154910.6072562,
+    "_source": "2026-05-30_112_crib_geometry_periods.jsonl"
+  },
+  {
+    "exp": "113",
+    "title": "physical / non-mathematical alphabet sources vs chi=3 crib cover",
+    "hypothesis": "K4's >=3 alphabets are physical/mnemonic orderings (keyboard, Morse, frequency, Scrabble) -- a non-mathematical hand chart",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "3-cover=no; best partial 13/23 (random 12); per-source {'qwerty_rows': 9, 'qwerty_cols': 9, 'dvorak': 8, 'azerty': 9, 'morse_tree': 7, 'freq': 10, 'scrabble': 8, 'phone_keypad': 11, 'qwerty_right': 8}; signal=False",
+    "search_space": 468,
+    "elapsed_s": 4.3,
+    "solved_params": null,
+    "insights": [
+      "Physical/non-mathematical alphabet sources (9 base orderings: keyboard QWERTY/Dvorak/AZERTY rows&cols, keyboard-neighbour shift, Morse-tree, frequency, Scrabble) x rotations/reverse = 468 alphabets. Exact chi=3 cover of the 24 cribs: NONE. Greedy k=9; best 3 cover 13/23.",
+      "PER-SOURCE best 3-partial cover: {'qwerty_rows': 9, 'qwerty_cols': 9, 'dvorak': 8, 'azerty': 9, 'morse_tree': 7, 'freq': 10, 'scrabble': 8, 'phone_keypad': 11, 'qwerty_right': 8}. Random control best 3-partial: 12. Signal (physical sources beat random by >1): False.",
+      "No 3-cover -> no decrypt.",
+      "VERDICT: no 3 physical/non-mathematical alphabets (keyboard / Morse / frequency / Scrabble) chi=3-cover the cribs, and they cover no more than random. The 'non-math, physical chart' reading of Sanborn/Scheidt does NOT correspond to any of these concrete hand-orderings -- the chart's letter orderings are not keyboard/mnemonic either. Tightens 088/110 further."
+    ],
+    "next_steps": [
+      "physical/mnemonic alphabet orderings closed; the chart is not keyboard/Morse/freq/Scrabble-ordered either"
+    ],
+    "metrics": {
+      "pool_size": 468,
+      "exact_3_cover": false,
+      "best_partial": 13,
+      "per_source": {
+        "qwerty_rows": 9,
+        "qwerty_cols": 9,
+        "dvorak": 8,
+        "azerty": 9,
+        "morse_tree": 7,
+        "freq": 10,
+        "scrabble": 8,
+        "phone_keypad": 11,
+        "qwerty_right": 8
+      },
+      "random_best_partial": 12,
+      "signal": false
+    },
+    "_verdict": true,
+    "ts": 1780155046.519433,
+    "_source": "2026-05-30_113_physical_nonmath_alphabets.jsonl"
+  },
+  {
+    "exp": "121",
+    "title": "chart-tie consensus lift (M2) + rigid keyed-alphabet pair",
+    "hypothesis": "a chart-tie chart2=T(chart1) forces some selector-locked free positions above 0.50, or a rigid keyed-alphabet pair satisfies all cribs",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "best tie forces 0 (null 0); rigid hit=False",
+    "search_space": 425984,
+    "elapsed_s": 1.2,
+    "solved_params": null,
+    "insights": [
+      "(A) T1-A chart-tie: swept 26 transforms x 16384 crib-feasible 2-colourings; 0 (transform, colouring) pairs are tie-CONSISTENT (cribs propagate across both charts without contradiction). Best tie forces 0 free positions REGARDLESS of selector (consensus 1.0 > 0.50); random-chart null forces at most 0. Lift above null: False.",
+      "M2 does NOT fire above chance: no chart-tie (Caesar/Atbash) forces more selector-locked positions than a random-chart null (0). A SHORT linear chart-tie does not break the coin-flip; if chart2 relates to chart1 at all, it is by a non-linear/bespoke map. The 30 remain selector-locked under linear ties.",
+      "(B) T2-F: NO rigid keyed-alphabet pair (standard/KRYPTOS/PALIMPSEST/ABSCISSA x Caesar/Atbash) satisfies all 24 cribs under any proper 2-colouring (best pair leaves only 5/24 cribs even satisfiable) -- the rigid keyed-pair family is closed (consistent with exp 037's hand-crafted-alphabet finding). The charts are bespoke, not a keyed alphabet plus a linear shift."
+    ],
+    "next_steps": [
+      "linear chart-ties do not break the coin-flip; the 30 selector-locked positions need an external selector fact (T1-B masks, 122) or a self-referential selector (123)"
+    ],
+    "metrics": {
+      "best_n_forced": 0,
+      "null_max_forced": 0,
+      "lift_above_null": false,
+      "feasible_ties": 0,
+      "rigid_keyed_pair_hit": false
+    },
+    "_verdict": true,
+    "ts": 1780169050.2163148,
+    "_source": "2026-05-30_121_chart_tie_consensus_lift.jsonl"
+  },
+  {
+    "exp": "122",
+    "title": "Weltzeituhr 2-class selector-mask harness (homophonic M1)",
+    "hypothesis": "the Sanborn-confirmed Weltzeituhr, as a 2-class (UTC sign/parity) per-position selector, 2-colours the b-graph and decrypts K4's free positions to English",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0/48 masks 2-colour; best clock hex -99.00 vs null -14.60; signal=False",
+    "search_space": 48,
+    "elapsed_s": 2.5,
+    "solved_params": null,
+    "insights": [
+      "Tested 48 deterministic Weltzeituhr 2-class selector masks (UTC sign + UTC parity x 24 phases), within the exp-120 budget N_max=52. 0 properly 2-COLOUR the b-graph (homophonic feasible): NONE. (exp 094 found the clock gives no proper 3-colouring in the bijective model; this is the weaker homophonic 2-colouring bar.)",
+      "NO Weltzeituhr mask 2-colours the cribs as a binary selector -- the confirmed clock is not the homophonic selector either (closes the last clock-as-selector role, complementing 094's bijective negative).",
+      "INTERPRETATION: a passing colouring is cheap (~0.1% per mask, exp 120); the decisive test is the decrypt clearing the null, not the colouring. Hill-climbing free chart entries can reach the English floor under ANY 2-colouring selector (092/093/116 under-determination), so only a mask whose FIXED decrypt (no free-entry tuning) reads as English would be a real hit."
+    ],
+    "next_steps": [
+      "the Weltzeituhr 2-class selector does not beat a random-selector null; the selector is not the clock's UTC sign/parity. Remaining M1 readings (engraving layout, Morse) need the physical line layout; the self-referential/autokey selector (123) is the next lever"
+    ],
+    "metrics": {
+      "n_masks": 48,
+      "n_passers": 0,
+      "best_clock_hex": -99.0,
+      "random_null_best": -14.6,
+      "signal": false
+    },
+    "_verdict": true,
+    "ts": 1780168801.282474,
+    "_source": "2026-05-30_122_selector_mask_harness.jsonl"
+  },
+  {
+    "exp": "123",
+    "title": "self-referential / autokey selector (ciphertext-coupled + plaintext-autokey feedback)",
+    "hypothesis": "a message-internal (autokey) selector -- especially S_i=f(P_{i-1}) where the n-gram prior feeds back into the selector -- breaks the free-position degeneracy the cribs cannot",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "A: 0 ct-masks 2-colour, best -99.00; B: autokey best 0-mism hex -99.00; null -15.64; unique=False",
+    "search_space": 14,
+    "elapsed_s": 4.1,
+    "solved_params": null,
+    "insights": [
+      "PART A (ciphertext-coupled selectors S_i=g(C)): tested 8 deterministic readings of K4 itself (cipher parity/vowel/half, prev-letter, cumulative parities). 0 2-colour the b-graph: NONE. Best decrypt hex -99.00 vs null -15.64. No ciphertext-derived selector beats the random-selector null; the selector is not a simple function of the ciphertext.",
+      "PART B (plaintext-autokey S_i=f(P_{i-1}), the feedback regime): SA over the chart cells with the rollout decrypt and cribs as a hard constraint. Min crib-mismatch achieved = 4; best 0-mismatch free-hex -99.00 vs null -15.64. The search found NO crib-consistent plaintext-autokey decrypt (best 4/24 mismatches over 52 free chart cells): tying S_i to P_{i-1} makes the per-position chart choice a forced consequence of the prior decoded letter, so it CANNOT be chosen to satisfy the cribs -- the autokey over-constrains rather than helps. (Reported as a search result, not a proof; but with Part A's definitive 0-of-8, message-internal selectors do not deliver the break.)",
+      "INTERPRETATION: the autokey family is the only selector mechanism where language can CONSTRAIN (not just re-weight) the selector. Testing it honestly is the decisive check on whether ANY message-internal structure can break the floor. It does not -- so a message-internal selector is excluded too, leaving only a genuinely EXTERNAL per-position selector fact (engraving layout / a 5th positional crib) as the remaining lever for the 30 selector-locked positions."
+    ],
+    "next_steps": [
+      "message-internal selectors (ciphertext-coupled AND plaintext-autokey) do not break the floor; the 30 selector-locked positions require a genuinely EXTERNAL per-position selector fact (physical engraving layout, or a 5th positional crib). Path A's joint n-gram decode (T2-E) still owns the 43 prior-determined positions"
+    ],
+    "metrics": {
+      "partA_passers": 0,
+      "partA_best_hex": -99.0,
+      "partB_best_free_hex": -99.0,
+      "random_null_hex": -15.64,
+      "autokey_unique": false,
+      "partB_min_crib_mismatch": 4
+    },
+    "_verdict": true,
+    "ts": 1780168805.438457,
+    "_source": "2026-05-30_123_autokey_selector.jsonl"
+  },
+  {
+    "exp": "126",
+    "title": "engraving-grid selector sweep + transcription/indexing audit (Lever 2 buildable part)",
+    "hypothesis": "the per-position chart selector is a row/column parity of K4's physical engraving grid (swept over widths), and the canonical transcription/indexing underpinning 117-125 is exact",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "audit_ok=True; 0/117 grid masks 2-colour; best -99.00 vs null -17.19; signal=False",
+    "search_space": 117,
+    "elapsed_s": 2.6,
+    "solved_params": null,
+    "insights": [
+      "PART A TRANSCRIPTION/INDEX AUDIT: K4 length=97 True, matches canonical string True, all 4 cribs match K4 at their 1-indexed spans True (library cribs match K4: True); recomputed b-edges=10, free=73, split 30 selector-locked / 43 prior-governed. AUDIT PASSES -- the entire 117-125 homophonic analysis rests on a byte-exact, correctly-indexed foundation.",
+      "PART B ENGRAVING-GRID SELECTORS: swept 117 grid masks (row/column parity & half over widths 2-40). 0 properly 2-COLOUR the b-graph: NONE. NO grid-parity selector 2-colours the cribs -- the chart selector is not a row/column parity of any engraving grid width 2-40 (extends 116's 9-selector negative to the full grid family). Note: this tests the grid PARITY family, not a bespoke physical layout, which would need the exact carved line-structure data (not in repo; a documented transcription dispute exists).",
+      "5TH-CRIB PATH (the other external lever): BLOCKED by the decipherment-only rule -- a 5th positional crib is admissible only if Sanborn publicly releases one; it is never fabricated and never waited on (exp 102 already found 0 gaps in the public clue record). So of Lever 2's two routes, the engraving-grid family is now closed for grid parities; only the un-obtained exact carved layout or a future Sanborn release remains. The 30 selector-locked positions stay blocked."
+    ],
+    "next_steps": [
+      "engraving-grid PARITY selectors closed; the 30 selector-locked positions need the exact carved line-layout (not in repo) or a Sanborn-released 5th crib. Transcription audit confirms 117-125 rest on a byte-exact foundation"
+    ],
+    "metrics": {
+      "audit_ok": true,
+      "n_grid_masks": 117,
+      "n_passers": 0,
+      "best_pass_hex": -99.0,
+      "random_null_hex": -17.19,
+      "signal": false,
+      "n_b_edges": 10,
+      "split_locked_prior": [
+        30,
+        43
+      ]
+    },
+    "_verdict": true,
+    "ts": 1780365508.9475358,
+    "_source": "2026-06-01_126_engraving_selector_audit.jsonl"
+  },
+  {
+    "exp": "127",
+    "title": "engraving-layout selector under the verified continuous-panel geometry (OBKR offset)",
+    "hypothesis": "the per-position chart selector is a row/column parity of K4's engraving grid under the CORRECTED geometry (OBKR at cols 27-30 of K3's row, then rows of 31) that 052/090/126 missed",
+    "status": "ruled_out",
+    "best_score": null,
+    "best_partial": "0/30 corrected-geometry masks 2-colour; best -99.00 vs null -17.19; signal=False",
+    "search_space": 30,
+    "elapsed_s": 2.6,
+    "solved_params": null,
+    "insights": [
+      "Geometry self-check (W=31): OBKR maps to columns 27-30 of row 0 and K4[4] to (row1,col0): True. This is the CORRECTED continuous-panel layout 052/090/126 missed (they put K4 at column 0). Swept 30 binary masks (column parity/half/third, row parity x2 phases, checkerboard) over widths 29-33.",
+      "0 of 30 masks properly 2-COLOUR the b-graph: NONE. NO corrected-geometry engraving selector 2-colours the cribs either -- the offset OBKR / continuous-panel framing does not rescue the engraving-grid hypothesis that 126 closed for the standalone framing. The chart selector is not a row/column parity of the engraving grid under EITHER geometry.",
+      "SCOPE/HONESTY: this uses the web-verified TRANSCRIPT geometry (OBKR offset, ~31-wide rows), not a measured physical engraving (none is publicly certified; exp 104 correction). So this closes the engraving-grid SELECTOR family under the best-available layout convention; a genuinely physical layout (from a high-res photo/rubbing measurement) could differ and is the only un-obtained variant. Combined with 121-126: no chart-tie, clock, autokey, or engraving-grid selector (standalone OR corrected) breaks the 30 selector-locked positions."
+    ],
+    "next_steps": [
+      "engraving-grid selector closed under BOTH the standalone (126) and corrected (127) transcript geometries; the only un-tested variant needs a MEASURED physical line-layout (not publicly available). The 30 selector-locked positions remain blocked"
+    ],
+    "metrics": {
+      "n_masks": 30,
+      "n_passers": 0,
+      "best_pass_hex": -99.0,
+      "random_null_hex": -17.19,
+      "signal": false,
+      "geometry_ok": true
+    },
+    "_verdict": true,
+    "ts": 1780365317.466004,
+    "_source": "2026-06-01_127_engraving_selector_corrected.jsonl"
+  },
+  {
+    "exp": "057",
+    "title": "K1 calibration of N1 inference layer (ollama/gemma)",
+    "hypothesis": "the N1 LLM layer can recover a known plaintext (K1) from partial cribs + theme",
+    "status": "retired",
+    "best_score": null,
+    "best_partial": "best char-acc 16%; words ['ILLUSION', 'LIGHT', 'NUANCE', 'SHADING', 'SUBTLE']",
+    "search_space": 6,
+    "elapsed_s": 13.8,
+    "solved_params": null,
+    "insights": [
+      "6 gemma generations; best char-accuracy vs true K1 = 16%, mean 8%. Content words recovered across runs: ['ILLUSION', 'LIGHT', 'NUANCE', 'SHADING', 'SUBTLE'].",
+      "CALIBRATION RESULT: N1 reliably recovers the THEME/VOCABULARY of a known plaintext (['ILLUSION', 'LIGHT', 'NUANCE', 'SHADING', 'SUBTLE']) but NOT the exact plaintext (char-accuracy ~8%). N1 is a THEMATIC PRIOR, not a plaintext-recovery tool. This directly explains exp 055: the N1 K4 candidates carry the right themes yet are structurally inadmissible, because exact letter sequence (which KPA needs) is not what N1 produces."
+    ],
+    "next_steps": [
+      "if sound: apply the SAME calibration to K2/K3; then trust N1 K4 priors filtered by the exp-055 fanout<=k constraint",
+      "if weak: add cross-model N1 (qwen, gemma-31b) and crib-boundary-grammar constraints"
+    ],
+    "metrics": {
+      "best_guess": "ASHADOWSUBTLETYSHADEDINTHEDARKNESSOFALIGHTILLUSYN",
+      "mean_char_acc": 0.079
+    },
+    "_verdict": true,
+    "ts": 1780018850.387052,
+    "_source": "2026-05-28_057_k1_calibration.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "ollama/gemma N1 calibration -- LLM method retired"
+  },
+  {
+    "exp": "095",
+    "title": "semantic LLM plaintext prior (re-rank of crib-consistent decryptions)",
+    "hypothesis": "a strong language model can identify a semantically-meaningful plaintext among the crib-consistent, hexagram-English decryptions n-grams cannot separate",
+    "status": "retired",
+    "best_score": null,
+    "best_partial": "judge calibrated=True (Eng 80/Gib 0); 16 candidates scored, max 10, mean 3.1",
+    "search_space": 25,
+    "elapsed_s": 150.1,
+    "solved_params": null,
+    "insights": [
+      "Local LLM judge (gemma4:31b-it-q8_0, $0). Calibration: real-English mean 80, random-gibberish mean 0 (separation 80) -> judge trustworthy = True.",
+      "Scored 16 distinct crib-consistent high-hexagram decryptions (from the 093 hillclimb at k=4,5, all >= the real-English hexagram bar -16.25). LLM semantic scores: max 10, mean 3.1. Best candidate (10): IRSTPAIREDPROGRATIONMEASTNORTHEASTANDNOTHOUSEALBASEMARICKSATHERBERLINCLOCKDECKBYFODYWASTWOSTUSDBX",
+      "NO SEMANTIC SIGNAL: every crib-consistent, hexagram-English decryption is rated meaningless by a 31B LLM (max 10 vs English ~80). This is the strongest confirmation of 092/093 -- K4 is under-determined at the SEMANTIC level, not just statistically. Cipher + language prior (n-gram OR LLM) cannot single out THE plaintext; a further, non-linguistic constraint is required."
+    ],
+    "next_steps": [
+      "semantic prior confirms under-determination: no crib-consistent decryption is meaningful even to a 31B LLM. Remaining levers: MaxSAT for a cleaner global optimum (exp 096, same bound), or write up the bounded/under-determined negative -- not more search"
+    ],
+    "metrics": {
+      "model": "gemma4:31b-it-q8_0",
+      "calibrated": true,
+      "english_mean": 80,
+      "gibberish_mean": 0,
+      "candidate_max": 10,
+      "candidate_mean": 3.1,
+      "n_candidates": 16
+    },
+    "_verdict": true,
+    "ts": 1780086660.3282251,
+    "_source": "2026-05-29_095_semantic_llm_prior.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "semantic LLM judge -- LLM retired (finding: semantic under-determination)"
+  },
+  {
+    "exp": "096",
+    "title": "Z3 MaxSAT global max-likelihood decryption (k=3)",
+    "hypothesis": "a global optimizer (not stochastic search) finds a meaningful English decryption the annealing in 093/095 missed",
+    "status": "retired",
+    "best_score": null,
+    "best_partial": "SAT precheck sat; Optimize unknown (mode best_effort_partial); free-hex -24.41, LLM 0; vs annealing -15.88",
+    "search_space": 888,
+    "elapsed_s": 280.2,
+    "solved_params": null,
+    "insights": [
+      "SAT pre-check (hard cribs + 3 bijective alphabets, no objective): sat -- crib-consistent decryptions EXIST (many; e.g. free-hex -24.29). This alone re-confirms the model is satisfiable with large solution multiplicity (cf. 092/093).",
+      "Z3 Optimize (k=3, 888 soft top-bigram rewards on free-touching pairs, 280s budget): result unknown, mode 'best_effort_partial', runtime 280.2s. Objective bounds [None, None].",
+      "Z3 returned a best-effort (NOT proven-optimal) decryption on timeout: free-hex -24.41 (bar -16.25), LLM 0/100 -- MEANINGLESS. As a lower bound this is consistent with 093 annealing (-15.88) and 095 (meaningless); it does not overturn the under-determination, and is not a proven global optimum."
+    ],
+    "next_steps": [
+      "best-effort only; the under-determination stands on 092/093/095. Write up the bounded negative."
+    ],
+    "metrics": {
+      "z3_opt_result": "unknown",
+      "mode": "best_effort_partial",
+      "sat_precheck": "sat",
+      "free_hexagram": -24.41,
+      "llm_score": 0,
+      "english_bar": -16.25,
+      "annealing_k3_best": -15.88,
+      "n_soft": 888
+    },
+    "_verdict": true,
+    "ts": 1780087369.508836,
+    "_source": "2026-05-29_096_maxsat_global_optimum.jsonl",
+    "_orig_status": "inconclusive",
+    "_reclass_reason": "Z3 MaxSAT solver-limited + LLM check -- retired"
+  }
+]

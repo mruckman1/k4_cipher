@@ -1,0 +1,197 @@
+# Kryptos clue provenance.
+#
+# Every clue Sanborn (or Scheidt) has released, with date, source, verbatim
+# quote (where available), and notes. When `kryptos.cribs.CRIBS` or any
+# experiment references "the cribs" or "the clues", point at this file.
+#
+# Schema:
+#   - id:        short slug, stable across edits
+#     date:      ISO 8601
+#     source:    primary publication (NYT, Wired, Spy Museum, ACA, ...)
+#     source_url: link if public
+#     released_by: Sanborn | Scheidt | community-confirmed-by-Sanborn
+#     kind:      crib | confirmation | correction | clarification | context
+#     positions: list of 1-indexed K4 positions (if applicable)
+#     plaintext: substring (if applicable)
+#     ciphertext: substring (if applicable)
+#     verbatim:  exact quote (where preserved)
+#     notes:     free text
+
+clues:
+
+  - id: berlin-2010
+    date: "2010-11-20"
+    source: "New York Times"
+    source_url: "https://www.nytimes.com/2010/11/21/us/21code.html"
+    released_by: Sanborn
+    kind: crib
+    positions: [64, 65, 66, 67, 68, 69]
+    plaintext: "BERLIN"
+    ciphertext: "NYPVTT"
+    verbatim: |
+      Sanborn provided the BERLIN crib via Scott Layne / John Schwartz at the
+      NYT, after 20 years of public attempts. He stated the six letters
+      NYPVTT at positions 64-69 decrypt to BERLIN.
+    notes: |
+      First public crib reveal. The "BERLIN" reading was widely taken to
+      refer to the Mengenlehreuhr ("Berlin Clock") until Sanborn's 2025
+      clarification that he meant the Weltzeituhr at Alexanderplatz.
+
+  - id: aca-2013-letter-by-letter
+    date: "2013-10-05"
+    source: "ACA Convention, San Antonio"
+    source_url: "https://kryptosfan.wordpress.com/2013/10/05/aca-2013/"
+    released_by: Sanborn
+    kind: confirmation
+    positions: [64, 65, 66, 67, 68, 69]
+    plaintext: "BERLIN"
+    ciphertext: "NYPVTT"
+    verbatim: "N=B, Y=E, P=R, V=L, T=I, T=N -- Emphatically."
+    notes: |
+      Confirms the letter-by-letter substitution at the BERLIN positions.
+      The doubled T (positions 67 and 68 both T in ciphertext, but
+      decrypting to L and N respectively) proves K4 is a one-to-one
+      positional cipher, not a simple substitution.
+
+  - id: clock-2014
+    date: "2014-11-20"
+    source: "New York Times"
+    source_url: "https://www.nytimes.com/2014/11/21/us/the-final-clue-to-the-cia-kryptos-puzzle.html"
+    released_by: Sanborn
+    kind: crib
+    positions: [70, 71, 72, 73, 74]
+    plaintext: "CLOCK"
+    ciphertext: "MZFPK"
+    notes: |
+      Position 74 is K -> K: a letter encrypts to itself. This kills any
+      reciprocal cipher (Beaufort variants) on arrival. With BERLIN+CLOCK
+      this is now an 11-letter contiguous crib at 64-74.
+
+  - id: east-2020
+    date: "2020-04-01"   # email; made public 2020-08
+    source: "Sanborn email (made public Aug 2020)"
+    source_url: "https://elonka.com/kryptos/"
+    released_by: Sanborn
+    kind: crib
+    positions: [22, 23, 24, 25]
+    plaintext: "EAST"
+    ciphertext: "FLRV"
+
+  - id: northeast-2020
+    date: "2020-01-29"
+    source: "New York Times (Schwartz & Corum)"
+    source_url: "https://www.nytimes.com/2020/01/29/us/cia-sculpture-kryptos.html"
+    released_by: Sanborn
+    kind: crib
+    positions: [26, 27, 28, 29, 30, 31, 32, 33, 34]
+    plaintext: "NORTHEAST"
+    ciphertext: "QQPRNGKSS"
+    notes: |
+      Combined with EAST, this is a 13-letter contiguous crib EAST+NORTHEAST
+      at positions 22-34. The shift sequence is
+      [25,15,1,24,23,24,2,2,20,24,16,0,1] in standard A-Z -- aperiodic
+      across all 13 positions, ruling out short-period polyalphabetics.
+
+  - id: weltzeituhr-2025
+    date: "2025-11-12"
+    source: "International Spy Museum talk, Washington DC"
+    source_url: "https://www.scientificamerican.com/article/kryptos-jim-sanborn-cia-puzzle-talk/"
+    released_by: Sanborn
+    kind: clarification
+    positions: [70, 71, 72, 73, 74]
+    plaintext: "CLOCK"
+    ciphertext: "MZFPK"
+    notes: |
+      Sanborn corrected the community: "CLOCK" refers to the Weltzeituhr
+      (Urania World Clock, Alexanderplatz) -- the gathering place for the
+      crowds that brought down the Berlin Wall -- NOT the Mengenlehreuhr.
+      Roughly 15 years of Mengenlehreuhr-based keystream analysis is on
+      the wrong device.
+
+  - id: egypt-and-wall-2025
+    date: "2025-11-12"
+    source: "International Spy Museum talk, Washington DC"
+    released_by: Sanborn
+    kind: context
+    notes: |
+      Two events influenced K4's plaintext: Sanborn's second trip to Egypt
+      in late 1986, and the fall of the Berlin Wall in 1989.
+
+  - id: k5-confirmation-2025
+    date: "2025-11-12"
+    source: "International Spy Museum talk, Washington DC"
+    released_by: Sanborn
+    kind: context
+    notes: |
+      K5 exists, is 97 characters, will appear in a public space after K4
+      is cryptographically solved, and shares words at the same positions
+      as K4. A K4 candidate method that ALSO fits K5 (once released) is
+      much more likely correct -- treat K5 as the eventual oracle.
+
+  - id: scheidt-non-mathematical-2011
+    date: "2011-10-08"
+    source: "Kryptos Dinner, Washington DC (Ed Hannon's notes)"
+    released_by: Scheidt
+    kind: context
+    verbatim: |
+      K4 cryptography is not mathematical (although this does not preclude
+      it being modeled mathematically), it is simple, can be remembered,
+      and executed years later when used with the correct key word/s.
+    notes: |
+      Constraint on the cipher family: must be memorisable and hand-
+      executable. Argues against pure SAT/ILP-style design and toward
+      Gromark / autokey / Quagmire families.
+
+  - id: scheidt-masking-2005
+    date: "2005-01-21"
+    source: "Wired (Kim Zetter)"
+    source_url: "https://www.wired.com/2005/01/scheidt/"
+    released_by: Scheidt
+    kind: context
+    verbatim: |
+      The techniques of the first three parts ... (used) frequency counting
+      and other techniques that are similar to that. ... But with this
+      other technique (in the fourth part), I disguise that. So you need
+      to solve the technique first and then go for the puzzle.
+    notes: |
+      "Disguise that" = "masking" elsewhere. K4 IoC of 0.0361 is below
+      random English IoC -- consistent with deliberate masking.
+
+  - id: sanborn-modifications-2005
+    date: "2005-01-21"
+    source: "Wired (Kim Zetter)"
+    source_url: "https://www.wired.com/2005/01/scheidt/"
+    released_by: Sanborn
+    kind: context
+    verbatim: |
+      I was modifying systems and developing my own which would make it
+      virtually impossible for [Scheidt] to decipher all of it.
+    notes: |
+      Sanborn modified Scheidt's classical scheme. The composable cipher
+      pipeline (Compose + FinalCaesar + PositionalRemap) exists for this.
+
+  - id: k2-correction-2006
+    date: "2006-04-19"
+    source: "Elonka Dunin / Sanborn announcement"
+    source_url: "https://elonka.com/kryptos/"
+    released_by: Sanborn
+    kind: correction
+    notes: |
+      Sanborn announced that K2's ciphertext on the sculpture has a missing
+      X separator at encryption time, causing the plaintext to read
+      "...WESTIDBYROWS" instead of the intended "...WESTXLAYERTWO". The
+      sculpture itself was not re-engraved. See data/ciphertexts/README.md.
+
+  - id: smithsonian-papers-2025
+    date: "2025-09-03"
+    source: "Wired (Steven Levy, Oct 2025); NYT 2025-10-16"
+    source_url: "https://www.wired.com/story/kryptos-k4-solution-discovered/"
+    released_by: community-confirmed-by-Sanborn
+    kind: context
+    notes: |
+      Jarett Kobek and Richard Byrne assembled the K4 plaintext from
+      taped-together coding charts Sanborn donated to the Smithsonian
+      Archives of American Art ~2023 during cancer treatment. Plaintext
+      is held privately by Sanborn, Scheidt, Kobek, Byrne, and the
+      anonymous $962,500 RR Auction buyer (20 Nov 2025). The cryptographic
+      method remains unsolved -- which is what this repo targets.

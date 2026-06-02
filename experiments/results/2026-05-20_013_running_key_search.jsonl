@@ -1,0 +1,3 @@
+{"_header": true, "name": "013_running_key_search", "ts": 1779338128.228367, "argv": ["experiments/013_running_key_search.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"n_sources": 9, "k4_len": 97}
+{"summary": true, "n_decrypted": 5328516, "n_hits": 0, "elapsed_s": 1.0050214160000905}

@@ -1,0 +1,356 @@
+"""Seed candidate for the K4 cipher-search evolution.
+
+ONLY this file is mutated by the LLM (between the EVOLVE-BLOCK markers).
+The shinka_adapter AST gate enforces a strict allowlist on this file, so
+everything not strictly required for the EVOLVE block lives in
+``problem/_fitness.py`` instead. We keep this file minimal: a few safe
+imports, a single ``run_experiment`` wrapper that delegates scoring, and
+the EVOLVE block itself.
+
+Allowlist (set in configs/config.yaml -> ast_check.allowed_imports):
+    __future__, numpy, math, typing, collections, kryptos, problem
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from problem._fitness import (
+    count_crib_letter_hits,
+    find_crib_literal_cheat,
+    now,
+    score_plaintext,
+)
+
+
+# Threshold for the sentinel-also-scores reward-hack guard. Random
+# expectation for crib hits in a single uniform A-Z 97-char string is
+# 24/26 = 0.92. For a multi-hypothesis dispatcher that picks one of N
+# cipher candidates by English-likeness, the max crib-hit count across
+# those candidates can run higher by chance:
+#   N=100  P(any candidate hits >= k):  k=5: 2%,   k=6: 0.16%, k=7: 0.008%
+#   N=500  P(any candidate hits >= k):  k=5: 10%,  k=6: 0.8%,  k=7: 0.04%
+# We had a confirmed false positive at threshold=4 during the k4_full_v1
+# run (gen 174: honest ~150-candidate dispatcher with sentinel_hits=5).
+# Threshold > 6 keeps the catch rate for actual cheaters at ~100% (a
+# hardcoder hits all 24) while keeping false-positive rate negligible
+# even for very large dispatchers.
+_SENTINEL_CRIB_HITS_THRESHOLD = 6
+
+
+def run_experiment(*, instance: dict[str, Any], seed: int, **kwargs: Any) -> dict[str, Any]:
+    """Score the EVOLVE block's decrypt_k4 against the K4 ciphertext.
+
+    Reward-hack guards layered before scoring:
+
+      1. Source scan: reject if the EVOLVE-block function source contains
+         all four crib literals, or both "EAST" and "NORTHEAST"
+         (find_crib_literal_cheat).
+      2. Differential input: call decrypt_k4 on K4 AND on reversed-K4. If
+         the two outputs share >50% positions, the function ignores its
+         argument (hardcoded plaintext).
+      3. Sentinel cribs: even when outputs differ, if decrypt_k4 of the
+         reversed sentinel also hits cribs at the K4 positions, the cribs
+         are coming from code (stitched-after-cipher, branchy lookup).
+         Random expectation is ~0.92 hits; we reject above 4.
+
+    Returns the EvalResult dict shinka expects:
+      score (higher better), solved (bool), runtime_s, metadata, error_tail.
+    """
+    t0 = now()
+    ciphertext = instance["ciphertext"]
+
+    literal_err = find_crib_literal_cheat(decrypt_k4)
+    if literal_err is not None:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": literal_err,
+        }
+
+    try:
+        plaintext = decrypt_k4(ciphertext)
+    except Exception as e:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": f"{type(e).__name__}: {e}",
+        }
+
+    sentinel = ciphertext[::-1]
+    try:
+        plaintext_sentinel = decrypt_k4(sentinel)
+    except Exception as e:
+        return {
+            "score": float("-inf"),
+            "solved": True,
+            "runtime_s": now() - t0,
+            "error_tail": (
+                "decrypt_k4 crashes on reversed-ciphertext sentinel "
+                "(non-robust to input): " + f"{type(e).__name__}: {e}"
+            ),
+        }
+
+    if (
+        isinstance(plaintext, str)
+        and isinstance(plaintext_sentinel, str)
+        and len(plaintext) == len(plaintext_sentinel)
+        and len(plaintext) > 0
+    ):
+        same = sum(1 for a, b in zip(plaintext, plaintext_sentinel) if a == b)
+        identity_ratio = same / len(plaintext)
+        if identity_ratio > 0.5:
+            return {
+                "score": float("-inf"),
+                "solved": True,
+                "runtime_s": now() - t0,
+                "error_tail": (
+                    f"decrypt_k4 appears to ignore its ciphertext argument: "
+                    f"{identity_ratio:.0%} identical positions between K4 "
+                    f"and reversed-K4 outputs (real cipher should produce "
+                    f"~4% identity; >50% means hardcoded plaintext)."
+                ),
+            }
+
+        sentinel_hits = count_crib_letter_hits(plaintext_sentinel)
+        if sentinel_hits > _SENTINEL_CRIB_HITS_THRESHOLD:
+            return {
+                "score": float("-inf"),
+                "solved": True,
+                "runtime_s": now() - t0,
+                "error_tail": (
+                    f"decrypt_k4 produces crib letters at the K4 crib "
+                    f"positions even on reversed-ciphertext input "
+                    f"({sentinel_hits} of 24 hits, random expectation "
+                    f"~1). Cribs are coming from code structure, not "
+                    f"from the cipher transforming K4."
+                ),
+            }
+
+    return score_plaintext(plaintext, t0=t0)
+
+
+# --------------------------------------------------------------------------
+# EVOLVE BLOCK
+#
+# The LLM mutates this function. Everything above is frozen.
+#
+# Contract:
+#   - Takes the K4 ciphertext (97 chars, uppercase A-Z).
+#   - Returns a candidate plaintext (97 chars, uppercase A-Z).
+#   - Allowed imports inside this function: kryptos.*, numpy, math, typing,
+#     collections. No os/sys/pathlib/time/random/open/eval/exec.
+#   - Must not call wall-clock or unseeded random.
+#   - Should NOT use pure Beaufort (position 74 needs self-encryption).
+
+# EVOLVE-BLOCK-START
+def decrypt_k4(ciphertext: str) -> str:
+    """Multi-hypothesis dispatcher. Try several K4 cipher hypotheses and
+    return the plaintext that looks most English-like (top-trigram count).
+
+    MUTATE: this is a *selector pattern*. Productive mutations include:
+      - Add a new (label, cipher_instance) to ``candidates`` representing
+        a different cipher hypothesis. Keywords worth trying include
+        KRYPTOS, PALIMPSEST, ABSCISSA, DYAHR (from Scheidt's notebooks),
+        plus any keyword the crib-derived residues (see task message)
+        suggest.
+      - Replace one candidate with a Compose([transposition, ...])
+        wrapper if you suspect a two-stage cipher.
+      - Sweep periods for a single cipher family by adding multiple
+        QuagmireIII(key=k, ...) entries with different ``k``.
+
+    Discipline:
+      - Pick by English-likeness (top-trigram count), NOT by crib hits.
+        Picking by cribs trips the sentinel-also-scores reward-hack guard.
+      - Do NOT stitch crib words ("EAST", "NORTHEAST", "BERLIN", "CLOCK")
+        into the output. The source scan rejects candidates that embed
+        those literals.
+      - Each candidate's ``.decrypt(ciphertext)`` must return a 97-char
+        A-Z string. Skip silently on exception or invalid output.
+    """
+    from kryptos.alphabets import KRYPTOS_KEYED
+    from kryptos.ciphers import (
+        Autokey,
+        Bifid,
+        Compose,
+        FourSquare,
+        Gromark,
+        Nicodemus,
+        Playfair,
+        QuagmireIII,
+        QuagmireIV,
+        Trifid,
+        TwoSquare,
+        Vigenere,
+        WSegmented,
+    )
+
+    # K4's W positions (0-indexed), needed by WSegmented; see the task
+    # message for the Lethuillier hypothesis.
+    k4_w_positions = (20, 36, 48, 58, 74)
+
+    # Cipher hypotheses for K4. Each spec is (class, kwargs); construction
+    # is wrapped so an LLM mutation with bad kwargs doesn't crash the
+    # whole dispatcher. .decrypt(ciphertext) is called on each instance.
+    # Gromark's primer is numeric by design (it's a numeric running key);
+    # an alphabetic primer is invalid -- use a digit string.
+    cipher_specs = [
+        # Quagmire III sweeps with K-series keyword roots
+        (QuagmireIII, {"key": "KRYPTOS", "alphabet_keyword": "KRYPTOS"}),
+        (QuagmireIII, {"key": "PALIMPSEST", "alphabet_keyword": "KRYPTOS"}),
+        (QuagmireIII, {"key": "ABSCISSA", "alphabet_keyword": "KRYPTOS"}),
+        # Quagmire IV
+        (QuagmireIV, {"key": "DYAHR", "plain_keyword": "KRYPTOS",
+                      "cipher_keyword": "ABSCISSA"}),
+        # Autokey ciphertext-mode
+        (Autokey, {"primer": "KRYPTOS", "mode": "ciphertext"}),
+        # Vigenere on KRYPTOS-keyed alphabet
+        (Vigenere, {"key": "PALIMPSEST", "alphabet": KRYPTOS_KEYED}),
+        # Gromark with numeric primer
+        (Gromark, {"primer": "23917", "alphabet_keyword": "KRYPTOS"}),
+        # NEW PRIMITIVES (added after the null cipher-class run):
+        # Bifid with KRYPTOS keyword, period 5 and 7
+        (Bifid, {"keyword": "KRYPTOS", "period": 5}),
+        (Bifid, {"keyword": "KRYPTOS", "period": 7}),
+        # Trifid with KRYPTOS keyword, period 5 and 7
+        (Trifid, {"keyword": "KRYPTOS", "period": 5}),
+        (Trifid, {"keyword": "KRYPTOS", "period": 7}),
+        # Playfair with KRYPTOS-keyed grid (default I/J merge)
+        (Playfair, {"keyword": "KRYPTOS"}),
+        # WSegmented: uniform Quagmire III across all 6 K4 segments
+        (WSegmented, {
+            "segment_ciphers": QuagmireIII(key="KRYPTOS",
+                                           alphabet_keyword="KRYPTOS"),
+            "delimiter_positions": k4_w_positions,
+        }),
+        # WSegmented with per-segment keyword sweep
+        (WSegmented, {
+            "segment_ciphers": [
+                QuagmireIII(key="KRYPTOS"),
+                QuagmireIII(key="PALIMPSEST"),
+                QuagmireIII(key="ABSCISSA"),
+                QuagmireIII(key="DYAHR"),
+                QuagmireIII(key="LANGLEY"),
+                QuagmireIII(key="SCHEIDT"),
+            ],
+            "delimiter_positions": k4_w_positions,
+        }),
+        # ROUND 2 ADDITIONS (after k4_full_v2 plateau at hex-saturation):
+        # Nicodemus: per-column Vigenere + columnar read-out
+        (Nicodemus, {"keyword": "KRYPTOS"}),
+        (Nicodemus, {"keyword": "BERLIN"}),
+        (Nicodemus, {"keyword": "ABSCISSA"}),
+        # TwoSquare: digram substitution, 2 keyed grids
+        (TwoSquare, {"top_keyword": "KRYPTOS", "bottom_keyword": "BERLIN"}),
+        (TwoSquare, {"top_keyword": "PALIMPSEST", "bottom_keyword": "DYAHR"}),
+        # FourSquare: digram substitution, 4 grids (2 keyed)
+        (FourSquare, {"top_right_keyword": "KRYPTOS", "bottom_left_keyword": "BERLIN"}),
+        (FourSquare, {"top_right_keyword": "PALIMPSEST", "bottom_left_keyword": "DYAHR"}),
+        # ADFGVX is length-DOUBLING and structurally incompatible with K4's
+        # 97 odd length; deliberately not included in this dispatcher.
+    ]
+    # ROUND 3 ADDITIONS: hypotheses that K4 DEPENDS ON K1/K2/K3 plaintext
+    # content. Sanborn's 2020 hint ("to solve it you need to know what
+    # came before") and the K1/K2 keyword-reuse pattern (PALIMPSEST,
+    # ABSCISSA) make this plausible. Constructions below use K1/K2/K3
+    # plaintext fragments as keys/primers/keywords across the cipher
+    # families, beyond the existing RunningKey-on-K1/K2/K3 entries.
+    try:
+        from kryptos.constants import K1_PLAINTEXT, K2_PLAINTEXT, K3_PLAINTEXT
+        K1H = K1_PLAINTEXT[:20]       # "BETWEENSUBTLESHADING" — first 20 of K1
+        K2H = K2_PLAINTEXT[:20]       # "ITWASTOTALLYINVISIBLE" — first 20 of K2
+        K3H = K3_PLAINTEXT[:20]       # "SLOWLYDESPARATLYSLOW" — first 20 of K3
+        k123_specs = [
+            # QuagmireIII keyed by K1/K2/K3 plaintext heads (vs the
+            # KRYPTOS-keyed alphabet, K1/K2's native machine)
+            (QuagmireIII, {"key": K1H, "alphabet_keyword": "KRYPTOS"}),
+            (QuagmireIII, {"key": K2H, "alphabet_keyword": "KRYPTOS"}),
+            (QuagmireIII, {"key": K3H, "alphabet_keyword": "KRYPTOS"}),
+            # QuagmireIV with K1/K2 as plain/cipher keywords (K1=K2 family)
+            (QuagmireIV, {"key": K3H[:10], "plain_keyword": K1H[:10],
+                          "cipher_keyword": K2H[:10]}),
+            # Autokey primed by K3 plaintext (the unrelated K3 transposition
+            # passage; if K4 reuses K3's text as a primer, this catches it)
+            (Autokey, {"primer": K3H, "mode": "ciphertext"}),
+            (Autokey, {"primer": K1H, "mode": "ciphertext"}),
+            # Vigenere on KRYPTOS_KEYED with K1/K2/K3 plaintext heads as
+            # keys (this is the actual cipher family of K1 and K2)
+            (Vigenere, {"key": K1H, "alphabet": KRYPTOS_KEYED}),
+            (Vigenere, {"key": K2H, "alphabet": KRYPTOS_KEYED}),
+            (Vigenere, {"key": K3H, "alphabet": KRYPTOS_KEYED}),
+            # Three-layer Vigenere chaining K1+K2+K3 heads as sequential keys
+            (Compose, {"layers": [
+                Vigenere(key=K1H[:10], alphabet=KRYPTOS_KEYED),
+                Vigenere(key=K2H[:10], alphabet=KRYPTOS_KEYED),
+                Vigenere(key=K3H[:10], alphabet=KRYPTOS_KEYED),
+            ]}),
+            # WSegmented with each W-segment using a different K1 window
+            (WSegmented, {
+                "segment_ciphers": [
+                    QuagmireIII(key=K1_PLAINTEXT[i*8:(i+1)*8] or "KRYPTOS",
+                                alphabet_keyword="KRYPTOS")
+                    for i in range(6)
+                ],
+                "delimiter_positions": k4_w_positions,
+            }),
+        ]
+        cipher_specs.extend(k123_specs)
+    except Exception:
+        # If K1/K2/K3 imports fail, skip these candidates (the rest of the
+        # dispatcher still works)
+        pass
+
+    candidates = []
+    for cls, kw in cipher_specs:
+        try:
+            candidates.append(cls(**kw))
+        except Exception:
+            continue
+
+    # English-likeness proxy: count occurrences of high-frequency English
+    # trigrams. Robust to the sentinel-also-scores guard because picking
+    # by trigram count (not by crib hits) does not concentrate crib
+    # letters at K4 crib positions on the reversed-ciphertext sentinel.
+    common_trigrams = (
+        "THE", "AND", "ING", "ENT", "ION", "HER", "FOR", "TIO", "HAT",
+        "ITH", "ERE", "TER", "EST", "ERS", "VER", "WIT", "HIS", "OFT",
+    )
+
+    def english_score(pt: str) -> int:
+        return sum(pt.count(t) for t in common_trigrams)
+
+    # Tier the selection: prefer K-at-74 candidates absolutely (matches
+    # the fitness scorer's structural filter), then tiebreak by trigram
+    # English-likeness. Candidates without K at 74 are kept only as a
+    # fallback if NO K-at-74 candidate is available.
+    best_pt_k74 = None
+    best_score_k74 = -1
+    best_pt_any = None
+    best_score_any = -1
+    for cipher in candidates:
+        try:
+            pt = cipher.decrypt(ciphertext)
+        except Exception:
+            continue
+        if not isinstance(pt, str) or len(pt) != 97:
+            continue
+        if not pt.isupper() or not pt.isalpha():
+            continue
+        s = english_score(pt)
+        if s > best_score_any:
+            best_score_any, best_pt_any = s, pt
+        if pt[73] == "K" and s > best_score_k74:
+            best_score_k74, best_pt_k74 = s, pt
+
+    if best_pt_k74 is not None:
+        return best_pt_k74
+    if best_pt_any is not None:
+        return best_pt_any
+
+    # Fallback if every hypothesis failed: identity-like Vigenere with a
+    # constant key. Produces gibberish but a valid 97-char A-Z string so
+    # we get a finite (poor) score rather than -inf.
+    return Vigenere(key="A").decrypt(ciphertext)
+# EVOLVE-BLOCK-END

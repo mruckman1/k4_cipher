@@ -1,0 +1,212 @@
+{"_header": true, "name": "006_shift_sequence_analysis", "ts": 1779333331.493952, "argv": ["experiments/006_shift_sequence_analysis.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"win_threshold": 5, "log_threshold": 3}
+{"generator": "vig-KK:KRYPTOSABCDEFGHIJLMNQUVWXZ_off0", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 69}
+{"generator": "const:ln10_base26_off28", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66}
+{"generator": "fib:a16_b21", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 28}
+{"generator": "fib:a23_b19", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63}
+{"generator": "lcg:m26_a1_c1_s0", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 69}
+{"generator": "lcg:m26_a1_c22_s6", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68}
+{"generator": "lcg:m26_a2_c20_s1", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30}
+{"generator": "lcg:m26_a2_c20_s14", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30}
+{"generator": "lcg:m26_a3_c10_s16", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64}
+{"generator": "lcg:m26_a3_c13_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 29}
+{"generator": "lcg:m26_a4_c19_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21}
+{"generator": "lcg:m26_a4_c19_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21}
+{"generator": "lcg:m26_a5_c5_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 64}
+{"generator": "lcg:m26_a5_c17_s0", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 30}
+{"generator": "lcg:m26_a6_c8_s4", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28}
+{"generator": "lcg:m26_a6_c8_s17", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28}
+{"generator": "lcg:m26_a7_c12_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63}
+{"generator": "lcg:m26_a7_c16_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67}
+{"generator": "lcg:m26_a7_c23_s6", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21}
+{"generator": "lcg:m26_a9_c15_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 23}
+{"generator": "lcg:m26_a10_c9_s8", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66}
+{"generator": "lcg:m26_a10_c9_s21", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66}
+{"generator": "lcg:m26_a11_c12_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29}
+{"generator": "lcg:m26_a14_c22_s6", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68}
+{"generator": "lcg:m26_a14_c22_s19", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68}
+{"generator": "lcg:m26_a15_c20_s14", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30}
+{"generator": "lcg:m26_a16_c10_s3", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64}
+{"generator": "lcg:m26_a16_c10_s16", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64}
+{"generator": "lcg:m26_a17_c6_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21}
+{"generator": "lcg:m26_a19_c8_s4", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28}
+{"generator": "lcg:m26_a20_c3_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67}
+{"generator": "lcg:m26_a20_c3_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67}
+{"generator": "lcg:m26_a20_c12_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63}
+{"generator": "lcg:m26_a20_c12_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63}
+{"generator": "lcg:m26_a21_c7_s8", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 22}
+{"generator": "lcg:m26_a21_c17_s20", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 66}
+{"generator": "lcg:m26_a23_c22_s21", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66}
+{"generator": "lcg:m26_a23_c23_s8", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 23}
+{"generator": "lcg:m26_a24_c12_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29}
+{"generator": "lcg:m26_a24_c12_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29}
+{"generator": "lcg:m26_a25_c21_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 24}
+{"summary": true, "n_tried": 19318, "n_hits": 0, "elapsed_s": 0.1438848749967292}
+{"_header": true, "name": "006_shift_sequence_analysis", "ts": 1779333478.772531, "argv": ["experiments/006_shift_sequence_analysis.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"win_threshold": 5, "log_threshold": 3}
+{"generator": "vig-AZ:K4ct_off41", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "vig-KK:KRYPTOSABCDEFGHIJLMNQUVWXZ_off0", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 69, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "const:pi_base26_off16_str3", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 70, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "const:sqrt2_base26_off19_str2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "const:sqrt2_base26_off24_str2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "const:ln2_base26_off22_str2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "const:ln10_base26_off9_str1", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "const:ln10_base26_off28_str1", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "const:ln10_base26_off29_str1", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "const:gamma_base26_off6_str3", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "fib:a5_b3", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "fib:a5_b24", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "fib:a16_b21", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 28, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "fib:a18_b4", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "fib:a23_b19", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 3, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a1_c1_s0", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 69, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a1_c16_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a1_c17_s6", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a1_c18_s24", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a1_c20_s3", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a1_c22_s6", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68, "boundary_run": 1, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a2_c4_s8", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a2_c4_s21", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a2_c5_s4", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a2_c5_s17", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a2_c17_s7", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a2_c17_s20", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a2_c20_s1", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a2_c20_s14", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a3_c10_s16", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a3_c13_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 29, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a3_c16_s14", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a3_c16_s15", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a3_c18_s25", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a3_c19_s12", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a4_c1_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a4_c1_s19", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a4_c2_s2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a4_c2_s15", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a4_c19_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 3, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a4_c19_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 3, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a5_c5_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 64, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a5_c12_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a5_c14_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a5_c17_s0", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 30, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a5_c20_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a5_c21_s6", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a6_c0_s5", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a6_c0_s18", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a6_c8_s4", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a6_c8_s17", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a6_c21_s11", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a6_c21_s24", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a6_c23_s5", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a6_c23_s18", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a7_c8_s21", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a7_c12_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 3, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a7_c16_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a7_c22_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a7_c23_s6", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 3, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a8_c19_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a8_c19_s22", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a8_c23_s10", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a8_c23_s23", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a8_c24_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a8_c24_s19", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a9_c4_s15", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a9_c10_s14", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a9_c15_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 23, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a9_c24_s25", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a9_c25_s12", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a10_c9_s8", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a10_c9_s21", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a10_c15_s12", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a10_c15_s25", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a10_c22_s10", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a10_c22_s23", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a10_c25_s7", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a10_c25_s20", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a11_c0_s3", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a11_c0_s21", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a11_c1_s24", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a11_c8_s24", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a11_c12_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a12_c1_s2", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a12_c1_s15", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a12_c11_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a12_c11_s22", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a12_c20_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a12_c20_s19", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c3_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c3_s14", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c7_s3", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a14_c7_s16", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a14_c18_s11", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c18_s24", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c22_s6", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68, "boundary_run": 1, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a14_c22_s19", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 68, "boundary_run": 1, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a15_c4_s7", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a15_c4_s8", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a15_c5_s14", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a15_c18_s17", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a15_c20_s14", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 30, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a16_c3_s2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a16_c3_s15", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a16_c5_s12", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a16_c5_s25", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a16_c10_s3", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a16_c10_s16", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 64, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a16_c16_s1", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a16_c16_s14", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a17_c2_s2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a17_c6_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 3, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a17_c7_s18", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a17_c14_s19", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a18_c7_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a18_c7_s14", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a18_c14_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a18_c14_s19", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a18_c25_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a18_c25_s22", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a19_c0_s18", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a19_c8_s4", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 28, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a19_c8_s11", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a19_c9_s2", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a19_c10_s5", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a20_c3_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a20_c3_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 67, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a20_c9_s1", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a20_c9_s14", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a20_c12_s9", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 3, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a20_c12_s22", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 3, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a20_c21_s8", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a20_c21_s21", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a21_c6_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a21_c7_s8", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 22, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a21_c10_s23", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a21_c11_s18", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a21_c17_s20", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 66, "boundary_run": 1, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a21_c24_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a22_c10_s1", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a22_c10_s14", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a22_c11_s12", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a22_c11_s25", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a22_c17_s2", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a22_c17_s15", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a23_c2_s25", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a23_c12_s7", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a23_c13_s14", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a23_c22_s10", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a23_c22_s21", "best_run": 3, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 66, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a23_c23_s8", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 23, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a24_c8_s11", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a24_c8_s24", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a24_c12_s10", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a24_c12_s23", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 29, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a24_c13_s3", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a24_c13_s8", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a24_c13_s16", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a24_c13_s21", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a25_c14_s15", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a25_c15_s16", "best_run": 2, "best_window": "EASTNORTHEAST", "best_alphabet": "kryptos_keyed", "best_start": 21, "boundary_run": 2, "boundary_window": "EASTNORTHEAST", "boundary_alphabet": "kryptos_keyed"}
+{"generator": "lcg:m26_a25_c20_s6", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "standard", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "standard"}
+{"generator": "lcg:m26_a25_c21_s24", "best_run": 3, "best_window": "EASTNORTHEAST", "best_alphabet": "standard", "best_start": 24, "boundary_run": 0, "boundary_window": null, "boundary_alphabet": null}
+{"generator": "lcg:m26_a25_c24_s9", "best_run": 2, "best_window": "BERLINCLOCK", "best_alphabet": "kryptos_keyed", "best_start": 63, "boundary_run": 2, "boundary_window": "BERLINCLOCK", "boundary_alphabet": "kryptos_keyed"}
+{"summary": true, "n_tried": 20524, "n_hits": 0, "elapsed_s": 0.22346200002357364}

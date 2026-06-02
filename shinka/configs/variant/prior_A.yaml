@@ -1,0 +1,65 @@
+# @package _global_
+# Prior A configuration: per-position alphabet selection cipher with
+# (2 × pos_mod_3 + consonant_count) mod 4 selection rule. 4 hand-crafted
+# alphabets with crib positions fixed by construction.
+#
+# Differences from flash_plus_opus.yaml:
+#   - Budget cap: $40 (was $50)
+#   - Same Flash + Opus 4.7 ensemble with UCB bandit
+#   - Holdout/checkpoint at every 50 generations (50/100/150/200)
+#   - Task name distinguishes the run for log organization
+#
+# Requires: OPENROUTER_API_KEY
+#
+# Expected cost: $30-40 at 250 generations with structurally-anchored
+# seed (cribs satisfied by construction). Most generations should
+# produce valid candidates (vs the prior run where many candidates
+# died at -300 from the K-at-74 filter).
+
+defaults:
+  - /evolution: default
+  - /database: default
+  - /runner: local
+  - /evaluator: in_process
+  - _self_
+
+task_name: k4_prior_A
+results_dir: results/${task_name}/${now:%Y-%m-%d_%H-%M-%S}
+
+init_program_path: problem/initial.py
+
+# Flash + Opus 4.7 ensemble via OpenRouter
+llm_models:
+  - openrouter/google/gemini-3.5-flash
+  - openrouter/anthropic/claude-opus-4.7
+prompt_llm_models:
+  - openrouter/google/gemini-3.5-flash
+  - openrouter/anthropic/claude-opus-4.7
+meta_llm_models:
+  - openrouter/google/gemini-3.5-flash
+  - openrouter/anthropic/claude-opus-4.7
+novelty_llm_models:
+  - openrouter/google/gemini-3.5-flash
+
+llm_dynamic_selection: ucb
+llm_dynamic_selection_kwargs:
+  cost_aware_coef: 0.5
+
+llm_kwargs:
+  temperatures: [0.3, 0.7, 1.0]
+  max_tokens: 6144
+  reasoning_efforts: ["minimal"]
+
+num_generations: 250
+max_api_costs: 40.0
+
+benchmark_set: default
+cascade_stages:
+  - { name: smoke, instances: 1, timeout_s: 10, reject_if_solved_ratio_below: 0.0 }
+  - { name: main,  instances: 1, timeout_s: 30, reject_if_solved_ratio_below: 0.0 }
+
+seeds: [17, 42, 1337]
+num_runs: 1
+
+# Checkpoint every 50 generations for monitoring (50, 100, 150, 200, 250)
+holdout_every_n_generations: 50

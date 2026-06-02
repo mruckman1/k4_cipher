@@ -1,0 +1,21 @@
+{"restart": 0, "crib_match": 15, "hex": -99.0}
+{"restart": 1, "crib_match": 14, "hex": -99.0}
+{"restart": 2, "crib_match": 15, "hex": -99.0}
+{"restart": 3, "crib_match": 16, "hex": -99.0}
+{"restart": 4, "crib_match": 15, "hex": -99.0}
+{"restart": 5, "crib_match": 13, "hex": -99.0}
+{"restart": 6, "crib_match": 16, "hex": -99.0}
+{"restart": 7, "crib_match": 15, "hex": -99.0}
+{"restart": 8, "crib_match": 13, "hex": -99.0}
+{"restart": 9, "crib_match": 14, "hex": -99.0}
+{"restart": 10, "crib_match": 15, "hex": -99.0}
+{"restart": 11, "crib_match": 19, "hex": -99.0}
+{"restart": 12, "crib_match": 13, "hex": -99.0}
+{"restart": 13, "crib_match": 14, "hex": -99.0}
+{"restart": 14, "crib_match": 18, "hex": -99.0}
+{"restart": 15, "crib_match": 16, "hex": -99.0}
+{"restart": 16, "crib_match": 15, "hex": -99.0}
+{"restart": 17, "crib_match": 12, "hex": -99.0}
+{"restart": 18, "crib_match": 14, "hex": -99.0}
+{"restart": 19, "crib_match": 16, "hex": -99.0}
+{"exp": "076", "title": "Hagelin M-209 KPA (bounded hill-climb)", "hypothesis": "K4 is a Hagelin M-209 (pin/lug/cage) Beaufort cipher", "status": "ruled_out", "best_score": -99.0, "best_partial": "best 19/24 crib displacements", "search_space": 400000, "elapsed_s": 13.3, "solved_params": null, "insights": ["M-209 bounded HC: 20 restarts x 20000 iters over pins(131)+lugs(27x2)+starts(6). Best crib-displacement match = 19/24 (max over restarts 19), hexagram -99.00.", "BUDGET CAVEAT: the M-209 key space is enormous; a bounded local HC is NOT a conclusive negative (Lasry-scale search uses far more compute). This is a budgeted SOLUTION ATTEMPT, not a ruling.", "At this budget the HC plateaus at 19/24 crib displacements with no trend to 24; no M-209 key reproducing the cribs was found. Combined with the poor fit to Scheidt's 'keyword' description, M-209 is deprioritised (not formally refuted)."], "next_steps": ["if a trend toward 24 appeared, scale HC (Lasry-style); else M-209 is low-prior/deprioritised"], "metrics": {"best_crib": 19, "trend_max": 19}, "_verdict": true, "ts": 1780029801.690135}

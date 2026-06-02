@@ -1,0 +1,71 @@
+{
+  "run_dir": "experiments/results/n1_claude_outputs/run_20260522_224147_claude-sonnet-4-6",
+  "n_candidates": 5220,
+  "n2_hypotheses_dir": null,
+  "quick": false,
+  "skip": [],
+  "only": [
+    "032",
+    "031"
+  ],
+  "total_elapsed_s": 192.2,
+  "total_solves": 0,
+  "results": [
+    {
+      "exp_id": "031",
+      "script": "experiments/031_two_pass_columnar_q3.py",
+      "exit_code": 0,
+      "elapsed_s": 1.8,
+      "stdout_tail": "Candidates: 5220\n\nKeywords: ['KRYPTOS', 'ABSCISSA', 'PALIMPSEST', 'BERLIN', 'CLOCK', 'BERLINCLOCK', 'WELTZEITUHR', 'DYAHR', 'SANBORN', 'LANGLEY', 'IQLUSION', 'UNDERGRUUND']\n  KRYPTOS (W=7): column_order=(0, 5, 3, 1, 6, 4, 2)\n  ABSCISSA (W=8): column_order=(0, 7, 1, 3, 4, 2, 5, 6)\n  PALIMPSEST (W=10): column_order=(1, 7, 3, 2, 4, 0, 5, 6, 8, 9)\n  BERLIN (W=6): column_order=(0, 1, 4, 3, 5, 2)\n  CLOCK (W=5): column_order=(0, 3, 4, 1, 2)\n  BERLINCLOCK (W=11): column_order=(0, 6, 9, 1, 4, 10, 3, 7, 5, 8, 2)\n  WELTZEITUHR (W=11): column_order=(1, 5, 9, 6, 2, 10, 3, 7, 8, 0, 4)\n  DYAHR (W=5): column_order=(2, 0, 3, 4, 1)\n  SANBORN (W=7): column_order=(1, 3, 2, 6, 4, 5, 0)\n  LANGLEY (W=7): column_order=(1, 5, 3, 0, 4, 2, 6)\n  IQLUSION (W=8): column_order=(0, 5, 2, 7, 6, 1, 4, 3)\n  UNDERGRUUND (W=11): column_order=(2, 10, 3, 5, 1, 9, 4, 6, 0, 7, 8)\n\n=== Shape B1: pipeline(plain) = col2(col1(plain, kw1), kw2) ===\n  Shape B1 done; 0 solves; best partial 16/97; 0.0s elapsed\n\n=== Shape B4: Q3(col2(col1(plain, kw1), kw2), q3_key) ===\n  Shape B4 done; 0 solves; 1.6s elapsed\n\n=== Two-pass columnar + Q3 composite ===\n  candidates:    5220\n  keywords:      12\n  B1 solves:     0\n  B4 solves:     0\n  B1 best partial: 16/97 {'kw1': 'DYAHR', 'kw2': 'BERLIN', 'cand_idx': 4432}\n  elapsed:       1.6s\n  JSONL:         experiments/results/2026-05-23_031_two_pass_columnar_q3.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-23_031_two_pass_columnar_q3.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 5220,
+        "keywords": [
+          "KRYPTOS",
+          "ABSCISSA",
+          "PALIMPSEST",
+          "BERLIN",
+          "CLOCK",
+          "BERLINCLOCK",
+          "WELTZEITUHR",
+          "DYAHR",
+          "SANBORN",
+          "LANGLEY",
+          "IQLUSION",
+          "UNDERGRUUND"
+        ],
+        "shape_B1_solves": 0,
+        "shape_B4_solves": 0,
+        "near_miss_B1": [
+          16,
+          {
+            "kw1": "DYAHR",
+            "kw2": "BERLIN",
+            "cand_idx": 4432
+          }
+        ],
+        "elapsed_s": 1.6
+      }
+    },
+    {
+      "exp_id": "032",
+      "script": "experiments/032_single_letter_ciphertext_error.py",
+      "exit_code": 0,
+      "elapsed_s": 190.4,
+      "stdout_tail": "Using experiments/results/n1_claude_outputs/run_20260522_224147_claude-sonnet-4-6\nCandidates: 5220\n  [standard] pos 20/97 done; solves so far=0; 19.6s\n  [standard] pos 40/97 done; solves so far=0; 39.2s\n  [standard] pos 60/97 done; solves so far=0; 58.8s\n  [standard] pos 80/97 done; solves so far=0; 78.5s\n  [kryptos_keyed] pos 20/97 done; solves so far=0; 114.8s\n  [kryptos_keyed] pos 40/97 done; solves so far=0; 134.4s\n  [kryptos_keyed] pos 60/97 done; solves so far=0; 154.0s\n  [kryptos_keyed] pos 80/97 done; solves so far=0; 173.5s\n\n=== Single-letter ciphertext-error model ===\n  candidates:    5220\n  positions:     97\n  total solves:  0\n  elapsed:       190.3s\n  JSONL:         experiments/results/2026-05-23_032_single_letter_ciphertext_error.jsonl",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-23_032_single_letter_ciphertext_error.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 5220,
+        "n_positions": 97,
+        "total_solves": 0,
+        "elapsed_s": 190.3
+      }
+    }
+  ]
+}

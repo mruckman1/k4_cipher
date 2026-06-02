@@ -1,0 +1,26 @@
+# Six-island default — same as scaffold. Tune later if K4 search wants more.
+num_islands: 6
+archive_size: 200
+elite_selection_ratio: 0.3
+
+num_archive_inspirations: 2
+num_top_k_inspirations: 3
+
+migration_interval: 30
+migration_rate: 0.1
+island_elitism: true
+enforce_island_separation: true
+island_selection_strategy: weighted
+
+enable_dynamic_islands: true
+stagnation_threshold: 150
+island_spawn_strategy: archive_random
+
+parent_selection_strategy: weighted
+exploitation_alpha: 1.0
+exploitation_ratio: 0.25
+parent_selection_lambda: 10.0
+
+archive_selection_strategy: crowding
+archive_criteria:
+  combined_score: 1.0

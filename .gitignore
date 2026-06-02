@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# Archive: bulky, regenerable artifacts kept on disk but out of version control
+# (raw search dumps, ShinkaEvolve run DBs, retired-LLM batch outputs).
+# ---------------------------------------------------------------------------
+archive/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+build/
+dist/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual envs (matches top-level .venv and nested shinka/.venv at any depth)
+.venv/
+venv/
+env/
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Secrets / local environment — NEVER commit API keys
+.env
+*.env
+.env.*
+!.env.example
+
+# LaTeX build intermediates (the .tex source and .pdf are committed)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
+paper/*.log
+
+# Large corpora / n-gram tables: downloadable or buildable, not committed.
+# See data/ngrams/README.md and data/corpora/README.md for how to obtain them.
+data/ngrams/*.txt
+data/ngrams/wikitext-103-raw/
+data/corpora/*.txt
+
+# Third-party vendored MaxSAT solver (clone + build separately; it ships its own
+# .git, and the wrapper scripts external/*.py/*.sh are committed).
+external/EvalMaxSAT/
+
+# ShinkaEvolve run outputs (raw evolutionary DBs/logs regenerate on re-run; the
+# harness code under shinka/ is committed). Past runs live under archive/.
+shinka/results/
+shinka/outputs/
+
+# Retired-LLM batch outputs (exps 057/095/096); verdicts are in findings.json.
+# Past runs live under archive/.
+experiments/results/n1_*_outputs/
+experiments/results/n2_*_outputs/
+
+# Notebook checkpoints
+.ipynb_checkpoints/

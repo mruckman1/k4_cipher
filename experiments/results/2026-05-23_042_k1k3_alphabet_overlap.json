@@ -1,0 +1,533 @@
+{
+  "Prior_A_k4_consonant_pos_mod_3": {
+    "0": {
+      "n_constraints": 6,
+      "constraints": {
+        "14": "Q",
+        "19": "R",
+        "4": "G",
+        "17": "P",
+        "8": "T",
+        "2": "M"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "EAST",
+          "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "SCHABOWSKI",
+          "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "TUTANKHAMEN",
+          "alphabet": "TUANKHMEBCDFGIJLOPQRSVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "VALLEY",
+          "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "JAMESSANBORN",
+          "alphabet": "JAMESNBORCDFGHIKLPQTUVWXYZ"
+        }
+      ],
+      "best_keyword": "EAST",
+      "best_overlap": 2,
+      "near_full_count": 0
+    },
+    "1": {
+      "n_constraints": 5,
+      "constraints": {
+        "18": "R",
+        "13": "Q",
+        "17": "P",
+        "4": "Y",
+        "11": "V"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 5,
+          "keyword": "VALLEY",
+          "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 5,
+          "keyword": "ABSCISSA",
+          "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 5,
+          "keyword": "DYAHR",
+          "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 5,
+          "keyword": "UNDERGRUUND",
+          "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 5,
+          "keyword": "EAST",
+          "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+        }
+      ],
+      "best_keyword": "VALLEY",
+      "best_overlap": 2,
+      "near_full_count": 0
+    },
+    "2": {
+      "n_constraints": 6,
+      "constraints": {
+        "0": "L",
+        "19": "V",
+        "18": "S",
+        "1": "N",
+        "14": "F",
+        "10": "K"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "STANDARD",
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "CIA",
+          "alphabet": "CIABDEFGHJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "ONE",
+          "alphabet": "ONEABCDFGHIJKLMPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 6,
+          "keyword": "PALIMPSEST_REV",
+          "alphabet": "ZYXWVURQONKJHGFDCBTESMILAP"
+        },
+        {
+          "overlap": 1,
+          "max": 6,
+          "keyword": "UNDERGRUUND",
+          "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+        }
+      ],
+      "best_keyword": "STANDARD",
+      "best_overlap": 2,
+      "near_full_count": 0
+    },
+    "3": {
+      "n_constraints": 7,
+      "constraints": {
+        "4": "F",
+        "7": "N",
+        "0": "K",
+        "19": "S",
+        "13": "T",
+        "11": "Z",
+        "2": "P"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 7,
+          "keyword": "TREMBLING",
+          "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 7,
+          "keyword": "KRYPTOS",
+          "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 7,
+          "keyword": "DYAHR",
+          "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 7,
+          "keyword": "UNDERGRUUND",
+          "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 7,
+          "keyword": "URANIA",
+          "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+        }
+      ],
+      "best_keyword": "TREMBLING",
+      "best_overlap": 2,
+      "near_full_count": 0
+    }
+  },
+  "Prior_B_k8_pos_in_w_seg": {
+    "0": {
+      "n_constraints": 3,
+      "constraints": {
+        "4": "F",
+        "7": "N",
+        "8": "T"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "ALEXANDERPLATZ",
+          "alphabet": "ALEXNDRPTZBCFGHIJKMOQSUVWY"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "REUNIFICATION",
+          "alphabet": "REUNIFCATOBDGHJKLMPQSVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "TREMBLING",
+          "alphabet": "TREMBLINGACDFHJKOPQSUVWXYZ"
+        },
+        {
+          "overlap": 0,
+          "max": 3,
+          "keyword": "STANDARD",
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 0,
+          "max": 3,
+          "keyword": "KRYPTOS",
+          "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+        }
+      ],
+      "best_keyword": "ALEXANDERPLATZ",
+      "best_overlap": 1,
+      "near_full_count": 0
+    },
+    "1": {
+      "n_constraints": 3,
+      "constraints": {
+        "0": "L",
+        "4": "G",
+        "13": "T"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "LUXOR",
+          "alphabet": "LUXORABCDEFGHIJKMNPQSTVWYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "LANGLEY",
+          "alphabet": "LANGEYBCDFHIJKMOPQRSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "LAYER",
+          "alphabet": "LAYERBCDFGHIJKMNOPQSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "LODESTONE",
+          "alphabet": "LODESTNABCFGHIJKMPQRUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "MESSAGE",
+          "alphabet": "MESAGBCDFHIJKLNOPQRTUVWXYZ"
+        }
+      ],
+      "best_keyword": "LUXOR",
+      "best_overlap": 1,
+      "near_full_count": 0
+    },
+    "2": {
+      "n_constraints": 3,
+      "constraints": {
+        "18": "R",
+        "0": "K",
+        "2": "M"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 3,
+          "keyword": "TOMB",
+          "alphabet": "TOMBACDEFGHIJKLNPQRSUVWXYZ"
+        },
+        {
+          "overlap": 2,
+          "max": 3,
+          "keyword": "COMPASS",
+          "alphabet": "COMPASBDEFGHIJKLNQRTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "KRYPTOS",
+          "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "ABSCISSA",
+          "alphabet": "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "WALL",
+          "alphabet": "WALBCDEFGHIJKMNOPQRSTUVXYZ"
+        }
+      ],
+      "best_keyword": "TOMB",
+      "best_overlap": 2,
+      "near_full_count": 2
+    },
+    "3": {
+      "n_constraints": 3,
+      "constraints": {
+        "19": "V",
+        "18": "S",
+        "11": "Z"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "STANDARD",
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "BERLIN",
+          "alphabet": "BERLINACDFGHJKMOPQSTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "CLOCK",
+          "alphabet": "CLOKABDEFGHIJMNPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "BERLINCLOCK",
+          "alphabet": "BERLINCOKADFGHJMPQSTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "BORNHOLMER",
+          "alphabet": "BORNHLMEACDFGIJKPQSTUVWXYZ"
+        }
+      ],
+      "best_keyword": "STANDARD",
+      "best_overlap": 1,
+      "near_full_count": 0
+    },
+    "4": {
+      "n_constraints": 4,
+      "constraints": {
+        "13": "Q",
+        "19": "S",
+        "1": "N",
+        "14": "F"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 2,
+          "max": 4,
+          "keyword": "UNDERGRUUND",
+          "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 4,
+          "keyword": "DYAHR",
+          "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 4,
+          "keyword": "URANIA",
+          "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 4,
+          "keyword": "BRANDENBURG",
+          "alphabet": "BRANDEUGCFHIJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 4,
+          "keyword": "MAUERFALL",
+          "alphabet": "MAUERFLBCDGHIJKNOPQSTVWXYZ"
+        }
+      ],
+      "best_keyword": "UNDERGRUUND",
+      "best_overlap": 2,
+      "near_full_count": 0
+    },
+    "5": {
+      "n_constraints": 3,
+      "constraints": {
+        "14": "Q",
+        "4": "Y",
+        "2": "P"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "VALLEY",
+          "alphabet": "VALEYBCDFGHIJKMNOPQRSTUWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 3,
+          "keyword": "CIPHER",
+          "alphabet": "CIPHERABDFGJKLMNOQSTUVWXYZ"
+        },
+        {
+          "overlap": 0,
+          "max": 3,
+          "keyword": "STANDARD",
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 0,
+          "max": 3,
+          "keyword": "KRYPTOS",
+          "alphabet": "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+        },
+        {
+          "overlap": 0,
+          "max": 3,
+          "keyword": "PALIMPSEST",
+          "alphabet": "PALIMSETBCDFGHJKNOQRUVWXYZ"
+        }
+      ],
+      "best_keyword": "VALLEY",
+      "best_overlap": 1,
+      "near_full_count": 0
+    },
+    "6": {
+      "n_constraints": 2,
+      "constraints": {
+        "17": "P",
+        "10": "K"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "STANDARD",
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "DYAHR",
+          "alphabet": "DYAHRBCEFGIJKLMNOPQSTUVWXZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "UNDERGRUUND",
+          "alphabet": "UNDERGABCFHIJKLMOPQSTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "EAST",
+          "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "URANIA",
+          "alphabet": "URANIBCDEFGHJKLMOPQSTVWXYZ"
+        }
+      ],
+      "best_keyword": "STANDARD",
+      "best_overlap": 1,
+      "near_full_count": 32
+    },
+    "7": {
+      "n_constraints": 2,
+      "constraints": {
+        "19": "R",
+        "11": "V"
+      },
+      "top_5_keywords": [
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "PALIMPSEST",
+          "alphabet": "PALIMSETBCDFGHJKNOQRUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "IQLUSION",
+          "alphabet": "IQLUSONABCDEFGHJKMPRTVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "EAST",
+          "alphabet": "EASTBCDFGHIJKLMNOPQRUVWXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "SCHABOWSKI",
+          "alphabet": "SCHABOWKIDEFGJLMNPQRTUVXYZ"
+        },
+        {
+          "overlap": 1,
+          "max": 2,
+          "keyword": "EGYPT",
+          "alphabet": "EGYPTABCDFHIJKLMNOQRSUVWXZ"
+        }
+      ],
+      "best_keyword": "PALIMPSEST",
+      "best_overlap": 1,
+      "near_full_count": 17
+    }
+  }
+}

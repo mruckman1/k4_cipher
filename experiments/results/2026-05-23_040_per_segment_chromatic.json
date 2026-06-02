@@ -1,0 +1,47 @@
+{
+  "global_chromatic_number": 3,
+  "per_segment": {
+    "seg_0": {
+      "lo": 0,
+      "hi": 19,
+      "n_cribs": 0,
+      "n_internal_conflict_edges": 0,
+      "chromatic_number": 0
+    },
+    "seg_1": {
+      "lo": 21,
+      "hi": 35,
+      "n_cribs": 13,
+      "n_internal_conflict_edges": 9,
+      "chromatic_number": 3
+    },
+    "seg_2": {
+      "lo": 37,
+      "hi": 47,
+      "n_cribs": 0,
+      "n_internal_conflict_edges": 0,
+      "chromatic_number": 0
+    },
+    "seg_3": {
+      "lo": 49,
+      "hi": 57,
+      "n_cribs": 0,
+      "n_internal_conflict_edges": 0,
+      "chromatic_number": 0
+    },
+    "seg_4": {
+      "lo": 59,
+      "hi": 73,
+      "n_cribs": 11,
+      "n_internal_conflict_edges": 4,
+      "chromatic_number": 2
+    },
+    "seg_5": {
+      "lo": 75,
+      "hi": 96,
+      "n_cribs": 0,
+      "n_internal_conflict_edges": 0,
+      "chromatic_number": 0
+    }
+  }
+}

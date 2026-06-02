@@ -1,0 +1,42 @@
+# Weltzeituhr (Urania World Clock), Alexanderplatz, Berlin.
+# Designed by Erich John, installed 1969.
+#
+# Sanborn confirmed on 12 Nov 2025 (International Spy Museum) that K4's
+# "Berlin Clock" refers to THIS clock, NOT the Mengenlehreuhr that was the
+# assumed referent from 2014 until Sanborn's correction. Roughly 15 years of
+# keystream/lamp-based analysis was therefore aimed at the wrong device.
+#
+# Structure:
+#   - cylindrical drum with 24 trapezoidal columns, one per "world time" zone
+#   - outer ring with 12 zodiac symbols
+#   - orbiting solar-system model on top
+#
+# This CSV lists the 24 columns in the order shown on the clock, with the
+# representative city/zone marker. Use as a 24-period keystream source for
+# Stage-2 experiments; treat the column-to-shift mapping as a hyperparameter.
+
+column,utc_offset,city,zone_marker
+1,-12,Eniwetok,EN
+2,-11,Samoa,SA
+3,-10,Hawaii,HA
+4,-9,Anchorage,AN
+5,-8,Los Angeles,LA
+6,-7,Denver,DE
+7,-6,Chicago,CH
+8,-5,New York,NY
+9,-4,Caracas,CA
+10,-3,Rio de Janeiro,RI
+11,-2,Mid-Atlantic,MA
+12,-1,Azores,AZ
+13,0,London,LO
+14,1,Berlin,BE
+15,2,Cairo,CR
+16,3,Moscow,MO
+17,4,Dubai,DU
+18,5,Karachi,KA
+19,6,Dhaka,DH
+20,7,Bangkok,BA
+21,8,Beijing,BJ
+22,9,Tokyo,TO
+23,10,Sydney,SY
+24,11,Noumea,NO

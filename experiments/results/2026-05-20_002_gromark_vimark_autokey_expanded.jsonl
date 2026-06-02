@@ -1,0 +1,36 @@
+{"_header": true, "name": "002_gromark_vimark_autokey_expanded", "ts": 1779331394.630216, "argv": ["experiments/002_gromark_k4_dyahr_primer.py"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"deep": false, "chi_threshold": 95.0}
+{"sweep": "dyahr_vimark", "params": {"primer": "DYAHR"}, "crib_ok": false, "chi_sq": 432.57, "plaintext": "USNGQQEEOORDAWGOVMOGJFWTTUUDEESQALBKGUVELEHJKJSHVUBRKJBRLCXPXNLPKSSWANPKDDBYGDNPXGJEUGWZNSMPWLEQV"}
+{"summary": true, "sweep": "gromark5_KRYPTOS", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.6058431250276044}
+{"summary": true, "sweep": "gromark5_STANDARD", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.3402783749625087}
+{"summary": true, "sweep": "gromark5_BERLINCLOCK", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5719180420273915}
+{"summary": true, "sweep": "gromark5_WELTZEITUHR", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5683780419640243}
+{"summary": true, "sweep": "gromark5_PALIMPSEST", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.577745957998559}
+{"summary": true, "sweep": "gromark5_ABSCISSA", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.581969792023301}
+{"summary": true, "sweep": "gromark5_DYAHR", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5489612920209765}
+{"summary": true, "sweep": "vimark4_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 10.866391208022833}
+{"summary": true, "sweep": "vimark4_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.053891166928224}
+{"summary": true, "sweep": "autokey4_plaintext_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.683052749955095}
+{"summary": true, "sweep": "autokey4_ciphertext_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.726767708081752}
+{"summary": true, "sweep": "autokey4_plaintext_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.883353541023098}
+{"summary": true, "sweep": "autokey4_ciphertext_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.970935208024457}
+{"grand_summary": true, "tried": 3441856, "crib_ok": 0, "fitness_ok": 0}
+{"_header": true, "name": "002_gromark_vimark_autokey_expanded", "ts": 1779331494.9838872, "argv": ["experiments/002_gromark_k4_dyahr_primer.py", "--deep"], "cwd": "/Users/mruckman1/Desktop/dev/k4_cipher"}
+{"deep": true, "chi_threshold": 95.0}
+{"sweep": "dyahr_vimark", "params": {"primer": "DYAHR"}, "crib_ok": false, "chi_sq": 432.57, "plaintext": "USNGQQEEOORDAWGOVMOGJFWTTUUDEESQALBKGUVELEHJKJSHVUBRKJBRLCXPXNLPKSSWANPKDDBYGDNPXGJEUGWZNSMPWLEQV"}
+{"summary": true, "sweep": "gromark5_KRYPTOS", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.6146823749877512}
+{"summary": true, "sweep": "gromark5_STANDARD", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.324907209025696}
+{"summary": true, "sweep": "gromark5_BERLINCLOCK", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5546241248957813}
+{"summary": true, "sweep": "gromark5_WELTZEITUHR", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5516485419357195}
+{"summary": true, "sweep": "gromark5_PALIMPSEST", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5725467919837683}
+{"summary": true, "sweep": "gromark5_ABSCISSA", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.552332582999952}
+{"summary": true, "sweep": "gromark5_DYAHR", "tried": 100000, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 2.5185910830041394}
+{"summary": true, "sweep": "vimark4_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 10.876306209014729}
+{"summary": true, "sweep": "vimark4_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 11.939364916994236}
+{"summary": true, "sweep": "autokey4_plaintext_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.57132637500763}
+{"summary": true, "sweep": "autokey4_ciphertext_STANDARD", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.507560750003904}
+{"summary": true, "sweep": "autokey4_plaintext_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.70057170803193}
+{"summary": true, "sweep": "autokey4_ciphertext_KRYPTOS", "tried": 456976, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 12.773419291013852}
+{"summary": true, "sweep": "vimark5_KRYPTOS", "tried": 11881376, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 311.8330767500447}
+{"summary": true, "sweep": "vimark5_STANDARD", "tried": 11881376, "crib_ok": 0, "fitness_ok": 0, "elapsed_s": 286.6892603749875}
+{"grand_summary": true, "tried": 27204608, "crib_ok": 0, "fitness_ok": 0}

@@ -1,0 +1,4 @@
+_target_: shinka.launch.LocalJobConfig
+eval_program_path: ${oc.env:SHINKA_ADAPTER_EVAL_MODULE,shinka_adapter.evaluate}
+activate_script: .venv/bin/activate
+numeric_threads_per_job: 1

@@ -1,0 +1,166 @@
+task_sys_msg: |
+  You mutate `decrypt_k4(ciphertext: str) -> str` proposing a 97-char A-Z
+  plaintext for Kryptos K4. Scored by crib satisfaction + hexagram English
+  fitness on the 73 unconstrained positions.
+
+  K4 cribs (1-indexed):
+    EAST at 22-25 (FLRV), NORTHEAST at 26-34 (QQPRNGKSS),
+    BERLIN at 64-69 (NYPVTT), CLOCK at 70-74 (MZFPK).
+    Position 74: K -> K (self-encryption; pure Beaufort impossible).
+
+  Vigenere-STANDARD key residues at the 24 crib positions
+  (key = (ct - pt) mod 26):
+    pos 22-34: B L Z C D C Y Y G C K A Z
+    pos 64-74: M U Y K L G K O R N A
+  Periodicity test: any period P where two constrained positions with
+  same (i-1)%P show different residues is ruled out (P=7 already ruled
+  out: pos 22 wants B, pos 29 wants Y). For KRYPTOS-keyed or Quagmire
+  variants, recompute with the cipher's forward equation.
+
+  Primitives (the ONLY building blocks; compose freely):
+    from kryptos.alphabets import STANDARD, KRYPTOS_KEYED
+    from kryptos.ciphers import (
+        Vigenere, QuagmireI, QuagmireII, QuagmireIII, QuagmireIV,
+        Beaufort, Autokey, Gromark, Vimark, RunningKey,
+        ColumnarTransposition, Hill,
+        Bifid, Trifid, Playfair, WSegmented,
+        Nicodemus, TwoSquare, FourSquare, ADFGVX,
+        Compose, FinalCaesar, PrependCaesar, PositionalRemap,
+    )
+
+  Signatures (exact kwarg names — wrong kwargs crash):
+    Vigenere(key, alphabet=STANDARD); Beaufort(key, alphabet=STANDARD)
+    QuagmireI(key, cipher_keyword, indicator=None)
+    QuagmireII(key, plain_keyword, indicator=None)
+    QuagmireIII(key, alphabet_keyword="KRYPTOS", base_alphabet=STANDARD)
+    QuagmireIV(key, plain_keyword, cipher_keyword, indicator=None)
+    Autokey(primer, alphabet=STANDARD, mode="plaintext"|"ciphertext")
+    Gromark(primer_NUMERIC_STR, alphabet_keyword="KRYPTOS")
+    Vimark(primer, alphabet_keyword="KRYPTOS")
+    RunningKey(key_text, alphabet=STANDARD, offset=0)
+    ColumnarTransposition(column_order: tuple[int], pad_letter="X")
+    Hill(key_matrix); Bifid(keyword, period, merge=("I","J"))
+    Trifid(keyword, period, filler="X")
+    Playfair(keyword, merge=("I","J"), filler="X")
+    WSegmented(segment_ciphers, delimiter="W",
+               delimiter_positions=None)   # for K4: (20,36,48,58,74)
+    Nicodemus(keyword)            # columnar + per-column Vigenere shift
+    TwoSquare(top_keyword, bottom_keyword, merge=("I","J"))
+    FourSquare(top_right_keyword, bottom_left_keyword, merge_drop="J")
+    # ADFGVX(grid_keyword, transposition_keyword, size=5|6) -- length
+    # DOUBLING (encrypt 1 char -> 2 cipher chars). NOT a direct K4 decrypt
+    # candidate (K4 is 97 odd; would need 194-char input). Available for
+    # composition study (e.g. inside Compose), not for direct dispatcher use.
+    Compose(layers); FinalCaesar(shift); PrependCaesar(shift)
+    PositionalRemap(perm)
+
+  KRYPTOS_KEYED is an Alphabet, pass as `alphabet=KRYPTOS_KEYED`. For
+  QuagmireIII/Gromark/Vimark, `alphabet_keyword="KRYPTOS"` builds it.
+
+  Key examples:
+    Vigenere(key="PALIMPSEST", alphabet=KRYPTOS_KEYED).decrypt(K1)   # K1
+    QuagmireIV(key="DYAHR", plain_keyword="KRYPTOS",
+               cipher_keyword="ABSCISSA").decrypt(ct)
+    Compose([ColumnarTransposition((2,0,1,3,4)),
+             QuagmireIII(key="PALIMPSEST")]).decrypt(ct)
+    Compose([QuagmireIII(key="KRYPTOS"), FinalCaesar(3)]).decrypt(ct)
+    WSegmented(segment_ciphers=[QuagmireIII(key=k)
+                                for k in ["KRYPTOS","PALIMPSEST",...,"LANGLEY"]],
+               delimiter_positions=(20,36,48,58,74)).decrypt(ct)
+
+  Discipline:
+    - 1989-era classical operations only. No FFTs/ML/number theory.
+    - Imports allowed in your function: kryptos.*, numpy, math, typing,
+      collections only. NOT os/sys/pathlib/time/random/open/eval/exec.
+    - MUST return exactly 97 uppercase A-Z chars.
+    - MUST use `ciphertext` arg; the evaluator runs decrypt_k4 on
+      reversed-K4 too and rejects if outputs are too similar OR if
+      reversed-K4 output ALSO hits cribs at K4 positions
+      (>6 hits => -inf, signals stitching/hardcoding). Source scan
+      rejects candidates literally containing both "EAST" and
+      "NORTHEAST" or all four crib words.
+
+  Prior $50 run (250 gens, 0 cribs hit, best score -68 from hex gains).
+  Exhausted patterns — DON'T repeat:
+    crib_aware_remap_q3_dispatcher, caesar_remap_q3_triple_stack,
+    gromark_primer_sweep, pre_shifted_composite_searcher,
+    remap_q4_crossproduct_dispatcher, autokey_tail_reconstruction,
+    expand_positional_remaps, quagmire_indicator_sweep.
+  Productive new directions:
+    * Bifid/Trifid with period sweeps (3,5,7,11)
+    * Playfair with non-default merge pairs (e.g. ("K","Q") for KRYPTOS grids)
+    * WSegmented with DIFFERENT cipher families per segment
+      (e.g. seg1=Vigenere, seg2=QuagmireIV, seg3=Bifid, seg4=Autokey,
+            seg5=Gromark, seg6=Trifid)
+    * Compose hybrids spanning families (e.g. Bifid + QuagmireIII)
+    * Hill with 2x2/3x3 matrices
+    * Vigenere on KRYPTOS_KEYED with non-K-family keys
+      (LANGLEY, SCHEIDT, SANBORN, IQLUSION, BERLIN)
+    * Nicodemus + per-column Vigenere sweep across width 5..11
+    * TwoSquare / FourSquare with non-K-family keyword pairs
+      (the k4_full_v2 plateau came from Quagmire-family saturation;
+       digram-substitution ciphers explore a fundamentally different
+       cipher class than the polyalphabetic family already exhausted).
+
+  Plateau-breaking note: in k4_full_v2 5+ distinct patches all hit
+  EXACTLY the same hexagram-saturation score with 0 cribs. The
+  current scorer now adds IoC + bigram chi-squared signals on top of
+  hexagrams; candidates that match English LETTER-PAIR statistics
+  but NOT just hex-likeness will score higher. Mutations that target
+  English-pair frequencies (TH, HE, IN, ER, AN, RE, ON, AT) at the
+  free positions are more discriminative than pure hexagram chasing.
+
+  Score: 100 = all cribs, ~110+ = cribs + English-like. Higher = better.
+
+language: python
+
+patch_types: ["full", "diff"]
+patch_type_probs: [0.7, 0.3]
+# Gemini 3.x is prone to emitting SEARCH blocks that don't match the parent;
+# weight `full` higher (per scaffold docs/learnings.md #1).
+
+num_generations: 500
+
+llm_models: null
+prompt_llm_models: null
+meta_llm_models: null
+novelty_llm_models: null
+
+llm_dynamic_selection: null
+
+llm_kwargs:
+  temperatures: [0.3, 0.7, 1.0]
+  max_tokens: 6144
+  reasoning_efforts: ["minimal"]
+
+embedding_model: local/qwen3-embedding:8b-fp16@http://${oc.env:OLLAMA_HOST,localhost}:11434/v1
+code_embed_sim_threshold: 0.92
+max_novelty_attempts: 3
+
+meta_rec_interval: 10
+meta_max_recommendations: 5
+sample_single_meta_rec: true
+
+use_text_feedback: true
+
+evolve_prompts: true
+prompt_evolution_interval: 100
+prompt_archive_size: 10
+
+max_api_costs: 30.0
+
+enable_controlled_oversubscription: true
+proposal_target_mode: adaptive
+proposal_target_min_samples: 5
+proposal_target_ratio_cap: 2.0
+proposal_buffer_max: 2
+proposal_target_ewma_alpha: 0.3
+
+# NOTE: an ``ast_check`` block was here previously to allowlist imports
+# (kryptos, numpy, math, typing, collections). The current shinka.core
+# EvolutionConfig does not accept that field -- the README mention of
+# it is aspirational. Import safety is therefore enforced only by the
+# fitness function's run_experiment wrapper (which catches ImportError
+# and returns -inf), not by an AST gate. The LM still sees the
+# allowlisted imports listed in task_sys_msg above; mutations that
+# import outside that list will simply score -inf at eval time.

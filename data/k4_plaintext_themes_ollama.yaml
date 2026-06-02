@@ -1,0 +1,65 @@
+model: gemma4:26b-a4b-it-q8_0
+timestamp: 20260522_174034
+framings_run:
+  - espionage
+  - navigation
+  - k2_k3_echo
+  - berlin_wall
+  - surveyor
+  - k5_forward
+n_per_framing: 834
+total_parsed: 5100
+total_crib_compliant: 5100
+per_framing:
+  espionage:
+    elapsed_s: 1525.7
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+  navigation:
+    elapsed_s: 1488.0
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+  k2_k3_echo:
+    elapsed_s: 1417.4
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+  berlin_wall:
+    elapsed_s: 1519.0
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+  surveyor:
+    elapsed_s: 1594.8
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+  k5_forward:
+    elapsed_s: 1741.8
+    n_batches: 34
+    n_parsed: 850
+    n_compliant: 850
+    errors: []
+theme_counts:
+  navigation: 5100
+  first_person: 5100
+  berlin_wall: 1119
+  k2_k3_echo: 364
+  egypt: 351
+  k5_forward: 1899
+  espionage: 926
+theme_frequency:
+  navigation: 1.0
+  first_person: 1.0
+  berlin_wall: 0.22
+  k2_k3_echo: 0.07
+  egypt: 0.07
+  k5_forward: 0.37
+  espionage: 0.18

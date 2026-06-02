@@ -1,0 +1,31 @@
+{
+  "run_dir": "experiments/results/n1_claude_outputs/run_20260522_224147_claude-sonnet-4-6",
+  "n_candidates": 5220,
+  "n2_hypotheses_dir": null,
+  "quick": false,
+  "skip": [],
+  "only": [
+    "025"
+  ],
+  "total_elapsed_s": 0.2,
+  "total_solves": 0,
+  "results": [
+    {
+      "exp_id": "025",
+      "script": "experiments/025_w_segmented_heterogeneous.py",
+      "exit_code": 0,
+      "elapsed_s": 0.2,
+      "stdout_tail": "Loaded 5220 candidates.\n\n=== Per-segment consistency sweep ===\n  seg 0 ( 0..19, len 20): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 1 (21..35, len 15): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 2 (37..47, len 11): sum over (alpha,conv,L>=2) of consistents = 20\n  seg 3 (49..57, len  9): sum over (alpha,conv,L>=2) of consistents = 23\n  seg 4 (59..73, len 15): sum over (alpha,conv,L>=2) of consistents = 0\n  seg 5 (75..96, len 22): sum over (alpha,conv,L>=2) of consistents = 0\n\n=== Cross-segment combination ===\n  Candidates with 6/6 segments passing (any params per seg, L>=2): 0\n\nDistribution of (n segments passed per candidate):\n  0/6:  5217  ############################################################\n  1/6:     2  \n  2/6:     1  \n  3/6:     0  \n  4/6:     0  \n  5/6:     0  \n  6/6:     0  \n\nTotal elapsed: 0.0s\n\nJSONL: experiments/results/2026-05-22_025_w_segmented_heterogeneous.jsonl\n  fully solved: 0\n  near miss (>=4 segs): 0",
+      "stderr_tail": "",
+      "n_solves": 0,
+      "jsonl_path": "experiments/results/2026-05-22_025_w_segmented_heterogeneous.jsonl",
+      "summary": {
+        "summary": true,
+        "n_candidates": 5220,
+        "n_fully_solved": 0,
+        "n_near_miss_4plus": 0,
+        "elapsed_s": 0.0
+      }
+    }
+  ]
+}

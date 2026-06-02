@@ -1,0 +1,52 @@
+# Kryptos K4 confirmed cribs.
+#
+# Positions are 1-indexed against the 97-character K4 ciphertext:
+#   OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAW
+#   INFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR
+#
+# Sources:
+#   - EAST  (22-25): Sanborn email April 2020, made public Aug 2020.
+#   - NORTHEAST (26-34): NYT, Schwartz & Corum, 29 Jan 2020.
+#   - BERLIN (64-69): NYT, Nov 2010.
+#   - CLOCK  (70-74): NYT, Nov 2014. NOTE pos 74 K -> K: a letter can
+#                    encrypt to itself. This kills any reciprocal cipher
+#                    (Beaufort variants) on arrival.
+#
+# Sanborn confirmed letter-by-letter at the 2013 ACA convention:
+#   N=B, Y=E, P=R, V=L, T=I, T=N -- "Emphatically".
+#
+# The 22-34 EAST+NORTHEAST window is a single contiguous 13-letter
+# constraint, far stronger than the four cribs taken separately. The
+# aperiodicity of the shift pattern across that window rules out most
+# periodic ciphers; encode it as a tight constraint for early pruning.
+
+cribs:
+  - name: EAST
+    start: 22       # 1-indexed
+    end: 25         # inclusive
+    plaintext: EAST
+    ciphertext: FLRV
+  - name: NORTHEAST
+    start: 26
+    end: 34
+    plaintext: NORTHEAST
+    ciphertext: QQPRNGKSS
+  - name: BERLIN
+    start: 64
+    end: 69
+    plaintext: BERLIN
+    ciphertext: NYPVTT
+  - name: CLOCK
+    start: 70
+    end: 74
+    plaintext: CLOCK
+    ciphertext: MZFPK
+
+# Derived windows (computed in code, repeated here for documentation):
+#   EASTNORTHEAST  pos 22-34  C=FLRVQQPRNGKSS    P=EASTNORTHEAST
+#   BERLINCLOCK    pos 64-74  C=NYPVTTMZFPK      P=BERLINCLOCK
+
+# Plaintext-minus-ciphertext shifts mod 26 (standard A-Z), for reference:
+#   EASTNORTHEAST: 25 15  1 24 23 24  2  2 20 24 16  0  1
+#   BERLINCLOCK:   14  6 24 16 15 20 16 12  9 13  0
+# No short period; argues for a non-repeating keystream.

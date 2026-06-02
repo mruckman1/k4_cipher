@@ -1,0 +1,10 @@
+# ShinkaEvolveRunner concurrency — workstation.
+#
+# LLM proposal calls are the wall-clock bottleneck (probe13: 162 s/proposal
+# with Opus on the long system prompt). Running 4 concurrent proposal jobs
+# halves wall-clock at no additional $ cost. eval jobs stay at 2 because
+# subprocess isolation has fixed overhead and parallel evals don't help
+# when each eval is ~3 seconds.
+max_evaluation_jobs: 2
+max_proposal_jobs: 4
+max_db_workers: 2

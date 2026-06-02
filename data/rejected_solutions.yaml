@@ -1,0 +1,128 @@
+# Catalog of publicly-claimed K4 solutions that have failed independent
+# verification. Each entry should be reproducible with `kryptos verify` --
+# point verify at the claim's stated method + plaintext and confirm the
+# mechanical rejection.
+#
+# Adding an entry: include enough detail that someone can press the verify
+# button. If the claim's method is too vague to reproduce, note that
+# explicitly under `verifiable: false`.
+#
+# Schema:
+#   - id:           short slug
+#     claimant:     author / handle
+#     date:         ISO 8601 (year only if exact date unknown)
+#     source:       publication / URL
+#     method:       free-text description of the cipher + parameters
+#     plaintext:    the claimed K4 plaintext (97 letters, no spaces) if available
+#     verifiable:   true | false  (true = `kryptos verify` can mechanically check)
+#     cipher:       (optional) cipher name for kryptos verify
+#     params:       (optional) params dict for kryptos verify
+#     fails_at:     human description of where the claim fails
+#     notes:        commentary
+
+rejected:
+
+  - id: thompson-2010
+    claimant: "Randy Thompson"
+    date: "2010"
+    source: "Various forum posts; cited in Wired and elonka.com"
+    method: |
+      Custom transposition + substitution. Plaintext claim:
+      'Hollis is the double agent'.
+    plaintext: null     # never published in reproducible byte-exact form
+    verifiable: false
+    fails_at: |
+      Falsified by the 2010 BERLIN crib reveal at positions 64-69:
+      Thompson's plaintext does not place "BERLIN" at those positions.
+    notes: "Pre-cribs claim; no reverse-encryption ever produced."
+
+  - id: coomer-2016
+    claimant: "Dan Coomer (kryptossolved.com)"
+    date: "2016"
+    source: "kryptossolved.com (now intermittent)"
+    method: "Alphanumeric substitution (ANS)"
+    plaintext: null
+    verifiable: false
+    fails_at: "No reproducible method; site does not provide enc(plain)==K4."
+
+  - id: naughton-grok-2025
+    claimant: "Michael Naughton + Grok 3"
+    date: "2025-02"
+    source: "Reddit / forum posts"
+    method: |
+      Reverse-Vigenere with KRYPTOS keyword, then reverse the result.
+    plaintext: "THISISAGUIDETOTHEBERLINCLOCK..."   # partial, full not published
+    verifiable: false
+    fails_at: |
+      Does not satisfy EAST (positions 22-25) or CLOCK (70-74)
+      simultaneously. The reverse-Vigenere construction was tested by
+      several community members and produced no candidate matching all
+      four cribs at canonical positions.
+
+  - id: hawkins-shadowcipher-2025
+    claimant: "Amber Hawkins (ShadowCipher)"
+    date: "2025-10"
+    source: "Self-published"
+    method: "Layered reversal + dual keys"
+    plaintext: null
+    verifiable: false
+    fails_at: "Author explicitly does not claim certainty; no reverse-encryption."
+
+  - id: klepp-ml-2025
+    claimant: "Matt Klepp (mattklepp/k4 GitHub, Aug 2025)"
+    date: "2025-08"
+    source: "github.com/mattklepp/k4"
+    method: |
+      Neural-network-augmented backtracking on a learned shift formula.
+    plaintext: null
+    verifiable: false
+    fails_at: |
+      The repo provides statistical analysis but does not produce a
+      single (plaintext, cipher, params) triple that re-encrypts to K4.
+      Without that, "solved" is undefined.
+    notes: "Useful as statistical reference; not a verifiable solution."
+
+  - id: lacy-rgrid-2025
+    claimant: "Matt Lacy (solvekryptos.com)"
+    date: "2025"
+    source: "solvekryptos.com"
+    method: "r-grid"
+    plaintext: null
+    verifiable: false
+    fails_at: "Mechanism opaque; no enc(plain)==K4 reproduction."
+
+  - id: avelar-zeta-2025
+    claimant: "Thiago Avelar (ZETA)"
+    date: "2025-12"
+    source: "Self-published"
+    method: |
+      Gromark-based with a custom 97-element keystream fitted to satisfy
+      cribs.
+    plaintext: "INTHECENTEROFTHISCITYEASTNORTHEAST...ROTESRATHAUS...BERLINCLOCKAREHEARDACROSSTHESQUARE"
+    verifiable: false
+    fails_at: |
+      Primer is fit to the crib constraints rather than emerging
+      independently; the unconstrained positions do not score above
+      shuffled-English baseline. Not independently validated.
+
+  - id: bonifacino-weltzeituhr-2025
+    claimant: "Ryan Bonifacino"
+    date: "2025-11"
+    source: "SSRN preprint"
+    method: |
+      'Weltzeituhr Error Key': mechanical decryption keyed on the World
+      Clock repair history.
+    plaintext: null
+    verifiable: false
+    fails_at: "Not independently reproduced; no enc(plain)==K4 published."
+
+# Mechanical test (sketch):
+#
+#   $ uv run kryptos verify \
+#       --cipher quagmire3 \
+#       --params 'key=THOMPSONCONJECTURE,alphabet_keyword=KRYPTOS' \
+#       --plaintext "HOLLISISTHEDOUBLEAGENT..." \
+#       --target "$(cat data/ciphertexts/k4.txt)"
+#
+# A passing verify on ANY entry in this file would be major news; collect
+# the citation and remove the entry from `rejected`.

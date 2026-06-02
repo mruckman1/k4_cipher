@@ -1,0 +1,582 @@
+{
+  "n_features": 12,
+  "n_valid_rules": 1009,
+  "min_k_used_at_cribs": 4,
+  "valid_rules_top_50": [
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 1,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 3,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 4,
+      "b": 2,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "consonant_count",
+      "a": 4,
+      "b": 6,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 1,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 3,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 4,
+      "b": 2,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_5",
+      "fb": "consonant_count",
+      "a": 4,
+      "b": 6,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 1,
+      "b": 2,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 3,
+      "b": 2,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 2,
+      "b": 4,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_3",
+      "a": 6,
+      "b": 4,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 1,
+      "b": 2,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 3,
+      "b": 2,
+      "k": 4,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 2,
+      "b": 4,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "consonant_count",
+      "fb": "pos_mod_5",
+      "a": 6,
+      "b": 4,
+      "k": 8,
+      "k_used_at_cribs": 4
+    },
+    {
+      "kind": "lex_compound",
+      "fa": "w_seg_offset",
+      "fb": "pos_mod_3",
+      "max_b": 3,
+      "k": 5,
+      "values_at_cribs": [
+        0,
+        4,
+        3,
+        4,
+        3,
+        2,
+        3,
+        2,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        0,
+        4,
+        0,
+        4,
+        3,
+        4,
+        3
+      ],
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "lex_compound",
+      "fa": "pos_mod_3",
+      "fb": "w_seg_offset",
+      "max_b": 22,
+      "k": 5,
+      "values_at_cribs": [
+        0,
+        3,
+        1,
+        3,
+        1,
+        4,
+        1,
+        4,
+        2,
+        4,
+        2,
+        0,
+        2,
+        4,
+        2,
+        0,
+        2,
+        0,
+        3,
+        0,
+        3,
+        1,
+        3,
+        1
+      ],
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "pos_mod_3",
+      "a": 1,
+      "b": 2,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "pos_mod_3",
+      "a": 2,
+      "b": 4,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "pos_mod_3",
+      "a": 3,
+      "b": 1,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "pos_mod_3",
+      "a": 4,
+      "b": 3,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "w_seg_offset",
+      "a": 1,
+      "b": 3,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "w_seg_offset",
+      "a": 2,
+      "b": 1,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "w_seg_offset",
+      "a": 3,
+      "b": 4,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "pos_mod_3",
+      "fb": "w_seg_offset",
+      "a": 4,
+      "b": 2,
+      "k": 5,
+      "k_used_at_cribs": 5
+    },
+    {
+      "kind": "lex_compound",
+      "fa": "pos_mod_5",
+      "fb": "position",
+      "max_b": 97,
+      "k": 6,
+      "values_at_cribs": [
+        4,
+        0,
+        2,
+        4,
+        1,
+        3,
+        5,
+        1,
+        3,
+        0,
+        2,
+        4,
+        0,
+        0,
+        2,
+        5,
+        1,
+        3,
+        5,
+        1,
+        4,
+        0,
+        2,
+        4
+      ],
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "lex_compound",
+      "fa": "signed_w_dist",
+      "fb": "w_seg_offset",
+      "max_b": 22,
+      "k": 6,
+      "values_at_cribs": [
+        2,
+        1,
+        0,
+        5,
+        4,
+        3,
+        2,
+        1,
+        2,
+        1,
+        0,
+        5,
+        4,
+        4,
+        3,
+        2,
+        1,
+        2,
+        1,
+        0,
+        5,
+        4,
+        3,
+        2
+      ],
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "lex_compound",
+      "fa": "vowel_count",
+      "fb": "position",
+      "max_b": 97,
+      "k": 6,
+      "values_at_cribs": [
+        4,
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3
+      ],
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_dist",
+      "fb": "pos_mod_3",
+      "a": 1,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_dist",
+      "fb": "pos_mod_3",
+      "a": 5,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 1,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 1,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 3,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 3,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 5,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_idx",
+      "fb": "w_seg_offset",
+      "a": 5,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 1,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 1,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 1,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 5,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 5,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "w_seg_idx",
+      "a": 5,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "signed_w_dist",
+      "a": 1,
+      "b": 4,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "signed_w_dist",
+      "a": 2,
+      "b": 5,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "signed_w_dist",
+      "a": 4,
+      "b": 1,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "signed_w_dist",
+      "a": 5,
+      "b": 2,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "vowel_count",
+      "a": 1,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "vowel_count",
+      "a": 5,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    },
+    {
+      "kind": "linear_compound",
+      "fa": "w_seg_offset",
+      "fb": "consonant_count",
+      "a": 2,
+      "b": 3,
+      "k": 6,
+      "k_used_at_cribs": 6
+    }
+  ]
+}
